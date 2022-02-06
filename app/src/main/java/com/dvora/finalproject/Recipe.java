@@ -2,9 +2,10 @@ package com.dvora.finalproject;
 
 import android.widget.EditText;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Recipe {
+public class Recipe implements Serializable {
     private String nameRecipe;
     private String category;
     private String preparationTime;
@@ -60,5 +61,16 @@ public class Recipe {
 
     public String getPreparationMethod() {
         return preparationMethod;
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe:" +'\n'+
+                " nameRecipe: " + nameRecipe +'\n'+
+                " category: " + category +'\n'+
+                " preparationTime: " + preparationTime +'\n'+
+                " ingredientInfo: " + ingredientInfo +'\n'+
+                " preparationMethod: " + preparationMethod+'\n'
+                ;
     }
 }

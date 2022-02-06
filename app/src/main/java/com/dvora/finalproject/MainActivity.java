@@ -5,14 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     //private FirebaseAuth mAuth;
@@ -59,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         mAllRecipesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.container,new AllRecipesFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,new ListRecipesFragment()).commit();
                 mAddRecipeBtn.setVisibility(View.GONE);
                 mAllRecipesBtn.setVisibility(View.GONE);
                 mLogoutBtn.setVisibility(View.GONE);

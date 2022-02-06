@@ -1,5 +1,7 @@
 package com.dvora.finalproject;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -135,6 +137,39 @@ public class RecipeRepository {
                 });
     }
 
+    public void getAllRecipes(OnSearchAllRecipes listener){
+        ref.child(RECIPES_PATH)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                    @Override
+                    public void onSuccess(DataSnapshot dataSnapshot) {
+                        Recipe match = null;
+                        List<Recipe> matches = new ArrayList<>();
+                        for (DataSnapshot recipeSnapShot: dataSnapshot.getChildren()){
+                            match=recipeSnapShot.getValue(Recipe.class);
+                            if(match ==null)
+                                continue;
+                            matches.add(match);
+                            Log.d("TAG","match==============="+match);
+                        }
+                        if(matches.isEmpty()) {
+                            listener.onNoRecipesFound("No Recipes found");
+                        }else {
+                            listener.onRecipesFound(matches);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) { listener.onExceptionOccurred(e); }
+                });
+    }
+
+    interface OnSearchAllRecipes{
+        void onRecipesFound(List<Recipe> matches);
+        void onNoRecipesFound(String message);
+        void onExceptionOccurred(Exception e);
+    }
 
     interface OnSearchRecipesByIngredient {
         void onRecipesFound(List<Recipe> matches);

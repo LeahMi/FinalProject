@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -88,20 +90,23 @@ public class AddRecipeFragment extends Fragment {
             String PreparationTime= preparationTime.getText().toString();
             String PreparationMethod= preparationMethod.getText().toString();
             String Ingredients= ingredients.getText().toString();
-
-            String str[] = Ingredients.split("\\R");
+            Log.d("TAG","Ingredients====="+Ingredients);
+            String[] str = Ingredients.split("\r\n");
+            Log.d("","Arrays.toString(str)========"+Arrays.toString(str));
 
             Log.d("TAG","str====="+str);
             IngredientInfo ing;
             List<IngredientInfo> allIngredients = new ArrayList<>();
             for (String s: str) {
                 Log.d("TAG","s====="+s);
-                String ing1[]= s.split("\\s+");
+                String[] ing1= s.split(" ");
+
                 Log.d("TAG","ing1====="+ing1);
                 ing= new IngredientInfo(ing1[0],Double.parseDouble(ing1[1]));
                 Log.d("TAG","ing===="+ing);
                 allIngredients.add(ing);
             }
+
             Recipe recipe = new Recipe(NameRecipe,Category,PreparationTime,allIngredients,PreparationMethod);
             repo.saveNewRecipe(recipe, new RecipeRepository.OnAddNewRecipeListener() {
                 @Override
