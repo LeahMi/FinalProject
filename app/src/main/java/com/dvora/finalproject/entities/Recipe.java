@@ -1,6 +1,4 @@
-package com.dvora.finalproject;
-
-import android.widget.EditText;
+package com.dvora.finalproject.entities;
 
 import java.io.Serializable;
 import java.util.List;

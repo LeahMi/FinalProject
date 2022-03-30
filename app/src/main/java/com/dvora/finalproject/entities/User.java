@@ -1,4 +1,4 @@
-package com.dvora.finalproject;
+package com.dvora.finalproject.entities;
 
 import java.io.Serializable;
 import java.util.List;

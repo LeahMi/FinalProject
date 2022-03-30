@@ -1,109 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddRecipeFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <EditText
-        android:id="@+id/nameRecipe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:ems="10"
-        android:hint="Name Recipe"
-        android:inputType="text"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <Button
-        android:id="@+id/addRecipeBtn"
-        android:layout_width="198dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="24dp"
-        android:hint="Add Recipe"
-        app:backgroundTint="#D0F47C93"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preparationMethod" />
-
-    <EditText
-        android:id="@+id/preparationTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Preparation Time"
-        android:inputType="time"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/category" />
-
-    <EditText
-        android:id="@+id/category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Category"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameRecipe" />
-
-    <EditText
-        android:id="@+id/preparationMethod"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Preparation Method"
-        android:inputType="text"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredients" />
-
-    <EditText
-        android:id="@+id/ingredients"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Ingredients"
-        android:inputType="textMultiLine"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preparationTime" />
+    android:background="#6F009688"
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="35dp"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin">
 
     <TextView
-        android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_height="51dp"
-        android:layout_marginTop="56dp"
+        android:layout_height="wrap_content"
         android:text="Add Recipe"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:id="@+id/mainScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="11dp"
+                android:hint="Name" />
+
+            <EditText
+                android:id="@+id/category"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="11dp"
+                android:hint="Category" />
+
+            <EditText
+                android:id="@+id/time"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="11dp"
+                android:hint="Time" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="Add"
+                    app:backgroundTint="#009688" />
 
 
+                <AutoCompleteTextView
+                    android:id="@+id/textin"
+                    android:layout_width="244dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="17dp"
+                    android:layout_toLeftOf="@id/quantity"
+                    android:hint="Ingredient" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <EditText
+                    android:id="@+id/quantity"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="11dp"
+                    android:layout_toLeftOf="@id/add"
+                    android:hint="gr" />
+            </RelativeLayout>
+            <!--            <ScrollView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:id="@+id/scrollView">-->
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"></LinearLayout>
+
+            <EditText
+                android:id="@+id/prep"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="11dp"
+                android:hint="preparation method" />
+
+            <Button
+                android:id="@+id/saveBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SAVE"
+                app:backgroundTint="#009688"></Button>
+            <!--            </ScrollView>-->
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

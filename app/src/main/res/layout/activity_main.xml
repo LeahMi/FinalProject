@@ -1,57 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    tools:ignore="MergeRootFrame">
+    tools:context=".activities.MainActivity">
 
-    <FrameLayout
-        android:id="@id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="-116dp">
+<!--    <FrameLayout-->
+<!--        android:id="@id/container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        tools:layout_editor_absoluteX="10dp"-->
+<!--        tools:layout_editor_absoluteY="-116dp">-->
 
-        <Button
-            android:id="@+id/addRecipeOptionBtn"
-            android:layout_width="198dp"
-            android:layout_height="44dp"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="130dp"
-            android:onClick="this"
-            android:text="Add Recipe"
-            app:backgroundTint="#D0F47C93"
-            tools:ignore="onClick" />
+<!--        <Button-->
+<!--            android:id="@+id/addRecipeOptionBtn"-->
+<!--            android:layout_width="198dp"-->
+<!--            android:layout_height="44dp"-->
+<!--            android:layout_marginLeft="100dp"-->
+<!--            android:layout_marginTop="130dp"-->
+<!--            android:onClick="this"-->
+<!--            android:text="Add Recipe"-->
+<!--            app:backgroundTint="#D0F47C93"-->
+<!--            tools:ignore="onClick" />-->
 
-        <Button
-            android:id="@+id/allRecipesOptionBtn"
-            android:layout_width="198dp"
-            android:layout_height="44dp"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="200dp"
-            android:onClick="this"
-            android:text="My Recipes"
-            app:backgroundTint="#D0F47C93"
-            tools:ignore="onClick" />
+<!--        <Button-->
+<!--            android:id="@+id/allRecipesOptionBtn"-->
+<!--            android:layout_width="198dp"-->
+<!--            android:layout_height="44dp"-->
+<!--            android:layout_marginLeft="100dp"-->
+<!--            android:layout_marginTop="200dp"-->
+<!--            android:onClick="this"-->
+<!--            android:text="My Recipes"-->
+<!--            app:backgroundTint="#D0F47C93"-->
+<!--            tools:ignore="onClick" />-->
 
-        <Button
-            android:id="@+id/logoutBtn"
-            android:layout_width="198dp"
-            android:layout_height="44dp"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="376dp"
-            android:onClick="this"
-            android:text="Log out"
-            app:backgroundTint="#00BCD4"
-            tools:ignore="onClick" />
-
-
-    </FrameLayout>
+<!--        <Button-->
+<!--            android:id="@+id/logoutBtn"-->
+<!--            android:layout_width="198dp"-->
+<!--            android:layout_height="44dp"-->
+<!--            android:layout_marginLeft="100dp"-->
+<!--            android:layout_marginTop="376dp"-->
+<!--            android:onClick="this"-->
+<!--            android:text="Log out"-->
+<!--            app:backgroundTint="#00BCD4"-->
+<!--            tools:ignore="onClick" />-->
 
 
+<!--    </FrameLayout>-->
+
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_menu"/>
+
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.298"
+        app:navGraph="@navigation/mobile_navigation" />
 </androidx.constraintlayout.widget.ConstraintLayout>

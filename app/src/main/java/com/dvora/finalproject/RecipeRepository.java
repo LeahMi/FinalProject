@@ -5,19 +5,20 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.dvora.finalproject.entities.Ingredient;
+import com.dvora.finalproject.entities.IngredientInfo;
+import com.dvora.finalproject.entities.Recipe;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class RecipeRepository {
@@ -163,6 +164,43 @@ public class RecipeRepository {
                     @Override
                     public void onFailure(@NonNull Exception e) { listener.onExceptionOccurred(e); }
                 });
+    }
+    public void getAllIngredients(OnSearchAllIngredients listener){
+        ref.child(INGREDIENTS_PATH)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                    @Override
+                    public void onSuccess(DataSnapshot dataSnapshot) {
+                        Ingredient match = null;
+                        List<Ingredient> matches = new ArrayList<>();
+                        for (DataSnapshot ingredientSnapShot: dataSnapshot.getChildren()){
+                            match=ingredientSnapShot.getValue(Ingredient.class);
+                            if(match ==null)
+                                continue;
+                            matches.add(match);
+                            Log.d("TAG","match==============="+match);
+                        }
+                        String[] listIngredients = new String[matches.size()];
+                        for (int i=0; i<matches.size(); ++i){
+                            listIngredients[i]= matches.get(i).getName();
+                        }
+                        if(matches.isEmpty()) {
+                            listener.onNoIngredientsFound("No Ingredients found");
+                        }else {
+                            listener.onIngredientsFound(listIngredients);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) { listener.onExceptionOccurred(e); }
+                });
+    }
+
+    interface OnSearchAllIngredients{
+        void onIngredientsFound(String[] matches);
+        void onNoIngredientsFound(String message);
+        void onExceptionOccurred(Exception e);
     }
 
     interface OnSearchAllRecipes{

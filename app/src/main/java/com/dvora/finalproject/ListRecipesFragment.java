@@ -9,39 +9,73 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.SearchView;
 import android.widget.Toast;
+
+import com.dvora.finalproject.entities.Recipe;
+import com.dvora.finalproject.fragments.ItemDetailsFragment;
 
 import java.util.List;
 
 
 public class ListRecipesFragment extends Fragment {
     private ListView list;
+    private ImageButton btnAdd;
+    private SearchView searchView;
+    private ArrayAdapter<String> arrayAdapter;
+    String[] nameList = {};
 
     private RecipeRepository repo = new RecipeRepository();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_list_recipes, container, false);
+
         repo.getAllRecipes(new RecipeRepository.OnSearchAllRecipes() {
             @Override
             public void onRecipesFound(List<Recipe> matches) {
                 Toast.makeText(getContext(),matches.size() + " Recipes Found!",Toast.LENGTH_SHORT).show();
                 list= v.findViewById(R.id.mainlistfragment_listv);
+                searchView= v.findViewById(R.id.search_bar);
+                int i=0;
+                nameList=new String[matches.size()];
+                for (Recipe recipe:matches) {
+                    nameList[i]=recipe.getNameRecipe();
+                    ++i;
+                }
+                arrayAdapter= new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,android.R.id.text1,nameList);
                 ContactAdapter adapter = new ContactAdapter(matches, getContext(), new ICallbackAdapter() {
+
                     @Override
                     public void onClickItem(Recipe recipe) {
                         openDetailsFragment(recipe);
                     }
                 });
                 list.setAdapter(adapter);
+                //list.setAdapter(arrayAdapter);
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        //adapter.getFilter().filter(query);
+                        adapter.getFilter().filter(query.toString());
+                        return false;
+                    }
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+
+                        //adapter.getFilter().filter(newText);
+                        adapter.getFilter().filter(newText.toString());
+                        return false;
+                    }
+                });
             }
             public void onNoRecipesFound(String message){
                 Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
@@ -52,6 +86,16 @@ public class ListRecipesFragment extends Fragment {
                 Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
+        btnAdd = (ImageButton) v.findViewById(R.id.btn_add);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(new AddRecipeFragment());
+            }
+        });
+
+
+
         // Inflate the layout for this fragment
         //Toast.makeText(getContext(),"Recipes Found!",Toast.LENGTH_SHORT).show();
         return v;
@@ -59,7 +103,7 @@ public class ListRecipesFragment extends Fragment {
     public void showFragment(Fragment frag) {
         FragmentManager manager = getFragmentManager();
         FragmentTransaction tran = manager.beginTransaction();
-        tran.replace(R.id.container, frag);
+        tran.replace(R.id.fragment, frag);
         tran.commit();
     }
 

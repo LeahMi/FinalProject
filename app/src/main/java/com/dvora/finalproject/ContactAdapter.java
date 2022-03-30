@@ -6,23 +6,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.dvora.finalproject.entities.Recipe;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class ContactAdapter extends BaseAdapter {
+public class ContactAdapter extends BaseAdapter implements Filterable {
 
     private List<Recipe> data;
     private LayoutInflater inflater;
     private ICallbackAdapter iCallbackAdapter;
+    private ItemFilter mFilter = new ItemFilter();
+    private List<String>filteredData = null;
 
     public ContactAdapter(List<Recipe> data, Context context, ICallbackAdapter callbackAdapter) {
         this.data = data;
         this.inflater = LayoutInflater.from(context);
         this.iCallbackAdapter = callbackAdapter;
     }
+
 
     @Override
     public int getCount() {
@@ -66,5 +74,48 @@ public class ContactAdapter extends BaseAdapter {
             }
         });
         return ROW;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
+    private class ItemFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String filterString = constraint.toString().toLowerCase();
+
+            FilterResults results = new FilterResults();
+
+            final List<String> list=null;
+            for (Recipe recipe:data) {
+                list.add(recipe.getNameRecipe());
+            }
+            int count = list.size();
+            final ArrayList<String> nlist = new ArrayList<String>(count);
+
+            String filterableString ;
+
+            for (int i = 0; i < count; i++) {
+                filterableString = list.get(i);
+                if (filterableString.toLowerCase().contains(filterString)) {
+                    nlist.add(filterableString);
+                }
+            }
+
+            results.values = nlist;
+            results.count = nlist.size();
+
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredData = (ArrayList<String>) results.values;
+            notifyDataSetChanged();
+        }
+
     }
 }

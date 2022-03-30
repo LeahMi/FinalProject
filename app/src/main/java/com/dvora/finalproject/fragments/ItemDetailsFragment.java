@@ -1,18 +1,24 @@
-package com.dvora.finalproject;
+package com.dvora.finalproject.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import java.io.Serializable;
+import com.dvora.finalproject.ListRecipesFragment;
+import com.dvora.finalproject.R;
+import com.dvora.finalproject.entities.IngredientInfo;
+import com.dvora.finalproject.entities.Recipe;
+
+import java.util.List;
 
 public class ItemDetailsFragment extends Fragment {
 
@@ -44,29 +50,39 @@ public class ItemDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_item_details, container, false);
 
-        final EditText idEt = view.findViewById(R.id.edt_id);
+        final EditText categoryEt = view.findViewById(R.id.edt_category);
         final EditText nameEt = view.findViewById(R.id.edt_name);
-        final EditText phoneEt = view.findViewById(R.id.edt_phone);
-        final EditText addressEt = view.findViewById(R.id.edt_address);
+        final EditText timeEt = view.findViewById(R.id.edt_time);
+        final EditText prepEt = view.findViewById(R.id.edt_prep_method);
+        final EditText IngEt = view.findViewById(R.id.edt_ing);
 
-        Button btn_edit = view.findViewById(R.id.btn_delete);
+        ImageButton btn_edit = view.findViewById(R.id.btn_back);
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showFragment(new ListRecipesFragment());
             }
         });
-        idEt.setText(recipe.getCategory());
+        categoryEt.setText(recipe.getCategory());
         nameEt.setText(recipe.getNameRecipe());
-        phoneEt.setText(recipe.getPreparationTime());
-        addressEt.setText(recipe.getPreparationMethod());
+        timeEt.setText(recipe.getPreparationTime());
+        prepEt.setText(recipe.getPreparationMethod());
+        List<IngredientInfo> list = recipe.getIngredients();
+        String strList = "";
+        for (int i = 0; i < list.size(); ++i) {
+            if(i==list.size()-1)
+                strList = strList + list.get(i).getName()+" "+list.get(i).getQuantity();
+            else
+                strList = strList + list.get(i).getName()+" "+list.get(i).getQuantity()+ '\n';
+        }
+        IngEt.setText(strList);
         return view;
     }
 
     public void showFragment(Fragment frag) {
         FragmentManager manager = getFragmentManager();
         FragmentTransaction tran = manager.beginTransaction();
-        tran.replace(R.id.container, frag);
+        tran.replace(R.id.fragment, frag);
         tran.commit();
     }
 

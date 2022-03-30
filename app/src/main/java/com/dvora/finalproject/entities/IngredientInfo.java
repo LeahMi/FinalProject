@@ -1,5 +1,6 @@
-package com.dvora.finalproject;
+package com.dvora.finalproject.entities;
 
+import com.dvora.finalproject.entities.Ingredient;
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
@@ -36,9 +37,13 @@ public class IngredientInfo {
         this.quantity = quantity;
     }
 
+//    @Override
+//    public String toString() {
+//        return name + '\n' +
+//                "quantity: " + quantity;
+//    }
     @Override
     public String toString() {
-        return name + '\n' +
-                "quantity: " + quantity;
+        return name+" "+quantity+'\n';
     }
 }
