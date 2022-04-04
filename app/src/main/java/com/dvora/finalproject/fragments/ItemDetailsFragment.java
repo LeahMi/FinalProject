@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.dvora.finalproject.ListRecipesFragment;
 import com.dvora.finalproject.R;
+import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.entities.IngredientInfo;
 import com.dvora.finalproject.entities.Recipe;
 
@@ -33,6 +34,7 @@ public class ItemDetailsFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

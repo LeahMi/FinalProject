@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -25,8 +24,8 @@ public class ListRecipesFragment extends Fragment {
     private ListView list;
     private ImageButton btnAdd;
     private SearchView searchView;
-    private ArrayAdapter<String> arrayAdapter;
-    String[] nameList = {};
+
+
 
     private RecipeRepository repo = new RecipeRepository();
     @Override
@@ -42,17 +41,11 @@ public class ListRecipesFragment extends Fragment {
         repo.getAllRecipes(new RecipeRepository.OnSearchAllRecipes() {
             @Override
             public void onRecipesFound(List<Recipe> matches) {
-                Toast.makeText(getContext(),matches.size() + " Recipes Found!",Toast.LENGTH_SHORT).show();
                 list= v.findViewById(R.id.mainlistfragment_listv);
                 searchView= v.findViewById(R.id.search_bar);
-                int i=0;
-                nameList=new String[matches.size()];
-                for (Recipe recipe:matches) {
-                    nameList[i]=recipe.getNameRecipe();
-                    ++i;
-                }
-                arrayAdapter= new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,android.R.id.text1,nameList);
-                ContactAdapter adapter = new ContactAdapter(matches, getContext(), new ICallbackAdapter() {
+                int i = 0;
+
+                RecipeAdapter adapter = new RecipeAdapter(matches, getContext(), new ICallbackAdapter() {
 
                     @Override
                     public void onClickItem(Recipe recipe) {
@@ -60,19 +53,16 @@ public class ListRecipesFragment extends Fragment {
                     }
                 });
                 list.setAdapter(adapter);
-                //list.setAdapter(arrayAdapter);
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
-                        //adapter.getFilter().filter(query);
-                        adapter.getFilter().filter(query.toString());
+                        adapter.getFilter().filter(query);
                         return false;
                     }
                     @Override
                     public boolean onQueryTextChange(String newText) {
 
-                        //adapter.getFilter().filter(newText);
-                        adapter.getFilter().filter(newText.toString());
+                        adapter.getFilter().filter(newText);
                         return false;
                     }
                 });

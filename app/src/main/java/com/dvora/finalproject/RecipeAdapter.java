@@ -17,16 +17,17 @@ import com.dvora.finalproject.entities.Recipe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactAdapter extends BaseAdapter implements Filterable {
+public class RecipeAdapter extends BaseAdapter implements Filterable {
 
     private List<Recipe> data;
+    private List<Recipe> exampleList;
     private LayoutInflater inflater;
     private ICallbackAdapter iCallbackAdapter;
-    private ItemFilter mFilter = new ItemFilter();
     private List<String>filteredData = null;
 
-    public ContactAdapter(List<Recipe> data, Context context, ICallbackAdapter callbackAdapter) {
+    public RecipeAdapter(List<Recipe> data, Context context, ICallbackAdapter callbackAdapter) {
         this.data = data;
+        this.exampleList = new ArrayList<>(data);
         this.inflater = LayoutInflater.from(context);
         this.iCallbackAdapter = callbackAdapter;
     }
@@ -80,42 +81,65 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
     public Filter getFilter() {
         return mFilter;
     }
-    private class ItemFilter extends Filter {
+    private Filter mFilter= new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-
-            String filterString = constraint.toString().toLowerCase();
-
-            FilterResults results = new FilterResults();
-
-            final List<String> list=null;
-            for (Recipe recipe:data) {
-                list.add(recipe.getNameRecipe());
-            }
-            int count = list.size();
-            final ArrayList<String> nlist = new ArrayList<String>(count);
-
-            String filterableString ;
-
-            for (int i = 0; i < count; i++) {
-                filterableString = list.get(i);
-                if (filterableString.toLowerCase().contains(filterString)) {
-                    nlist.add(filterableString);
+            List<Recipe> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(exampleList);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Recipe item : exampleList) {
+                    if (item.getNameRecipe().toLowerCase().contains(filterPattern) || item.getCategory().toLowerCase().contains(filterPattern) ) {
+                        filteredList.add(item);
+                    }
                 }
             }
-
-            results.values = nlist;
-            results.count = nlist.size();
-
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
             return results;
         }
-
-        @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredData = (ArrayList<String>) results.values;
+            data.clear();
+            data.addAll((List) results.values);
             notifyDataSetChanged();
         }
+//        @Override
+//        protected FilterResults performFiltering(CharSequence constraint) {
+//            List<Recipe> filteredList = new ArrayList<>();
+//            String filterString = constraint.toString().toLowerCase();
+//
+//            FilterResults results = new FilterResults();
+//
+//            final List<String> list=null;
+//            for (Recipe recipe:data) {
+//                list.add(recipe.getNameRecipe());
+//            }
+//            int count = list.size();
+//            final ArrayList<String> nlist = new ArrayList<String>(count);
+//
+//            String filterableString ;
+//
+//            for (int i = 0; i < count; i++) {
+//                filterableString = list.get(i);
+//                if (filterableString.toLowerCase().contains(filterString)) {
+//                    nlist.add(filterableString);
+//                }
+//            }
+//
+//            results.values = nlist;
+//            results.count = nlist.size();
+//
+//            return results;
+//        }
+//
+//        @SuppressWarnings("unchecked")
+//        @Override
+//        protected void publishResults(CharSequence constraint, FilterResults results) {
+//            filteredData = (ArrayList<String>) results.values;
+//            notifyDataSetChanged();
+//        }
 
-    }
+    };
 }
