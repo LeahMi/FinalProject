@@ -1,7 +1,6 @@
-package com.dvora.finalproject;
+package com.dvora.finalproject.fragments;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,7 +14,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.stats.LoggingConstants;
+import com.dvora.finalproject.R;
+import com.dvora.finalproject.activities.MainActivity;
+import com.dvora.finalproject.entities.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,6 +24,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 //public class Register extends AppCompatActivity {
@@ -34,12 +37,17 @@ import com.google.firebase.auth.FirebaseUser;
 //    }
 //}
 
-public class Register extends AppCompatActivity {
+public class Register extends AppCompatActivity{
     EditText mFullName, mEmail, mPassword;
     Button mRegisterBtn;
     TextView mLoginBtn;
     FirebaseAuth fAuth;
     ProgressBar progressBar;
+
+    private FirebaseDatabase database;
+    private DatabaseReference mDatabase;
+    private static final String USER="user";
+    private User user;
 
 
     @Override
@@ -54,8 +62,11 @@ public class Register extends AppCompatActivity {
         mLoginBtn= findViewById(R.id.loginTextView);
         fAuth= FirebaseAuth.getInstance();
 
+        database=FirebaseDatabase.getInstance();
+        mDatabase=database.getReference().child(USER);
+
         if(fAuth.getCurrentUser() !=null){
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
 
@@ -64,6 +75,7 @@ public class Register extends AppCompatActivity {
             public void onClick(View view) {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
+                String fullName=mFullName.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Email is Recuired.");
@@ -80,6 +92,8 @@ public class Register extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
 
+                User user1= new User(email,password,fullName);
+
                 // register the user in firebase
 
                 fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -90,6 +104,7 @@ public class Register extends AppCompatActivity {
                             // send verification link
 
                             FirebaseUser user= fAuth.getCurrentUser();
+
                             user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -104,6 +119,15 @@ public class Register extends AppCompatActivity {
                             });
 
                             Toast.makeText(Register.this, "User Created.", Toast.LENGTH_SHORT).show();
+
+
+
+//                            String keyId=mDatabase.push().getKey();
+//                            String currentuser = user.getUid();
+//                            mDatabase.child(currentuser).setValue(user1);
+                            Log.d("TAG","updateUI====Before====");
+                            updateUI(user);
+                            Log.d("TAG","updateUI====After====");
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }else{
                             Toast.makeText(Register.this, "Error!"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -117,11 +141,18 @@ public class Register extends AppCompatActivity {
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),Login.class));
+                startActivity(new Intent(getApplicationContext(), Login.class));
             }
         });
-
     }
-
+    public void updateUI(FirebaseUser currentUser){
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child(USER);
+        Log.d("TAG","currentUser=========="+currentUser);
+        String keyId=currentUser.getUid();
+        Log.d("TAG","keyId=========="+keyId);
+        String in="0";
+        ref.child(keyId).child("Inventory").setValue(in);
+//        ref.child(keyId).child("Details").setValue(currentUser);
+    }
 
 }
