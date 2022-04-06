@@ -101,24 +101,24 @@ public class RecipeRepository {
                                         public void onSuccess(DataSnapshot dataSnapshot) {
                                             HashMap<String,Boolean> linkedRecipes = finalMatch.getLinkedRecipes();
                                             List<Recipe> matches = new ArrayList<>();
-                                                for(DataSnapshot recipeSnapShot : dataSnapshot.getChildren()) {
-                                                    String recipeName = (String)recipeSnapShot.child("nameRecipe").getValue();
-                                                    if(recipeName==null)
+                                            for(DataSnapshot recipeSnapShot : dataSnapshot.getChildren()) {
+                                                String recipeName = (String)recipeSnapShot.child("nameRecipe").getValue();
+                                                if(recipeName==null)
+                                                    continue;
+                                                if(linkedRecipes.get(recipeName) != null &&
+                                                        linkedRecipes.get(recipeName)) {
+                                                    Recipe match = recipeSnapShot.getValue(Recipe.class);
+                                                    if(match ==null)
                                                         continue;
-                                                    if(linkedRecipes.get(recipeName) != null &&
-                                                            linkedRecipes.get(recipeName)) {
-                                                        Recipe match = recipeSnapShot.getValue(Recipe.class);
-                                                        if(match ==null)
-                                                            continue;
 
-                                                        matches.add(match);
-                                                    }
+                                                    matches.add(match);
                                                 }
-                                                if(matches.isEmpty()) {
-                                                    listener.onNoRecipesFound("No Recipes for ingredient " + ingredientName);
-                                                }else {
-                                                    listener.onRecipesFound(matches);
-                                                }
+                                            }
+                                            if(matches.isEmpty()) {
+                                                listener.onNoRecipesFound("No Recipes for ingredient " + ingredientName);
+                                            }else {
+                                                listener.onRecipesFound(matches);
+                                            }
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -180,14 +180,14 @@ public class RecipeRepository {
                             matches.add(match);
                             Log.d("TAG","match==============="+match);
                         }
-                        String[] listIngredients = new String[matches.size()];
-                        for (int i=0; i<matches.size(); ++i){
-                            listIngredients[i]= matches.get(i).getName();
-                        }
+                        //String[] listIngredients = new String[matches.size()];
+//                        for (int i=0; i<matches.size(); ++i){
+//                            listIngredients[i]= matches.get(i).getName();
+//                        }
                         if(matches.isEmpty()) {
                             listener.onNoIngredientsFound("No Ingredients found");
                         }else {
-                            listener.onIngredientsFound(listIngredients);
+                            listener.onIngredientsFound(matches);
                         }
                     }
                 })
@@ -197,8 +197,8 @@ public class RecipeRepository {
                 });
     }
 
-    interface OnSearchAllIngredients{
-        void onIngredientsFound(String[] matches);
+    public interface OnSearchAllIngredients{
+        void onIngredientsFound(List<Ingredient> matches);
         void onNoIngredientsFound(String message);
         void onExceptionOccurred(Exception e);
     }
@@ -214,11 +214,39 @@ public class RecipeRepository {
         void onNoRecipesFound(String message);
         void onExceptionOcured(Exception e);
     }
-    interface OnAddNewRecipeListener {
+    public interface OnAddNewRecipeListener {
+        void onSuccess(String message);
+        void onFailure(Exception e);
+    }
+    public interface OnAddNewIngredientListener{
         void onSuccess(String message);
         void onFailure(Exception e);
     }
 
+    public  void saveNewIngredient(Ingredient ingredient,OnAddNewIngredientListener listener){
+        DatabaseReference existingIngredient = ref.child(INGREDIENTS_PATH).child(ingredient.getName());
+        existingIngredient.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists())
+                {
+                    ref.child(INGREDIENTS_PATH).child(ingredient.getName()).setValue(ingredient);
+                    listener.onSuccess("the ingredient "+ ingredient.getName() + " added");
+                }
+                else{
+                    listener.onFailure(new Exception("the ingredient "+ingredient.getName()+" is exist"));
+                }
+            }
+
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                listener.onFailure(e);
+            }
+        });
+
+
+    }
     public void saveNewRecipe(Recipe recipe, OnAddNewRecipeListener listener) {
         List<IngredientInfo> ingredients = recipe.getIngredients();
         for(IngredientInfo ing : ingredients) {
@@ -228,6 +256,7 @@ public class RecipeRepository {
                     .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                         @Override
                         public void onSuccess(DataSnapshot dataSnapshot) {
+
                             if(dataSnapshot.exists()) {
                                 dataSnapshot.child("linkedRecipes")
                                         .child(recipe.getNameRecipe())

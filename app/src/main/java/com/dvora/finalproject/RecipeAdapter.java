@@ -19,11 +19,11 @@ import java.util.List;
 
 public class RecipeAdapter extends BaseAdapter implements Filterable {
 
-    private List<Recipe> data;
-    private List<Recipe> exampleList;
-    private LayoutInflater inflater;
-    private ICallbackAdapter iCallbackAdapter;
-    private List<String>filteredData = null;
+    private final List<Recipe> data;
+    private final List<Recipe> exampleList;
+    private final LayoutInflater inflater;
+    private final ICallbackAdapter iCallbackAdapter;
+    private final List<String>filteredData = null;
 
     public RecipeAdapter(List<Recipe> data, Context context, ICallbackAdapter callbackAdapter) {
         this.data = data;
@@ -81,7 +81,7 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
     public Filter getFilter() {
         return mFilter;
     }
-    private Filter mFilter= new Filter() {
+    private final Filter mFilter= new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Recipe> filteredList = new ArrayList<>();
