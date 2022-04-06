@@ -15,7 +15,7 @@ import com.dvora.finalproject.RecipeRepository;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    //private FirebaseAuth mAuth;
+
     Button mLogoutBtn;
     Button mAddRecipeBtn;
     Button mAllRecipesBtn;
@@ -34,47 +34,5 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
 
-//        mLogoutBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getApplicationContext(),Login.class));
-//            logout(view);
-//            }
-//        });
-//        mLogoutBtn=findViewById(R.id.logoutBtn);
-//        mLogoutBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FirebaseAuth.getInstance().signOut();
-//                startActivity(new Intent(getApplicationContext(),Login.class));
-//                finish();
-//            }
-//        });
-//        mAddRecipeBtn=findViewById(R.id.addRecipeOptionBtn);
-//        mAddRecipeBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Log.d("TAG","AddRecipe class");
-////                startActivity(new Intent(getApplicationContext(),AddRecipe.class));
-//                getSupportFragmentManager().beginTransaction().replace(R.id.container,new AddRecipeFragment()).commit();
-//                mAddRecipeBtn.setVisibility(View.GONE);
-//                mAllRecipesBtn.setVisibility(View.GONE);
-//                mLogoutBtn.setVisibility(View.GONE);
-//            }
-//        });
-//        mAllRecipesBtn= findViewById(R.id.allRecipesOptionBtn);
-//        mAllRecipesBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.container,new ListRecipesFragment()).commit();
-//                mAddRecipeBtn.setVisibility(View.GONE);
-//                mAllRecipesBtn.setVisibility(View.GONE);
-//                mLogoutBtn.setVisibility(View.GONE);
-//            }
-//        });
     }
-
-//    public void logout(View view){
-//
-//    }
 }

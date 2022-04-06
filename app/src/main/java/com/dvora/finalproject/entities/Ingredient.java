@@ -13,7 +13,7 @@ public class Ingredient {
     public Ingredient() {}
 
     public Ingredient(String name, double quantity, HashMap<String, Boolean> linkedRecipes) {
-        this.name = name;
+        this.name=name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
         this.quantity = quantity;
         this.linkedRecipes = linkedRecipes;
     }

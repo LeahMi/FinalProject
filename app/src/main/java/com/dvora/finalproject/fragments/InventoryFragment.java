@@ -40,7 +40,11 @@ public class InventoryFragment extends Fragment {
     private ArrayAdapter<String> arrayAdapter;
     String[] nameList = {};
 
+<<<<<<< HEAD
     private RecipeRepository repo = new RecipeRepository();
+=======
+   private RecipeRepository repo = new RecipeRepository();
+>>>>>>> master
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,11 +66,19 @@ public class InventoryFragment extends Fragment {
                     nameList[i]=ingredient.getName();
                     ++i;
                 }
+<<<<<<< HEAD
                 //  arrayAdapter= new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,android.R.id.text1,nameList);
                 IngAdapter adapter= new IngAdapter(matches, getContext());
                 list.setAdapter(adapter);
             }
             // @Override
+=======
+              //  arrayAdapter= new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,android.R.id.text1,nameList);
+                IngAdapter adapter= new IngAdapter(matches, getContext());
+                list.setAdapter(adapter);
+            }
+           // @Override
+>>>>>>> master
 //            public void onIngredientsFound(List <Ingredient>) {
 //
 //            }
@@ -83,7 +95,11 @@ public class InventoryFragment extends Fragment {
             }
         });
         //ScrollView InventoryScroll = (ScrollView) v.findViewById(R.id.InventoryScroll);
+<<<<<<< HEAD
         // textIn = v.findViewById(R.id.textin);
+=======
+       // textIn = v.findViewById(R.id.textin);
+>>>>>>> master
         buttonAdd=v.findViewById(R.id.btn_Add_ing);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -12,7 +12,7 @@ public class IngredientInfo {
     public IngredientInfo() {}
 
     public IngredientInfo(String name, double quantity) {
-        this.name = name;
+        this.name=name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
         this.quantity = quantity;
     }
 
@@ -37,11 +37,6 @@ public class IngredientInfo {
         this.quantity = quantity;
     }
 
-//    @Override
-//    public String toString() {
-//        return name + '\n' +
-//                "quantity: " + quantity;
-//    }
     @Override
     public String toString() {
         return name+" "+quantity+'\n';

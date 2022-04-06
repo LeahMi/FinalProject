@@ -47,9 +47,8 @@ public class ListRecipesFragment extends Fragment {
             public void onRecipesFound(List<Recipe> matches) {
                 list= v.findViewById(R.id.mainlistfragment_listv);
                 searchView= v.findViewById(R.id.search_bar);
-                int i = 0;
 
-                RecipeAdapter adapter = new RecipeAdapter(matches, getContext(), new ICallbackAdapter() {
+                ContactAdapter adapter = new ContactAdapter(matches, getContext(), new ICallbackAdapter() {
 
                     @Override
                     public void onClickItem(Recipe recipe) {
@@ -57,16 +56,19 @@ public class ListRecipesFragment extends Fragment {
                     }
                 });
                 list.setAdapter(adapter);
+                //list.setAdapter(arrayAdapter);
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
-                        adapter.getFilter().filter(query);
+                        //adapter.getFilter().filter(query);
+                        adapter.getFilter().filter(query.toString());
                         return false;
                     }
                     @Override
                     public boolean onQueryTextChange(String newText) {
 
-                        adapter.getFilter().filter(newText);
+                        //adapter.getFilter().filter(newText);
+                        adapter.getFilter().filter(newText.toString());
                         return false;
                     }
                 });
@@ -89,9 +91,6 @@ public class ListRecipesFragment extends Fragment {
         });
 
 
-
-        // Inflate the layout for this fragment
-        //Toast.makeText(getContext(),"Recipes Found!",Toast.LENGTH_SHORT).show();
         return v;
     }
     public void showFragment(Fragment frag) {

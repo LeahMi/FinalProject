@@ -17,6 +17,7 @@ import com.dvora.finalproject.entities.Recipe;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< HEAD:app/src/main/java/com/dvora/finalproject/RecipeAdapter.java
 public class RecipeAdapter extends BaseAdapter implements Filterable {
 
     private final List<Recipe> data;
@@ -24,10 +25,17 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
     private final LayoutInflater inflater;
     private final ICallbackAdapter iCallbackAdapter;
     private final List<String>filteredData = null;
+=======
+public class ContactAdapter extends BaseAdapter implements Filterable {
+    private List<Recipe> data;
+    private LayoutInflater inflater;
+    private ICallbackAdapter iCallbackAdapter;
+    private ItemFilter mFilter = new ItemFilter();
+    private List<String>filteredData = null;
+>>>>>>> master:app/src/main/java/com/dvora/finalproject/ContactAdapter.java
 
-    public RecipeAdapter(List<Recipe> data, Context context, ICallbackAdapter callbackAdapter) {
+    public ContactAdapter(List<Recipe> data, Context context, ICallbackAdapter callbackAdapter) {
         this.data = data;
-        this.exampleList = new ArrayList<>(data);
         this.inflater = LayoutInflater.from(context);
         this.iCallbackAdapter = callbackAdapter;
     }
@@ -81,65 +89,46 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
     public Filter getFilter() {
         return mFilter;
     }
+<<<<<<< HEAD:app/src/main/java/com/dvora/finalproject/RecipeAdapter.java
     private final Filter mFilter= new Filter() {
+=======
+    private class ItemFilter extends Filter {
+>>>>>>> master:app/src/main/java/com/dvora/finalproject/ContactAdapter.java
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Recipe> filteredList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(exampleList);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                for (Recipe item : exampleList) {
-                    if (item.getNameRecipe().toLowerCase().contains(filterPattern) || item.getCategory().toLowerCase().contains(filterPattern) ) {
-                        filteredList.add(item);
-                    }
+
+            String filterString = constraint.toString().toLowerCase();
+
+            FilterResults results = new FilterResults();
+
+            final List<String> list=null;
+            for (Recipe recipe:data) {
+                list.add(recipe.getNameRecipe());
+            }
+            int count = list.size();
+            final ArrayList<String> nlist = new ArrayList<String>(count);
+
+            String filterableString ;
+
+            for (int i = 0; i < count; i++) {
+                filterableString = list.get(i);
+                if (filterableString.toLowerCase().contains(filterString)) {
+                    nlist.add(filterableString);
                 }
             }
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
+
+            results.values = nlist;
+            results.count = nlist.size();
+
             return results;
         }
+
+        @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            data.clear();
-            data.addAll((List) results.values);
+            filteredData = (ArrayList<String>) results.values;
             notifyDataSetChanged();
         }
-//        @Override
-//        protected FilterResults performFiltering(CharSequence constraint) {
-//            List<Recipe> filteredList = new ArrayList<>();
-//            String filterString = constraint.toString().toLowerCase();
-//
-//            FilterResults results = new FilterResults();
-//
-//            final List<String> list=null;
-//            for (Recipe recipe:data) {
-//                list.add(recipe.getNameRecipe());
-//            }
-//            int count = list.size();
-//            final ArrayList<String> nlist = new ArrayList<String>(count);
-//
-//            String filterableString ;
-//
-//            for (int i = 0; i < count; i++) {
-//                filterableString = list.get(i);
-//                if (filterableString.toLowerCase().contains(filterString)) {
-//                    nlist.add(filterableString);
-//                }
-//            }
-//
-//            results.values = nlist;
-//            results.count = nlist.size();
-//
-//            return results;
-//        }
-//
-//        @SuppressWarnings("unchecked")
-//        @Override
-//        protected void publishResults(CharSequence constraint, FilterResults results) {
-//            filteredData = (ArrayList<String>) results.values;
-//            notifyDataSetChanged();
-//        }
 
-    };
+    }
 }
