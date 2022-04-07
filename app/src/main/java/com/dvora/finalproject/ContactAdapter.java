@@ -17,22 +17,12 @@ import com.dvora.finalproject.entities.Recipe;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD:app/src/main/java/com/dvora/finalproject/RecipeAdapter.java
-public class RecipeAdapter extends BaseAdapter implements Filterable {
-
-    private final List<Recipe> data;
-    private final List<Recipe> exampleList;
-    private final LayoutInflater inflater;
-    private final ICallbackAdapter iCallbackAdapter;
-    private final List<String>filteredData = null;
-=======
 public class ContactAdapter extends BaseAdapter implements Filterable {
     private List<Recipe> data;
     private LayoutInflater inflater;
     private ICallbackAdapter iCallbackAdapter;
     private ItemFilter mFilter = new ItemFilter();
     private List<String>filteredData = null;
->>>>>>> master:app/src/main/java/com/dvora/finalproject/ContactAdapter.java
 
     public ContactAdapter(List<Recipe> data, Context context, ICallbackAdapter callbackAdapter) {
         this.data = data;
@@ -89,11 +79,7 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
     public Filter getFilter() {
         return mFilter;
     }
-<<<<<<< HEAD:app/src/main/java/com/dvora/finalproject/RecipeAdapter.java
-    private final Filter mFilter= new Filter() {
-=======
     private class ItemFilter extends Filter {
->>>>>>> master:app/src/main/java/com/dvora/finalproject/ContactAdapter.java
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
 

@@ -215,13 +215,6 @@ public class RecipeRepository {
         void onExceptionOcured(Exception e);
     }
     public interface OnAddNewRecipeListener {
-<<<<<<< HEAD
-=======
-        void onSuccess(String message);
-        void onFailure(Exception e);
-    }
-    public interface OnAddNewIngredientListener{
->>>>>>> master
         void onSuccess(String message);
         void onFailure(Exception e);
     }
@@ -245,32 +238,10 @@ public class RecipeRepository {
                 }
             }
 
-<<<<<<< HEAD
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 listener.onFailure(e);
-=======
-    public  void saveNewIngredient(Ingredient ingredient,OnAddNewIngredientListener listener){
-        DatabaseReference existingIngredient = ref.child(INGREDIENTS_PATH).child(ingredient.getName());
-        existingIngredient.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists())
-                {
-                   ref.child(INGREDIENTS_PATH).child(ingredient.getName()).setValue(ingredient);
-                   listener.onSuccess("the ingredient "+ ingredient.getName() + " added");
-                }
-                else{
-                    listener.onFailure(new Exception("the ingredient "+ingredient.getName()+" is exist"));
-                }
-                }
-
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                    listener.onFailure(e);
->>>>>>> master
             }
         });
 
