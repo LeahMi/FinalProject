@@ -60,15 +60,13 @@ public class ListRecipesFragment extends Fragment {
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
-                        //adapter.getFilter().filter(query);
-                        adapter.getFilter().filter(query.toString());
+                        adapter.getFilter().filter(query);
                         return false;
                     }
                     @Override
                     public boolean onQueryTextChange(String newText) {
 
-                        //adapter.getFilter().filter(newText);
-                        adapter.getFilter().filter(newText.toString());
+                        adapter.getFilter().filter(newText);
                         return false;
                     }
                 });
