@@ -60,8 +60,10 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
 
         final Recipe recipeRow = data.get(pos);
         TextView tv = ROW.findViewById(R.id.mainlistrow_text_v);
+        TextView tv2 = ROW.findViewById(R.id.mainlistrow_text_v2);
         ImageView imageViewProfile = ROW.findViewById(R.id.img_profile);
-        tv.setText(recipeRow.getNameRecipe() + "\n" + recipeRow.getCategory());
+        tv.setText(recipeRow.getNameRecipe());
+        tv2.setText(recipeRow.getCategory());
         imageViewProfile.setImageResource(R.drawable.image_recipe);
 
         ROW.setOnClickListener(new View.OnClickListener() {
