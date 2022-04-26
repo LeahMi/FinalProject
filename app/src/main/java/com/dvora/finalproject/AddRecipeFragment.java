@@ -140,7 +140,7 @@ public class AddRecipeFragment extends Fragment {
                 textOut2.setText(quantity.getText().toString());
                 ing = textIn.getText().toString().trim();
                 qua = quantity.getText().toString().trim();
-                ingr = new IngredientInfo(ing, Double.parseDouble(qua));
+                ingr = new IngredientInfo(ing, Double.parseDouble(qua),"type");
                 allIngredients.add(ingr);
                 textIn.setText("");
                 quantity.setText("");

@@ -7,19 +7,24 @@ import java.util.HashMap;
 public class Ingredient {
     private String name;
     private double quantity;
+    private String type;
     private HashMap<String,Boolean> linkedRecipes; // ids
 
 
     public Ingredient() {}
 
-    public Ingredient(String name, double quantity, HashMap<String, Boolean> linkedRecipes) {
+    public Ingredient(String name, double quantity, HashMap<String, Boolean> linkedRecipes,String type) {
         this.name=name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
         this.quantity = quantity;
+        this.type = type;
         this.linkedRecipes = linkedRecipes;
     }
 
     public String getName() {
         return name;
+    }
+    public String getType() {
+        return type;
     }
     public double getQuantity() {
         return quantity;
@@ -31,7 +36,7 @@ public class Ingredient {
 
     @Exclude
     public IngredientInfo getIngredientInfo() {
-        return new IngredientInfo(name,quantity);
+        return new IngredientInfo(name,quantity,type);
     }
 
     public void setLinkedRecipes(HashMap<String,Boolean> linkedRecipes) {
