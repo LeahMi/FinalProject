@@ -37,6 +37,7 @@ public class InventoryFragment extends Fragment {
     private AutoCompleteTextView textIn;
     private ListView list;
     private Button buttonAdd;
+    private Button ListShopping;
     private ArrayAdapter<String> arrayAdapter;
     String[] nameList = {};
 
@@ -84,6 +85,14 @@ public class InventoryFragment extends Fragment {
         });
         //ScrollView InventoryScroll = (ScrollView) v.findViewById(R.id.InventoryScroll);
         // textIn = v.findViewById(R.id.textin);
+        ListShopping=v.findViewById(R.id.btn_list_shopping);
+        ListShopping.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showFragment(new ListShoppingFragment());
+            }
+        });
+
         buttonAdd=v.findViewById(R.id.btn_Add_ing);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
