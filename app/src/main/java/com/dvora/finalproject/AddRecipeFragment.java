@@ -10,12 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,16 +35,11 @@ import static com.dvora.finalproject.RecipeRepository.INGREDIENTS_PATH;
 
 public class AddRecipeFragment extends Fragment {
     private AutoCompleteTextView textIn;
-    private EditText quantity;
-    private EditText prep;
-    private EditText name;
-    private EditText category;
-    private EditText time;
-    private Button buttonAdd;
-    private Button buttonSave;
-    private String qua;
-    private String ing;
+    private EditText quantity, prep, name, category, time;
+    private Button buttonAdd, buttonSave;
+    private String qua, ing, type;
     private IngredientInfo ingr;
+    private String[] types = {"gr","ml","psc","tbsp"};
     private RecipeRepository repo = new RecipeRepository();
 
     @Override
@@ -87,10 +84,22 @@ public class AddRecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-//        View v=inflater.inflate(R.layout.fragment_add_recipe, container, false);
         View v = inflater.inflate(R.layout.fragment_add_recipe, container, false);
-        // ScrollView scrollView = (ScrollView)v.findViewById(R.id.scrollView);
+        Spinner spinner =(Spinner) v.findViewById(R.id.spinner2);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, types);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.v("item", (String) parent.getItemAtPosition(position));
+                type = (String)parent.getItemAtPosition(position);
+                //((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
         ScrollView mainScroll = (ScrollView) v.findViewById(R.id.mainScroll);
         textIn = (AutoCompleteTextView) v.findViewById(R.id.textin);
 
@@ -136,11 +145,13 @@ public class AddRecipeFragment extends Fragment {
                 final View addView = layoutInflater.inflate(R.layout.row, null);
                 TextView textOut = (TextView) addView.findViewById(R.id.textout);
                 TextView textOut2 = (TextView) addView.findViewById(R.id.textout2);
+                TextView textOutType = (TextView) addView.findViewById(R.id.textout3);
                 textOut.setText(textIn.getText().toString());
                 textOut2.setText(quantity.getText().toString());
+                textOutType.setText(type);
                 ing = textIn.getText().toString().trim();
                 qua = quantity.getText().toString().trim();
-                ingr = new IngredientInfo(ing, Double.parseDouble(qua),"type");
+                ingr = new IngredientInfo(ing, Double.parseDouble(qua),type);
                 allIngredients.add(ingr);
                 textIn.setText("");
                 quantity.setText("");

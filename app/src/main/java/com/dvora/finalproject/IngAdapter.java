@@ -53,7 +53,9 @@ public class IngAdapter extends BaseAdapter {
         }
         final Ingredient ingredientRow=dataIng.get(i);
         TextView tv = Row.findViewById(R.id.inventorylistrow_text_v);
-        tv.setText(ingredientRow.getName() +"     "+ ingredientRow.getQuantity());
+        TextView tv_quantity = Row.findViewById(R.id.inventorylistrow_quantity);
+        tv.setText(ingredientRow.getName());
+        tv_quantity.setText(ingredientRow.getQuantity()+" "+ingredientRow.getType());
         return Row;
     }
 
