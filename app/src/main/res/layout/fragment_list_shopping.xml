@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back_shop_list"
     tools:context=".fragments.ListShoppingFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -10,15 +12,23 @@
 
     <EditText
         android:id="@+id/testEditText"
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="11dp"
-        android:hint="enter" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp" />
 
     <Button
         android:id="@+id/button_Save_Ing"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="-10dp"
+        android:layout_marginBottom="183dp"
+        android:text="Save"
+        app:backgroundTint="#03A9F4" />
 
-</FrameLayout>
+</RelativeLayout>
