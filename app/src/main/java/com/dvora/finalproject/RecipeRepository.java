@@ -223,6 +223,11 @@ public class RecipeRepository {
         void onFailure(Exception e);
     }
 
+    public interface OnSearchShoppingList{
+        void onSuccess(String message);
+        void onFailure(Exception e);
+    }
+
     public  void saveNewIngredient(Ingredient ingredient,OnAddNewIngredientListener listener){
         DatabaseReference existingIngredient = ref.child(INGREDIENTS_PATH).child(ingredient.getName());
         existingIngredient.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -283,7 +288,29 @@ public class RecipeRepository {
                 .addOnSuccessListener(aVoid -> listener.onSuccess("Successfuly added " + recipe.getNameRecipe() + " to the list"))
                 .addOnFailureListener(e -> listener.onFailure(e));
     }
+    public void SaveListShopping(String listS){
 
+        ref.child("ShoppingList").setValue(listS);
+    }
+    public void getList(OnSearchShoppingList listener)
+    {
+        ref.child("ShoppingList").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>(){
+            public void onSuccess(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists()) {
+                    String data=dataSnapshot.getValue().toString();
+                    listener.onSuccess(data);
+                }
+                else {listener.onSuccess("Enter your Shopping List ");}
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                listener.onFailure(e);
+            }
+        });
+
+    }
     public MutableLiveData<Exception> getExceptionsData() {
         return exceptionsData;
     }
