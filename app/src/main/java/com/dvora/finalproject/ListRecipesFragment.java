@@ -14,13 +14,9 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.dvora.finalproject.entities.Ingredient;
-import com.dvora.finalproject.entities.IngredientInfo;
 import com.dvora.finalproject.entities.Recipe;
 import com.dvora.finalproject.fragments.ItemDetailsFragment;
-import com.google.firebase.database.DataSnapshot;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -48,7 +44,7 @@ public class ListRecipesFragment extends Fragment {
                 list= v.findViewById(R.id.mainlistfragment_listv);
                 searchView= v.findViewById(R.id.search_bar);
 
-                ContactAdapter adapter = new ContactAdapter(matches, getContext(), new ICallbackAdapter() {
+                RecipeAdapter adapter = new RecipeAdapter(matches, getContext(), new ICallbackAdapter() {
 
                     @Override
                     public void onClickItem(Recipe recipe) {

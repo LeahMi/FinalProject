@@ -20,4 +20,9 @@
         android:name="com.dvora.finalproject.fragments.InventoryFragment"
         android:label="Inventory"
         tools:layout="@layout/fragment_inventory" />
+    <fragment
+        android:id="@+id/ListShoppingFragment"
+        android:name="com.dvora.finalproject.fragments.ListShoppingFragment"
+        android:label="List Shopping"
+        tools:layout="@layout/fragment_list_shopping" />
 </navigation>

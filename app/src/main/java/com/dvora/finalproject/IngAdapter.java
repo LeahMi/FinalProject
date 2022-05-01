@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,17 +14,20 @@ import com.dvora.finalproject.entities.Ingredient;
 import com.dvora.finalproject.entities.IngredientInfo;
 import com.dvora.finalproject.entities.Recipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.RowSetWriter;
 
 public class IngAdapter extends BaseAdapter {
     private List<Ingredient> dataIng;
+    private List<Ingredient> data;
     private LayoutInflater inflaterI;
     public IngAdapter(List<Ingredient> dataIng, Context context)
     {
         this.dataIng=dataIng;
-        this.inflaterI=LayoutInflater.from(context);;
+        this.data=dataIng;
+        this.inflaterI=LayoutInflater.from(context);
     }
 
 
@@ -59,16 +63,33 @@ public class IngAdapter extends BaseAdapter {
         return Row;
     }
 
-//
-//        ROW.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("asds", "ROW");
-//
-//                if (iCallbackAdapter != null) {
-//                    iCallbackAdapter.onClickItem(recipeRow);
-//                }
-//            }
-
+    public Filter getFilter() {
+        return mFilter;
+    }
+    private final Filter mFilter= new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Ingredient> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(dataIng);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Ingredient item : dataIng) {
+                    if (item.getName().toLowerCase().contains(filterPattern)  ) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            data.clear();
+            data.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
 }

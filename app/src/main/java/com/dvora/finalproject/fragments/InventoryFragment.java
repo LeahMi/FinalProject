@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class InventoryFragment extends Fragment {
     private Button ListShopping;
     private ArrayAdapter<String> arrayAdapter;
     String[] nameList = {};
+    private SearchView searchViewInvetory;
 
     private RecipeRepository repo = new RecipeRepository();
 
@@ -53,6 +55,7 @@ public class InventoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_inventory, container, false);
+        searchViewInvetory=v.findViewById(R.id.search_bar_inventory);
         repo.getAllIngredients(new RecipeRepository.OnSearchAllIngredients() {
             public void onIngredientsFound(List<Ingredient> matches){
                 Toast.makeText(getContext(),matches.size() + " Ingredients Found!",Toast.LENGTH_SHORT).show();
@@ -66,6 +69,19 @@ public class InventoryFragment extends Fragment {
                 //  arrayAdapter= new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,android.R.id.text1,nameList);
                 IngAdapter adapter= new IngAdapter(matches, getContext());
                 list.setAdapter(adapter);
+                searchViewInvetory.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        adapter.getFilter().filter(s);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String a) {
+                        adapter.getFilter().filter(a);
+                        return false;
+                    }
+                });
             }
             // @Override
 //            public void onIngredientsFound(List <Ingredient>) {
