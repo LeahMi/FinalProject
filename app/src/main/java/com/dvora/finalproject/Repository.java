@@ -21,13 +21,13 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RecipeRepository {
+public class Repository {
     public static final String RECIPES_PATH = "userRecipes";
     public static final String INGREDIENTS_PATH = "userIngredients";
     public DatabaseReference ref;
     public MutableLiveData<List<Recipe>> recipesData = new MutableLiveData<>();
     public MutableLiveData<Exception> exceptionsData = new MutableLiveData<>();
-    public RecipeRepository() {
+    public Repository() {
         FirebaseUser currentUser = FirebaseManager.currentUser;
         String uid="";
         if(currentUser==null)
@@ -165,6 +165,26 @@ public class RecipeRepository {
                     public void onFailure(@NonNull Exception e) { listener.onExceptionOccurred(e); }
                 });
     }
+    public void isExistIngredient(String name,OnAddNewIngredientListener listener){
+        DatabaseReference existingIngredient = ref.child(INGREDIENTS_PATH).child(name);
+        existingIngredient.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()) {
+                    listener.onSuccess("false");
+                }
+                else{
+                    listener.onFailure(new Exception("true"));
+                }
+            }
+
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                listener.onFailure(e);
+            }
+        });
+    }
     public void getAllIngredients(OnSearchAllIngredients listener){
         ref.child(INGREDIENTS_PATH)
                 .get()
@@ -222,14 +242,40 @@ public class RecipeRepository {
         void onSuccess(String message);
         void onFailure(Exception e);
     }
+    public interface OnSearchShoppingList{
+        void onSuccess(String message);
+        void onFailure(Exception e);
+    }
+    public void SaveListShopping(String listS){
+
+        ref.child("ShoppingList").setValue(listS);
+    }
+    public void getList(OnSearchShoppingList listener)
+    {
+        ref.child("ShoppingList").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>(){
+            public void onSuccess(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists()) {
+                    String data=dataSnapshot.getValue().toString();
+                    listener.onSuccess(data);
+                }
+                else {listener.onSuccess("Enter your Shopping List");}
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                listener.onFailure(e);
+            }
+        });
+
+    }
 
     public  void saveNewIngredient(Ingredient ingredient,OnAddNewIngredientListener listener){
         DatabaseReference existingIngredient = ref.child(INGREDIENTS_PATH).child(ingredient.getName());
         existingIngredient.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists())
-                {
+                if(!dataSnapshot.exists()) {
                     ref.child(INGREDIENTS_PATH).child(ingredient.getName()).setValue(ingredient);
                     listener.onSuccess("the ingredient "+ ingredient.getName() + " added");
                 }

@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.dvora.finalproject.R;
-import com.dvora.finalproject.RecipeRepository;
+import com.dvora.finalproject.Repository;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     Button mLogoutBtn;
     Button mAddRecipeBtn;
     Button mAllRecipesBtn;
-    private RecipeRepository repo = new RecipeRepository();
+    private Repository repo = new Repository();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //mAuth = FirebaseAuth.getInstance();

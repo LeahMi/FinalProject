@@ -43,7 +43,7 @@ public class Register extends AppCompatActivity{
     TextView mLoginBtn;
     FirebaseAuth fAuth;
     ProgressBar progressBar;
-
+    private String fullName;
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private static final String USER="user";
@@ -54,16 +54,16 @@ public class Register extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        mFullName= findViewById(R.id.fullName);
-        mEmail= findViewById(R.id.email);
-        mPassword= findViewById(R.id.password) ;
+        mFullName = findViewById(R.id.fullName);
+        mEmail = findViewById(R.id.email);
+        mPassword = findViewById(R.id.password) ;
         progressBar = findViewById (R.id.progressBarRegister);
-        mRegisterBtn= findViewById(R.id.registerBtn);
-        mLoginBtn= findViewById(R.id.loginTextView);
-        fAuth= FirebaseAuth.getInstance();
+        mRegisterBtn = findViewById(R.id.registerBtn);
+        mLoginBtn = findViewById(R.id.loginTextView);
+        fAuth = FirebaseAuth.getInstance();
 
-        database=FirebaseDatabase.getInstance();
-        mDatabase=database.getReference().child(USER);
+        database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference().child(USER);
 
         if(fAuth.getCurrentUser() !=null){
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -75,7 +75,7 @@ public class Register extends AppCompatActivity{
             public void onClick(View view) {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
-                String fullName=mFullName.getText().toString().trim();
+                fullName = mFullName.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Email is Recuired.");
@@ -146,12 +146,12 @@ public class Register extends AppCompatActivity{
         });
     }
     public void updateUI(FirebaseUser currentUser){
-        DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child(USER);
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child(currentUser.getUid());
         Log.d("TAG","currentUser=========="+currentUser);
         String keyId=currentUser.getUid();
         Log.d("TAG","keyId=========="+keyId);
         String in="0";
-        ref.child(keyId).child("Inventory").setValue(in);
+        ref.child("userName").setValue(fullName);
 //        ref.child(keyId).child("Details").setValue(currentUser);
     }
 

@@ -1,6 +1,5 @@
 package com.dvora.finalproject.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,16 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dvora.finalproject.R;
-import com.dvora.finalproject.RecipeRepository;
+import com.dvora.finalproject.Repository;
 import com.dvora.finalproject.entities.Ingredient;
 
 
@@ -31,7 +27,7 @@ public class AddIngredient extends Fragment {
     private EditText amount;
     private Button buttonSave;
     private String[] types = {"gr","ml","psc"};
-    private RecipeRepository repo = new RecipeRepository();
+    private Repository repo = new Repository();
 
 
     @Override
@@ -69,7 +65,7 @@ public class AddIngredient extends Fragment {
                 String Name = name.getText().toString().trim();
                 String Amount = amount.getText().toString().trim();
                 Ingredient ingredient = new Ingredient(Name,Double.parseDouble(Amount), null,type);
-                repo.saveNewIngredient(ingredient, new RecipeRepository.OnAddNewIngredientListener() {
+                repo.saveNewIngredient(ingredient, new Repository.OnAddNewIngredientListener() {
                     @Override
                     public void onSuccess(String message) {
                         Log.d("saveNewIng::Succeed",message);
