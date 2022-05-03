@@ -1,0 +1,104 @@
+com/dvora/finalproject/entities/Ingredient.java
+ com.dvora.finalproject.entities.Ingredient
+com/dvora/finalproject/AddRecipeFragment.java
+ com.dvora.finalproject.AddRecipeFragment
+ com.dvora.finalproject.AddRecipeFragment$1
+ com.dvora.finalproject.AddRecipeFragment$2
+ com.dvora.finalproject.AddRecipeFragment$3
+ com.dvora.finalproject.AddRecipeFragment$3$1
+ com.dvora.finalproject.AddRecipeFragment$3$1$1
+ com.dvora.finalproject.AddRecipeFragment$4
+ com.dvora.finalproject.AddRecipeFragment$4$1
+com/dvora/finalproject/entities/User.java
+ com.dvora.finalproject.entities.User
+com/dvora/finalproject/Repository.java
+ com.dvora.finalproject.Repository
+ com.dvora.finalproject.Repository$1
+ com.dvora.finalproject.Repository$10
+ com.dvora.finalproject.Repository$11
+ com.dvora.finalproject.Repository$12
+ com.dvora.finalproject.Repository$13
+ com.dvora.finalproject.Repository$14
+ com.dvora.finalproject.Repository$15
+ com.dvora.finalproject.Repository$2
+ com.dvora.finalproject.Repository$3
+ com.dvora.finalproject.Repository$3$1
+ com.dvora.finalproject.Repository$3$2
+ com.dvora.finalproject.Repository$4
+ com.dvora.finalproject.Repository$5
+ com.dvora.finalproject.Repository$6
+ com.dvora.finalproject.Repository$7
+ com.dvora.finalproject.Repository$8
+ com.dvora.finalproject.Repository$9
+ com.dvora.finalproject.Repository$OnAddNewIngredientListener
+ com.dvora.finalproject.Repository$OnAddNewRecipeListener
+ com.dvora.finalproject.Repository$OnSearchAllIngredients
+ com.dvora.finalproject.Repository$OnSearchAllRecipes
+ com.dvora.finalproject.Repository$OnSearchRecipesByIngredient
+ com.dvora.finalproject.Repository$OnSearchShoppingList
+com/dvora/finalproject/activities/MainActivity.java
+ com.dvora.finalproject.activities.MainActivity
+com/dvora/finalproject/fragments/ListShoppingFragment.java
+ com.dvora.finalproject.fragments.ListShoppingFragment
+ com.dvora.finalproject.fragments.ListShoppingFragment$1
+ com.dvora.finalproject.fragments.ListShoppingFragment$2
+com/dvora/finalproject/RecipeAdapter.java
+ com.dvora.finalproject.RecipeAdapter
+ com.dvora.finalproject.RecipeAdapter$1
+ com.dvora.finalproject.RecipeAdapter$2
+com/dvora/finalproject/FirebaseManager.java
+ com.dvora.finalproject.FirebaseManager
+com/dvora/finalproject/Login.java
+ com.dvora.finalproject.Login
+ com.dvora.finalproject.Login$1
+ com.dvora.finalproject.Login$1$1
+ com.dvora.finalproject.Login$2
+ com.dvora.finalproject.Login$3
+ com.dvora.finalproject.Login$3$1
+ com.dvora.finalproject.Login$3$1$1
+ com.dvora.finalproject.Login$3$1$2
+ com.dvora.finalproject.Login$3$2
+com/dvora/finalproject/ICallbackAdapter.java
+ com.dvora.finalproject.ICallbackAdapter
+com/dvora/finalproject/fragments/ItemDetailsFragment.java
+ com.dvora.finalproject.fragments.ItemDetailsFragment
+ com.dvora.finalproject.fragments.ItemDetailsFragment$1
+com/dvora/finalproject/entities/Recipe.java
+ com.dvora.finalproject.entities.Recipe
+com/dvora/finalproject/ProfileFragment.java
+ com.dvora.finalproject.ProfileFragment
+com/dvora/finalproject/entities/IngredientInfo.java
+ com.dvora.finalproject.entities.IngredientInfo
+com/dvora/finalproject/ListRecipesFragment.java
+ com.dvora.finalproject.ListRecipesFragment
+ com.dvora.finalproject.ListRecipesFragment$1
+ com.dvora.finalproject.ListRecipesFragment$1$1
+ com.dvora.finalproject.ListRecipesFragment$1$2
+ com.dvora.finalproject.ListRecipesFragment$2
+com/dvora/finalproject/fragments/AddIngredient.java
+ com.dvora.finalproject.fragments.AddIngredient
+ com.dvora.finalproject.fragments.AddIngredient$1
+ com.dvora.finalproject.fragments.AddIngredient$2
+ com.dvora.finalproject.fragments.AddIngredient$2$1
+com/dvora/finalproject/Register.java
+ com.dvora.finalproject.Register
+ com.dvora.finalproject.Register$1
+ com.dvora.finalproject.Register$1$1
+ com.dvora.finalproject.Register$1$1$1
+ com.dvora.finalproject.Register$1$1$2
+ com.dvora.finalproject.Register$2
+com/dvora/finalproject/fragments/DialogIng.java
+ com.dvora.finalproject.fragments.DialogIng
+ com.dvora.finalproject.fragments.DialogIng$1
+ com.dvora.finalproject.fragments.DialogIng$1$1
+ com.dvora.finalproject.fragments.DialogIng$2
+ com.dvora.finalproject.fragments.DialogIng$OnInputSelected
+com/dvora/finalproject/BuildConfig.java
+ com.dvora.finalproject.BuildConfig
+com/dvora/finalproject/fragments/InventoryFragment.java
+ com.dvora.finalproject.fragments.InventoryFragment
+ com.dvora.finalproject.fragments.InventoryFragment$1
+ com.dvora.finalproject.fragments.InventoryFragment$2
+ com.dvora.finalproject.fragments.InventoryFragment$3
+com/dvora/finalproject/IngAdapter.java
+ com.dvora.finalproject.IngAdapter

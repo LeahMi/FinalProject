@@ -1,46 +1,35 @@
 package com.dvora.finalproject.fragments;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.dvora.finalproject.AddRecipeFragment;
 import com.dvora.finalproject.IngAdapter;
 import com.dvora.finalproject.R;
-import com.dvora.finalproject.RecipeRepository;
-import com.dvora.finalproject.activities.MainActivity;
+import com.dvora.finalproject.Repository;
 import com.dvora.finalproject.entities.Ingredient;
-import com.dvora.finalproject.entities.IngredientInfo;
-import com.dvora.finalproject.entities.Recipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryFragment extends Fragment {
     private AutoCompleteTextView textIn;
     private ListView list;
     private Button buttonAdd;
+    private Button ListShopping;
     private ArrayAdapter<String> arrayAdapter;
     String[] nameList = {};
 
-    private RecipeRepository repo = new RecipeRepository();
+    private Repository repo = new Repository();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +41,7 @@ public class InventoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_inventory, container, false);
-        repo.getAllIngredients(new RecipeRepository.OnSearchAllIngredients() {
+        repo.getAllIngredients(new Repository.OnSearchAllIngredients() {
             public void onIngredientsFound(List<Ingredient> matches){
                 Toast.makeText(getContext(),matches.size() + " Ingredients Found!",Toast.LENGTH_SHORT).show();
                 list= v.findViewById(R.id.mainlistinventory_listv);
@@ -84,6 +73,14 @@ public class InventoryFragment extends Fragment {
         });
         //ScrollView InventoryScroll = (ScrollView) v.findViewById(R.id.InventoryScroll);
         // textIn = v.findViewById(R.id.textin);
+        ListShopping=v.findViewById(R.id.btn_list_shopping);
+        ListShopping.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showFragment(new ListShoppingFragment());
+            }
+        });
+
         buttonAdd=v.findViewById(R.id.btn_Add_ing);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override

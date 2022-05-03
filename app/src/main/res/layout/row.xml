@@ -22,5 +22,11 @@
         android:id="@+id/textout2"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/remove"/>
+        android:layout_toLeftOf="@id/textout3"/>
+
+    <TextView
+        android:id="@+id/textout3"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/remove" />
 </RelativeLayout>

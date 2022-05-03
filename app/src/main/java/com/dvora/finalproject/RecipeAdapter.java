@@ -17,7 +17,7 @@ import com.dvora.finalproject.entities.Recipe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactAdapter extends BaseAdapter implements Filterable {
+public class RecipeAdapter extends BaseAdapter implements Filterable {
 
     private final List<Recipe> data;
     private final List<Recipe> exampleList;
@@ -25,7 +25,7 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
     private final ICallbackAdapter iCallbackAdapter;
     private final List<String>filteredData = null;
 
-    public ContactAdapter(List<Recipe> data, Context context, ICallbackAdapter callbackAdapter) {
+    public RecipeAdapter(List<Recipe> data, Context context, ICallbackAdapter callbackAdapter) {
         this.data = data;
         this.exampleList = new ArrayList<>(data);
         this.inflater = LayoutInflater.from(context);
@@ -60,8 +60,10 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
 
         final Recipe recipeRow = data.get(pos);
         TextView tv = ROW.findViewById(R.id.mainlistrow_text_v);
+        TextView tv2 = ROW.findViewById(R.id.mainlistrow_text_v2);
         ImageView imageViewProfile = ROW.findViewById(R.id.img_profile);
-        tv.setText(recipeRow.getNameRecipe() + "\n" + recipeRow.getCategory());
+        tv.setText(recipeRow.getNameRecipe());
+        tv2.setText(recipeRow.getCategory());
         imageViewProfile.setImageResource(R.drawable.image_recipe);
 
         ROW.setOnClickListener(new View.OnClickListener() {

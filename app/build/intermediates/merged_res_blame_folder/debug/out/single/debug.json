@@ -1,0 +1,346 @@
+[
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_add_ingredient.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\layout\\fragment_add_ingredient.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_inventory.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\layout\\fragment_inventory.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-mdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_note_add.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\note_add.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ic_baseline_local_grocery_store.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\ic_baseline_local_grocery_store.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_profile.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxxhdpi\\profile.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21_ic_baseline_note_add_24.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v21\\ic_baseline_note_add_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21_profile.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v21\\profile.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_baseline_menu_book.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-hdpi\\ic_baseline_menu_book.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_baseline_note_add_24.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\ic_baseline_note_add_24.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-mdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_baseline_menu_book.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\ic_baseline_menu_book.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21_note_add.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v21\\note_add.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_note_add.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\note_add.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ic_baseline_menu_book.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\ic_baseline_menu_book.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_baseline_local_grocery_store.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xhdpi\\ic_baseline_local_grocery_store.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21_back.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v21\\back.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_login.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_baseline_note_add_24.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-hdpi\\ic_baseline_note_add_24.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_item_details.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\layout\\fragment_item_details.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_dialog_ing.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\layout\\fragment_dialog_ing.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_ic_baseline_menu_book.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxxhdpi\\ic_baseline_menu_book.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_back.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\back.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_baseline_local_grocery_store.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-hdpi\\ic_baseline_local_grocery_store.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_baseline_local_grocery_store.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\ic_baseline_local_grocery_store.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_ic_baseline_note_add_24.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxxhdpi\\ic_baseline_note_add_24.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_note_add.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-hdpi\\note_add.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_ic_baseline_local_grocery_store.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxxhdpi\\ic_baseline_local_grocery_store.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_profile.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xhdpi\\profile.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\layout_inventory_list_row.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\layout\\inventory_list_row.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_baseline_note_add_24.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xhdpi\\ic_baseline_note_add_24.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21_ic_baseline_local_grocery_store.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v21\\ic_baseline_local_grocery_store.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_note_add.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxxhdpi\\note_add.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-hdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable_image_recipe.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\drawable\\image_recipe.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_profile.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-hdpi\\profile.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_back.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\back.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxxhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21_ic_baseline_menu_book.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v21\\ic_baseline_menu_book.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_ing_adapter.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\layout\\fragment_ing_adapter.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_back.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-hdpi\\back.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_back.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxxhdpi\\back.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_baseline_menu_book.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xhdpi\\ic_baseline_menu_book.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\menu_bottom_menu.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\menu\\bottom_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-hdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_profile.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\profile.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_note_add.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xhdpi\\note_add.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_profile.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\profile.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_baseline_local_grocery_store.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-mdpi\\ic_baseline_local_grocery_store.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_list_shopping.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\layout\\fragment_list_shopping.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_back.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-mdpi\\back.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_register.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\layout\\activity_register.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\layout_row.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\layout\\row.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ic_baseline_note_add_24.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\ic_baseline_note_add_24.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\navigation_mobile_navigation.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\navigation\\mobile_navigation.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_profile.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\layout\\fragment_profile.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xhdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_note_add.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-mdpi\\note_add.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\layout_main_list_row.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\layout\\main_list_row.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_profile.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-mdpi\\profile.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_baseline_note_add_24.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-mdpi\\ic_baseline_note_add_24.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v24\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_back.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xhdpi\\back.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_list_recipes.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\layout\\fragment_list_recipes.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_add_recipe.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\layout\\fragment_add_recipe.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxxhdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v21\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_baseline_menu_book.png.flat",
+        "source": "C:\\Users\\student\\Desktop\\FinalProject\\app\\build\\generated\\res\\pngs\\debug\\drawable-mdpi\\ic_baseline_menu_book.png"
+    }
+]

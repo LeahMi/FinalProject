@@ -28,6 +28,11 @@
         android:layout_marginRight="11dp"
         android:hint="amount" />
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="251dp"
+        android:layout_height="wrap_content" />
+
     <Button
         android:id="@+id/button_Save_Ing"
         android:layout_width="match_parent"
