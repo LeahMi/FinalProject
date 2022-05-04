@@ -70,7 +70,6 @@ public class Repository {
 //                            System.out.println("No Recipes Found!");
 //                            listener.onNoRecipesFound1("No recipes found");
 //                        }else {
-//
 //                        }
 //                });
 //    }
@@ -344,15 +343,18 @@ public class Repository {
         });
 
     }
-    public void getProfile(OnSearchProfile listener){
+    public void getProfile(OnSearchProfile listener) {
         ref.child("userName").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    String FullName= dataSnapshot.getValue().toString();
+                if (dataSnapshot.exists()) {
+                    String FullName = dataSnapshot.getValue().toString();
                     listener.onSuccess(FullName);
 
                 }
+            }
+        });
+    }
 
     public int getPercent(Recipe recipe, List<Ingredient> listInventory) {
 
