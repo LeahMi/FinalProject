@@ -114,11 +114,6 @@
                 android:text="SAVE"
                 app:backgroundTint="#009688"></Button>
 
-            <Button
-                android:id="@+id/open_dialog"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button" />
             <!--            </ScrollView>-->
         </LinearLayout>
 

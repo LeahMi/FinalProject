@@ -42,23 +42,19 @@ public class InventoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_inventory, container, false);
         repo.getAllIngredients(new Repository.OnSearchAllIngredients() {
-            public void onIngredientsFound(List<Ingredient> matches){
-                Toast.makeText(getContext(),matches.size() + " Ingredients Found!",Toast.LENGTH_SHORT).show();
-                list= v.findViewById(R.id.mainlistinventory_listv);
-                int i=0;
-                nameList=new String[matches.size()];
-                for (Ingredient ingredient:matches) {
-                    nameList[i]=ingredient.getName();
+            public void onIngredientsFound(List<Ingredient> matches) {
+                Toast.makeText(getContext(), matches.size() + " Ingredients Found!", Toast.LENGTH_SHORT).show();
+                list = v.findViewById(R.id.mainlistinventory_listv);
+                int i = 0;
+                nameList = new String[matches.size()];
+                for (Ingredient ingredient : matches) {
+                    nameList[i] = ingredient.getName();
                     ++i;
                 }
                 //  arrayAdapter= new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,android.R.id.text1,nameList);
-                IngAdapter adapter= new IngAdapter(matches, getContext());
+                IngAdapter adapter = new IngAdapter(matches, getContext());
                 list.setAdapter(adapter);
             }
-            // @Override
-//            public void onIngredientsFound(List <Ingredient>) {
-//
-//            }
 
             @Override
             public void onNoIngredientsFound(String message) {

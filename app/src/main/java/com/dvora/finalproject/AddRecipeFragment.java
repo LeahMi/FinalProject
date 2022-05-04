@@ -148,44 +148,47 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
                 repo.isExistIngredient(ing, new Repository.OnAddNewIngredientListener() {
                     @Override
                     public void onSuccess(String message) {
-                        if(message=="false"){
-                            // Create and show the dialog.
+                        if(message=="true"){
+                            final View addView = layoutInflater.inflate(R.layout.row, null);
+                            TextView textOut = (TextView) addView.findViewById(R.id.textout);
+                            TextView textOut2 = (TextView) addView.findViewById(R.id.textout2);
+                            TextView textOutType = (TextView) addView.findViewById(R.id.textout3);
+                            textOut.setText(textIn.getText().toString());
+                            textOut2.setText(quantity.getText().toString());
+                            textOutType.setText(type);
+
+                            ingr = new IngredientInfo(ing, Double.parseDouble(qua),type);
+                            allIngredients.add(ingr);
+                            textIn.setText("");
+                            quantity.setText("");
+                            Button buttonRemove = (Button) addView.findViewById(R.id.remove);
+                            buttonRemove.setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View v) {
+                                    ((LinearLayout) addView.getParent()).removeView(addView);
+                                    for (int i = 0; i < allIngredients.size(); ++i) {
+                                        if (allIngredients.get(i).getName().equals(textOut.getText().toString()))
+                                            allIngredients.remove(i);
+                                    }
+                                }
+                            });
+
+                            container2.addView(addView);
+                        }
+                        else{
                             DialogIng dialog = new DialogIng();
                             dialog.setTargetFragment(AddRecipeFragment.this, 1);
                             dialog.show(getFragmentManager(), "DialogIng");
                             Log.d("O","_________  "+dialog.getNameIng());
-                            addToArray(dialog.getNameIng());
                         }
                     }
 
                     @Override
                     public void onFailure(Exception e) {
-                        final View addView = layoutInflater.inflate(R.layout.row, null);
-                        TextView textOut = (TextView) addView.findViewById(R.id.textout);
-                        TextView textOut2 = (TextView) addView.findViewById(R.id.textout2);
-                        TextView textOutType = (TextView) addView.findViewById(R.id.textout3);
-                        textOut.setText(textIn.getText().toString());
-                        textOut2.setText(quantity.getText().toString());
-                        textOutType.setText(type);
+                        // Create and show the dialog.
 
-                        ingr = new IngredientInfo(ing, Double.parseDouble(qua),type);
-                        allIngredients.add(ingr);
-                        textIn.setText("");
-                        quantity.setText("");
-                        Button buttonRemove = (Button) addView.findViewById(R.id.remove);
-                        buttonRemove.setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-                                ((LinearLayout) addView.getParent()).removeView(addView);
-                                for (int i = 0; i < allIngredients.size(); ++i) {
-                                    if (allIngredients.get(i).getName().equals(textOut.getText().toString()))
-                                        allIngredients.remove(i);
-                                }
-                            }
-                        });
-
-                        container2.addView(addView);
+                        //addToArray(dialog.getNameIng());
                     }
                 });
 
@@ -277,6 +280,7 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
     }
 
     public void addToArray(String newIng){
+        Log.d("addToArray", "addToArray");
         if(myListIng!=null) {
             myListIng = Arrays.copyOf(myListIng, myListIng.length + 1);
             myListIng[myListIng.length - 1] = newIng;
@@ -287,7 +291,11 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
     @Override
     public void sendInput(String input) {
         Log.d("DDDialog", "sendInput: found incoming input: " + input);
-
+        if(myListIng!=null) {
+            myListIng = Arrays.copyOf(myListIng, myListIng.length + 1);
+            myListIng[myListIng.length - 1] = input;
+            textIn.setAdapter(new ArrayAdapter<>(AddRecipeFragment.this.getContext(), android.R.layout.simple_list_item_1, myListIng));
+        }
         mInputDisplay.setText(input);
     }
 }

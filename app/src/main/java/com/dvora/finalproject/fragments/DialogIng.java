@@ -24,11 +24,10 @@ public class DialogIng extends DialogFragment {
 
     public static final String TAG = "MyCustomDialog";
 
+
     public interface OnInputSelected {
         void sendInput(String input);
     }
-
-    public OnInputSelected mOnInputSelected;
 
     //widgets
     private EditText mInput;
@@ -41,6 +40,7 @@ public class DialogIng extends DialogFragment {
     private String Type;
     private Ingredient ingredient;
     private TextView mActionOk, mActionCancel;
+
 
     @NonNull
     @Override
@@ -74,6 +74,7 @@ public class DialogIng extends DialogFragment {
                     @Override
                     public void onSuccess(String message) {
                         Log.d("saveNewIng::Succeed",message);
+                        //mOnInputSelected.sendInput(Name);
                         Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
                     }
 

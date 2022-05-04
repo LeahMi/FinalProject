@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.dvora.finalproject.entities.Ingredient;
+import com.dvora.finalproject.entities.IngredientInfo;
 import com.dvora.finalproject.entities.Recipe;
 
 import java.util.ArrayList;
@@ -19,11 +21,13 @@ import java.util.List;
 
 public class RecipeAdapter extends BaseAdapter implements Filterable {
 
+    private int per =0;
     private final List<Recipe> data;
     private final List<Recipe> exampleList;
     private final LayoutInflater inflater;
     private final ICallbackAdapter iCallbackAdapter;
     private final List<String>filteredData = null;
+    private Repository repo = new Repository();
 
     public RecipeAdapter(List<Recipe> data, Context context, ICallbackAdapter callbackAdapter) {
         this.data = data;
@@ -31,7 +35,6 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
         this.inflater = LayoutInflater.from(context);
         this.iCallbackAdapter = callbackAdapter;
     }
-
 
     @Override
     public int getCount() {
@@ -61,9 +64,29 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
         final Recipe recipeRow = data.get(pos);
         TextView tv = ROW.findViewById(R.id.mainlistrow_text_v);
         TextView tv2 = ROW.findViewById(R.id.mainlistrow_text_v2);
+        TextView tv3 = ROW.findViewById(R.id.mainlistrow_text_v3);
         ImageView imageViewProfile = ROW.findViewById(R.id.img_profile);
         tv.setText(recipeRow.getNameRecipe());
         tv2.setText(recipeRow.getCategory());
+        repo.getAllIngredients(new Repository.OnSearchAllIngredients() {
+            @Override
+            public void onIngredientsFound(List<Ingredient> matches) {
+                per = repo.getPercent(recipeRow,matches);
+            }
+
+            @Override
+            public void onNoIngredientsFound(String message) {
+                per = 0;
+            }
+
+            @Override
+            public void onExceptionOccurred(Exception e) {
+
+            }
+        });
+
+        Log.d("Perrrrrr","Perrrrrr "+per);
+        tv3.setText(per+" %");
         imageViewProfile.setImageResource(R.drawable.image_recipe);
 
         ROW.setOnClickListener(new View.OnClickListener() {

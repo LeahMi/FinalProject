@@ -22,15 +22,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Repository {
+    private int per;
+    private int count = 0;
     public static final String RECIPES_PATH = "userRecipes";
     public static final String INGREDIENTS_PATH = "userIngredients";
     public DatabaseReference ref;
     public MutableLiveData<List<Recipe>> recipesData = new MutableLiveData<>();
     public MutableLiveData<Exception> exceptionsData = new MutableLiveData<>();
+
     public Repository() {
         FirebaseUser currentUser = FirebaseManager.currentUser;
-        String uid="";
-        if(currentUser==null)
+        String uid = "";
+        if (currentUser == null)
             uid = "admin";
         else
             uid = currentUser.getUid();
@@ -39,9 +42,9 @@ public class Repository {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Recipe> recipes = new ArrayList<>();
-                for(DataSnapshot child : snapshot.getChildren()) {
+                for (DataSnapshot child : snapshot.getChildren()) {
                     Recipe recipe = child.getValue(Recipe.class);
-                    if(recipe!=null)
+                    if (recipe != null)
                         recipes.add(recipe);
                 }
                 recipesData.postValue(recipes);
@@ -80,7 +83,7 @@ public class Repository {
                     @Override
                     public void onSuccess(DataSnapshot dataSnapshot) {
                         Ingredient match = null;
-                        for(DataSnapshot ingredientSnapShot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot ingredientSnapShot : dataSnapshot.getChildren()) {
                             String databaseIngredientName = (String) ingredientSnapShot.child("name").getValue();
                             if (databaseIngredientName == null)
                                 continue;
@@ -89,34 +92,34 @@ public class Repository {
                                 break;
                             }
                         }
-                        if(match==null) {
+                        if (match == null) {
                             System.out.println("No Recipes Found!");
                             listener.onNoRecipesFound("No recipes found for ingredient " + ingredientName);
-                        }else {
+                        } else {
                             Ingredient finalMatch = match;
                             ref.child(RECIPES_PATH)
                                     .get()
                                     .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                                         @Override
                                         public void onSuccess(DataSnapshot dataSnapshot) {
-                                            HashMap<String,Boolean> linkedRecipes = finalMatch.getLinkedRecipes();
+                                            HashMap<String, Boolean> linkedRecipes = finalMatch.getLinkedRecipes();
                                             List<Recipe> matches = new ArrayList<>();
-                                            for(DataSnapshot recipeSnapShot : dataSnapshot.getChildren()) {
-                                                String recipeName = (String)recipeSnapShot.child("nameRecipe").getValue();
-                                                if(recipeName==null)
+                                            for (DataSnapshot recipeSnapShot : dataSnapshot.getChildren()) {
+                                                String recipeName = (String) recipeSnapShot.child("nameRecipe").getValue();
+                                                if (recipeName == null)
                                                     continue;
-                                                if(linkedRecipes.get(recipeName) != null &&
+                                                if (linkedRecipes.get(recipeName) != null &&
                                                         linkedRecipes.get(recipeName)) {
                                                     Recipe match = recipeSnapShot.getValue(Recipe.class);
-                                                    if(match ==null)
+                                                    if (match == null)
                                                         continue;
 
                                                     matches.add(match);
                                                 }
                                             }
-                                            if(matches.isEmpty()) {
+                                            if (matches.isEmpty()) {
                                                 listener.onNoRecipesFound("No Recipes for ingredient " + ingredientName);
-                                            }else {
+                                            } else {
                                                 listener.onRecipesFound(matches);
                                             }
                                         }
@@ -138,7 +141,7 @@ public class Repository {
                 });
     }
 
-    public void getAllRecipes(OnSearchAllRecipes listener){
+    public void getAllRecipes(OnSearchAllRecipes listener) {
         ref.child(RECIPES_PATH)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -146,35 +149,37 @@ public class Repository {
                     public void onSuccess(DataSnapshot dataSnapshot) {
                         Recipe match = null;
                         List<Recipe> matches = new ArrayList<>();
-                        for (DataSnapshot recipeSnapShot: dataSnapshot.getChildren()){
-                            match=recipeSnapShot.getValue(Recipe.class);
-                            if(match ==null)
+                        for (DataSnapshot recipeSnapShot : dataSnapshot.getChildren()) {
+                            match = recipeSnapShot.getValue(Recipe.class);
+                            if (match == null)
                                 continue;
                             matches.add(match);
-                            Log.d("TAG","match==============="+match);
+                            Log.d("TAG", "match===============" + match);
                         }
-                        if(matches.isEmpty()) {
+                        if (matches.isEmpty()) {
                             listener.onNoRecipesFound("No Recipes found");
-                        }else {
+                        } else {
                             listener.onRecipesFound(matches);
                         }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onFailure(@NonNull Exception e) { listener.onExceptionOccurred(e); }
+                    public void onFailure(@NonNull Exception e) {
+                        listener.onExceptionOccurred(e);
+                    }
                 });
     }
-    public void isExistIngredient(String name,OnAddNewIngredientListener listener){
+
+    public void isExistIngredient(String name, OnAddNewIngredientListener listener) {
         DatabaseReference existingIngredient = ref.child(INGREDIENTS_PATH).child(name);
         existingIngredient.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists()) {
-                    listener.onSuccess("false");
-                }
+                if(dataSnapshot.exists())
+                    listener.onSuccess("true");
                 else{
-                    listener.onFailure(new Exception("true"));
+                    listener.onSuccess("false");
                 }
             }
 
@@ -185,7 +190,8 @@ public class Repository {
             }
         });
     }
-    public void getAllIngredients(OnSearchAllIngredients listener){
+
+    public void getAllIngredients(OnSearchAllIngredients listener) {
         ref.child(INGREDIENTS_PATH)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -193,73 +199,89 @@ public class Repository {
                     public void onSuccess(DataSnapshot dataSnapshot) {
                         Ingredient match = null;
                         List<Ingredient> matches = new ArrayList<>();
-                        for (DataSnapshot ingredientSnapShot: dataSnapshot.getChildren()){
-                            match=ingredientSnapShot.getValue(Ingredient.class);
-                            if(match ==null)
+                        for (DataSnapshot ingredientSnapShot : dataSnapshot.getChildren()) {
+                            match = ingredientSnapShot.getValue(Ingredient.class);
+                            if (match == null)
                                 continue;
                             matches.add(match);
-                            Log.d("TAG","match==============="+match);
+                            Log.d("TAG", "match===============" + match);
                         }
                         //String[] listIngredients = new String[matches.size()];
 //                        for (int i=0; i<matches.size(); ++i){
 //                            listIngredients[i]= matches.get(i).getName();
 //                        }
-                        if(matches.isEmpty()) {
+                        if (matches.isEmpty()) {
                             listener.onNoIngredientsFound("No Ingredients found");
-                        }else {
+                        } else {
                             listener.onIngredientsFound(matches);
                         }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onFailure(@NonNull Exception e) { listener.onExceptionOccurred(e); }
+                    public void onFailure(@NonNull Exception e) {
+                        listener.onExceptionOccurred(e);
+                    }
                 });
     }
 
-    public interface OnSearchAllIngredients{
+    public interface OnSearchAllIngredients {
         void onIngredientsFound(List<Ingredient> matches);
+
         void onNoIngredientsFound(String message);
+
         void onExceptionOccurred(Exception e);
     }
 
-    interface OnSearchAllRecipes{
+    interface OnSearchAllRecipes {
         void onRecipesFound(List<Recipe> matches);
+
         void onNoRecipesFound(String message);
+
         void onExceptionOccurred(Exception e);
     }
 
     interface OnSearchRecipesByIngredient {
         void onRecipesFound(List<Recipe> matches);
+
         void onNoRecipesFound(String message);
+
         void onExceptionOcured(Exception e);
     }
+
     public interface OnAddNewRecipeListener {
         void onSuccess(String message);
+
         void onFailure(Exception e);
     }
-    public interface OnAddNewIngredientListener{
+
+    public interface OnAddNewIngredientListener {
         void onSuccess(String message);
+
         void onFailure(Exception e);
     }
-    public interface OnSearchShoppingList{
+
+    public interface OnSearchShoppingList {
         void onSuccess(String message);
+
         void onFailure(Exception e);
     }
-    public void SaveListShopping(String listS){
+
+    public void SaveListShopping(String listS) {
 
         ref.child("ShoppingList").setValue(listS);
     }
-    public void getList(OnSearchShoppingList listener)
-    {
-        ref.child("ShoppingList").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>(){
+
+    public void getList(OnSearchShoppingList listener) {
+        ref.child("ShoppingList").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             public void onSuccess(DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.exists()) {
-                    String data=dataSnapshot.getValue().toString();
+                if (dataSnapshot.exists()) {
+                    String data = dataSnapshot.getValue().toString();
                     listener.onSuccess(data);
+                } else {
+                    listener.onSuccess("Enter your Shopping List");
                 }
-                else {listener.onSuccess("Enter your Shopping List");}
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -270,17 +292,16 @@ public class Repository {
 
     }
 
-    public  void saveNewIngredient(Ingredient ingredient,OnAddNewIngredientListener listener){
+    public void saveNewIngredient(Ingredient ingredient, OnAddNewIngredientListener listener) {
         DatabaseReference existingIngredient = ref.child(INGREDIENTS_PATH).child(ingredient.getName());
         existingIngredient.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists()) {
+                if (!dataSnapshot.exists()) {
                     ref.child(INGREDIENTS_PATH).child(ingredient.getName()).setValue(ingredient);
-                    listener.onSuccess("the ingredient "+ ingredient.getName() + " added");
-                }
-                else{
-                    listener.onFailure(new Exception("the ingredient "+ingredient.getName()+" is exist"));
+                    listener.onSuccess("the ingredient " + ingredient.getName() + " added");
+                } else {
+                    listener.onFailure(new Exception("the ingredient " + ingredient.getName() + " is exist"));
                 }
             }
 
@@ -293,9 +314,10 @@ public class Repository {
 
 
     }
+
     public void saveNewRecipe(Recipe recipe, OnAddNewRecipeListener listener) {
         List<IngredientInfo> ingredients = recipe.getIngredients();
-        for(IngredientInfo ing : ingredients) {
+        for (IngredientInfo ing : ingredients) {
             DatabaseReference existingIngredient = ref.child(INGREDIENTS_PATH).child(ing.getName());
             existingIngredient
                     .get()
@@ -303,12 +325,12 @@ public class Repository {
                         @Override
                         public void onSuccess(DataSnapshot dataSnapshot) {
 
-                            if(dataSnapshot.exists()) {
+                            if (dataSnapshot.exists()) {
                                 dataSnapshot.child("linkedRecipes")
                                         .child(recipe.getNameRecipe())
                                         .getRef()
                                         .setValue(true);
-                            }else {
+                            } else {
                                 Ingredient ingredient = ing.getNewIngredientWithLink(recipe.getNameRecipe());
                                 ingredient.setQuantity(0);
                                 ref.child(INGREDIENTS_PATH)
@@ -330,6 +352,30 @@ public class Repository {
                 .addOnFailureListener(e -> listener.onFailure(e));
     }
 
+    public int getPercent(Recipe recipe, List<Ingredient> listInventory) {
+
+        List<IngredientInfo> listRecipe = recipe.getIngredients();
+        int numOfIngredients = listRecipe.size();
+        for (IngredientInfo ingredient : listRecipe) {
+            isExistIngredient(ingredient.getName(), new OnAddNewIngredientListener() {
+                @Override
+                public void onSuccess(String message) {
+                    if(message == "true") {
+                        count++;
+                        Log.d("count", "ingredient.getName() " + ingredient.getName());
+                        Log.d("count", "countttttttt " + count);
+                    }
+                }
+                @Override
+                public void onFailure(Exception e) {
+
+                }
+            });
+        }
+        per = (count / numOfIngredients) * 100;
+        Log.d("Perrrrrr","Perrrrrr Repository "+per);
+        return per;
+    }
     public MutableLiveData<Exception> getExceptionsData() {
         return exceptionsData;
     }
