@@ -14,9 +14,9 @@
     android:paddingBottom="0dp">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Recipe"
+        android:text="הוספת מתכון"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -33,24 +33,24 @@
 
             <EditText
                 android:id="@+id/name"
-                android:layout_width="250dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="11dp"
-                android:hint="Name" />
+                android:hint="שם" />
 
             <EditText
                 android:id="@+id/category"
-                android:layout_width="250dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="11dp"
-                android:hint="Category" />
+                android:hint="קטגוריה" />
 
             <EditText
                 android:id="@+id/time"
-                android:layout_width="250dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="11dp"
-                android:hint="Time" />
+                android:hint="זמן הכנה" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                     android:layout_width="65dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:text="Add"
+                    android:text="הוסף"
                     app:backgroundTint="#009688" />
 
 
@@ -73,7 +73,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginRight="33dp"
                     android:layout_toLeftOf="@id/quantity"
-                    android:hint="Ingredient" />
+                    android:hint="מרכיב" />
 
                 <EditText
                     android:id="@+id/quantity"
@@ -81,7 +81,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="12dp"
                     android:layout_toLeftOf="@id/spinner2"
-                    android:hint="quantity" />
+                    android:hint="כמות" />
 
                 <Spinner
                     android:id="@+id/spinner2"
@@ -90,10 +90,8 @@
                     android:layout_marginEnd="4dp"
                     android:layout_toStartOf="@+id/add" />
             </RelativeLayout>
-            <!--            <ScrollView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:id="@+id/scrollView">-->
+
+
             <LinearLayout
                 android:id="@+id/container"
                 android:layout_width="match_parent"
@@ -102,19 +100,19 @@
 
             <EditText
                 android:id="@+id/prep"
-                android:layout_width="250dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="11dp"
-                android:hint="preparation method" />
+                android:hint="אופן ההכנה" />
 
             <Button
                 android:id="@+id/saveBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SAVE"
+                android:text="שמור"
                 app:backgroundTint="#009688"></Button>
 
-            <!--            </ScrollView>-->
+
         </LinearLayout>
 
     </ScrollView>

@@ -34,7 +34,7 @@
         android:id="@+id/btn_Add_ing"
         android:layout_width="95dp"
         android:layout_height="34dp"
-        android:text="Button"
+        android:text="הוספה למלאי"
         tools:layout_editor_absoluteX="159dp"
         tools:layout_editor_absoluteY="528dp" />
 

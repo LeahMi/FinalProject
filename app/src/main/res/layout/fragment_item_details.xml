@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Recipe Details "
+        android:text="פרטי המתכון: "
         android:textSize="30sp" />
 
     <ImageView
@@ -47,15 +47,15 @@
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Category:"
+                    android:text="קטגוריה: "
                     android:textSize="30sp" />
 
                 <EditText
                     android:id="@+id/edt_category"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:enabled="false"
+                    android:enabled="true"
                     android:inputType="textPersonName"
                     android:textSize="30sp" />
 
@@ -71,13 +71,14 @@
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name:"
+                    android:text="שם: "
                     android:textSize="30sp" />
 
                 <EditText
                     android:id="@+id/edt_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="361dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="left"
                     android:ems="10"
                     android:enabled="false"
                     android:inputType="textPersonName"
@@ -93,9 +94,9 @@
 
                 <TextView
                     android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="171dp"
                     android:layout_height="wrap_content"
-                    android:text="Preparation Time"
+                    android:text="זמן הכנה: "
                     android:textSize="30sp" />
 
                 <EditText
@@ -116,9 +117,9 @@
 
                 <TextView
                     android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ingredients:"
+                    android:text="מרכיבים: "
                     android:textSize="30sp" />
 
                 <EditText
@@ -138,9 +139,9 @@
 
                 <TextView
                     android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
+                    android:layout_width="400dp"
                     android:layout_height="wrap_content"
-                    android:text="Preparation Method:"
+                    android:text="אופן ההכנה: "
                     android:textSize="30sp" />
 
                 <EditText

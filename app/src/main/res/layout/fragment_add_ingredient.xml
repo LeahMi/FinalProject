@@ -7,36 +7,36 @@
     android:orientation="vertical">
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="396dp"
         android:layout_height="wrap_content"
-        android:text="Add Ingredient"
+        android:text="הוספת מרכיב"
         android:textAlignment="center"
         android:textSize="24sp" />
 
 
-        <EditText
+    <EditText
         android:id="@+id/nameIngredient"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="11dp"
-        android:hint="Name" />
+        android:hint="שם" />
 
     <EditText
         android:id="@+id/amount"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="11dp"
-        android:hint="amount" />
+        android:hint="כמות" />
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="251dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/button_Save_Ing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="הוסף" />
 
 </LinearLayout>
