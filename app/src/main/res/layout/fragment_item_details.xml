@@ -8,16 +8,6 @@
     tools:context=".fragments.ItemDetailsFragment">
 
 
-<!--    <ScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical" />-->
-<!--    </ScrollView>-->
-
     <TextView
         android:id="@+id/txtHeader"
         android:layout_width="wrap_content"
