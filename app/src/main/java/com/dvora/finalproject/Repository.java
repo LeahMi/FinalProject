@@ -180,10 +180,7 @@ public class RecipeRepository {
                             matches.add(match);
                             Log.d("TAG","match==============="+match);
                         }
-                        //String[] listIngredients = new String[matches.size()];
-//                        for (int i=0; i<matches.size(); ++i){
-//                            listIngredients[i]= matches.get(i).getName();
-//                        }
+
                         if(matches.isEmpty()) {
                             listener.onNoIngredientsFound("No Ingredients found");
                         }else {
