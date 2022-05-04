@@ -21,13 +21,13 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RecipeRepository {
+public class Repository {
     public static final String RECIPES_PATH = "userRecipes";
     public static final String INGREDIENTS_PATH = "userIngredients";
     public DatabaseReference ref;
     public MutableLiveData<List<Recipe>> recipesData = new MutableLiveData<>();
     public MutableLiveData<Exception> exceptionsData = new MutableLiveData<>();
-    public RecipeRepository() {
+    public Repository() {
         FirebaseUser currentUser = FirebaseManager.currentUser;
         String uid="";
         if(currentUser==null)
@@ -225,6 +225,11 @@ public class RecipeRepository {
         void onFailure(Exception e);
     }
 
+    public interface OnSearchProfile{
+        void onSuccess(String message);
+        void onFailure(Exception e);
+    }
+
     public  void saveNewIngredient(Ingredient ingredient,OnAddNewIngredientListener listener){
         DatabaseReference existingIngredient = ref.child(INGREDIENTS_PATH).child(ingredient.getName());
         existingIngredient.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -304,6 +309,21 @@ public class RecipeRepository {
             @Override
             public void onFailure(@NonNull Exception e) {
                 listener.onFailure(e);
+            }
+        });
+
+    }
+    public void getProfile(OnSearchProfile listener){
+        ref.child("userName").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    String FullName= dataSnapshot.getValue().toString();
+                    listener.onSuccess(FullName);
+
+                }
+
+
             }
         });
 

@@ -1,37 +1,25 @@
 package com.dvora.finalproject.fragments;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.dvora.finalproject.AddRecipeFragment;
 import com.dvora.finalproject.IngAdapter;
 import com.dvora.finalproject.R;
-import com.dvora.finalproject.RecipeRepository;
-import com.dvora.finalproject.activities.MainActivity;
+import com.dvora.finalproject.Repository;
 import com.dvora.finalproject.entities.Ingredient;
-import com.dvora.finalproject.entities.IngredientInfo;
-import com.dvora.finalproject.entities.Recipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryFragment extends Fragment {
@@ -43,7 +31,7 @@ public class InventoryFragment extends Fragment {
     String[] nameList = {};
     private SearchView searchViewInvetory;
 
-    private RecipeRepository repo = new RecipeRepository();
+    private Repository repo = new Repository();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +44,7 @@ public class InventoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_inventory, container, false);
         searchViewInvetory=v.findViewById(R.id.search_bar_inventory);
-        repo.getAllIngredients(new RecipeRepository.OnSearchAllIngredients() {
+        repo.getAllIngredients(new Repository.OnSearchAllIngredients() {
             public void onIngredientsFound(List<Ingredient> matches){
                 Toast.makeText(getContext(),matches.size() + " Ingredients Found!",Toast.LENGTH_SHORT).show();
                 list= v.findViewById(R.id.mainlistinventory_listv);

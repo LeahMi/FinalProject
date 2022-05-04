@@ -27,7 +27,7 @@ public class ListRecipesFragment extends Fragment {
 
 
 
-    private RecipeRepository repo = new RecipeRepository();
+    private Repository repo = new Repository();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +38,7 @@ public class ListRecipesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_list_recipes, container, false);
 
-        repo.getAllRecipes(new RecipeRepository.OnSearchAllRecipes() {
+        repo.getAllRecipes(new Repository.OnSearchAllRecipes() {
             @Override
             public void onRecipesFound(List<Recipe> matches) {
                 list= v.findViewById(R.id.mainlistfragment_listv);

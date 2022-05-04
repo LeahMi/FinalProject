@@ -8,15 +8,14 @@ import androidx.navigation.ui.NavigationUI;
 
 
 import android.os.Bundle;
-import android.widget.Button;
 
 import com.dvora.finalproject.R;
-import com.dvora.finalproject.RecipeRepository;
+import com.dvora.finalproject.Repository;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecipeRepository repo = new RecipeRepository();
+    private Repository repo = new Repository();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

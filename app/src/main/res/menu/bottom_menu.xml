@@ -13,4 +13,5 @@
         android:title="Inventory"
         android:id="@+id/inventoryFragment"
         android:icon="@drawable/ic_baseline_local_grocery_store"/>
+
 </menu>

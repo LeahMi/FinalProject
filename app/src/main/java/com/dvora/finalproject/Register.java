@@ -28,14 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-//public class Register extends AppCompatActivity {
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_register);
-//    }
-//}
+
 
 public class Register extends AppCompatActivity{
     EditText mFullName, mEmail, mPassword;
@@ -43,7 +36,7 @@ public class Register extends AppCompatActivity{
     TextView mLoginBtn;
     FirebaseAuth fAuth;
     ProgressBar progressBar;
-
+    private String fullName;
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private static final String USER="user";
@@ -75,7 +68,7 @@ public class Register extends AppCompatActivity{
             public void onClick(View view) {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
-                String fullName=mFullName.getText().toString().trim();
+                fullName=mFullName.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Email is Recuired.");
@@ -146,12 +139,13 @@ public class Register extends AppCompatActivity{
         });
     }
     public void updateUI(FirebaseUser currentUser){
-        DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child(USER);
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child(currentUser.getUid());
         Log.d("TAG","currentUser=========="+currentUser);
         String keyId=currentUser.getUid();
         Log.d("TAG","keyId=========="+keyId);
         String in="0";
-        ref.child(keyId).child("Inventory").setValue(in);
+        ref.child("userName").setValue(fullName);
+
 //        ref.child(keyId).child("Details").setValue(currentUser);
     }
 

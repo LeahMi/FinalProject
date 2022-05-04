@@ -27,10 +27,7 @@ import com.dvora.finalproject.entities.IngredientInfo;
 import com.dvora.finalproject.entities.Recipe;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import static com.dvora.finalproject.RecipeRepository.INGREDIENTS_PATH;
 
 
 public class AddRecipeFragment extends Fragment {
@@ -40,7 +37,7 @@ public class AddRecipeFragment extends Fragment {
     private String qua, ing, type;
     private IngredientInfo ingr;
     private String[] types = {"gr","ml","psc","tbsp"};
-    private RecipeRepository repo = new RecipeRepository();
+    private Repository repo = new Repository();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,7 +100,7 @@ public class AddRecipeFragment extends Fragment {
         ScrollView mainScroll = (ScrollView) v.findViewById(R.id.mainScroll);
         textIn = (AutoCompleteTextView) v.findViewById(R.id.textin);
 
-        repo.getAllIngredients(new RecipeRepository.OnSearchAllIngredients() {
+        repo.getAllIngredients(new Repository.OnSearchAllIngredients() {
             String[] emptyList = new String[]{};
             @Override
             public void onIngredientsFound(List <Ingredient> matches) {
@@ -181,7 +178,7 @@ public class AddRecipeFragment extends Fragment {
                 String Category = category.getText().toString().trim();
                 String Prep = prep.getText().toString().trim();
                 Recipe recipe = new Recipe(Name,Category,Time,allIngredients,Prep);
-                repo.saveNewRecipe(recipe, new RecipeRepository.OnAddNewRecipeListener() {
+                repo.saveNewRecipe(recipe, new Repository.OnAddNewRecipeListener() {
                     @Override
                     public void onSuccess(String message) {
                         Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
