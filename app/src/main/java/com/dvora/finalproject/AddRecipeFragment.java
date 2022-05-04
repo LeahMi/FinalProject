@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,18 +26,22 @@ import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.entities.Ingredient;
 import com.dvora.finalproject.entities.IngredientInfo;
 import com.dvora.finalproject.entities.Recipe;
+import com.dvora.finalproject.fragments.DialogIng;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
-public class AddRecipeFragment extends Fragment {
+public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSelected{
     private AutoCompleteTextView textIn;
     private EditText quantity, prep, name, category, time;
     private Button buttonAdd, buttonSave;
     private String qua, ing, type;
     private IngredientInfo ingr;
     private String[] types = {"gr","ml","psc","tbsp"};
+    private String[] myListIng;
+    private TextView mInputDisplay;
     private Repository repo = new Repository();
 
     @Override
@@ -99,12 +104,11 @@ public class AddRecipeFragment extends Fragment {
         });
         ScrollView mainScroll = (ScrollView) v.findViewById(R.id.mainScroll);
         textIn = (AutoCompleteTextView) v.findViewById(R.id.textin);
-
         repo.getAllIngredients(new Repository.OnSearchAllIngredients() {
             String[] emptyList = new String[]{};
             @Override
             public void onIngredientsFound(List <Ingredient> matches) {
-                String[] myListIng = new String[matches.size()];
+                myListIng = new String[matches.size()];
                 for(int i=0; i<matches.size() ; ++i){
                     myListIng[i] = matches.get(i).getName();
                     Log.d("myListIng[i]","myListIng ["+i+"]"+" "+myListIng[i]);
@@ -139,33 +143,56 @@ public class AddRecipeFragment extends Fragment {
             public void onClick(View arg0) {
                 LayoutInflater layoutInflater =
                         (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final View addView = layoutInflater.inflate(R.layout.row, null);
-                TextView textOut = (TextView) addView.findViewById(R.id.textout);
-                TextView textOut2 = (TextView) addView.findViewById(R.id.textout2);
-                TextView textOutType = (TextView) addView.findViewById(R.id.textout3);
-                textOut.setText(textIn.getText().toString());
-                textOut2.setText(quantity.getText().toString());
-                textOutType.setText(type);
                 ing = textIn.getText().toString().trim();
                 qua = quantity.getText().toString().trim();
-                ingr = new IngredientInfo(ing, Double.parseDouble(qua),type);
-                allIngredients.add(ingr);
-                textIn.setText("");
-                quantity.setText("");
-                Button buttonRemove = (Button) addView.findViewById(R.id.remove);
-                buttonRemove.setOnClickListener(new View.OnClickListener() {
+                //check if the ingredient exist
+                repo.isExistIngredient(ing, new Repository.OnAddNewIngredientListener() {
+                    @Override
+                    public void onSuccess(String message) {
+                        if(message=="true"){
+                            final View addView = layoutInflater.inflate(R.layout.row, null);
+                            TextView textOut = (TextView) addView.findViewById(R.id.textout);
+                            TextView textOut2 = (TextView) addView.findViewById(R.id.textout2);
+                            TextView textOutType = (TextView) addView.findViewById(R.id.textout3);
+                            textOut.setText(textIn.getText().toString());
+                            textOut2.setText(quantity.getText().toString());
+                            textOutType.setText(type);
+
+                            ingr = new IngredientInfo(ing, Double.parseDouble(qua),type);
+                            allIngredients.add(ingr);
+                            textIn.setText("");
+                            quantity.setText("");
+                            Button buttonRemove = (Button) addView.findViewById(R.id.remove);
+                            buttonRemove.setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View v) {
+                                    ((LinearLayout) addView.getParent()).removeView(addView);
+                                    for (int i = 0; i < allIngredients.size(); ++i) {
+                                        if (allIngredients.get(i).getName().equals(textOut.getText().toString()))
+                                            allIngredients.remove(i);
+                                    }
+                                }
+                            });
+
+                            container2.addView(addView);
+                        }
+                        else{
+                            DialogIng dialog = new DialogIng();
+                            dialog.setTargetFragment(AddRecipeFragment.this, 1);
+                            dialog.show(getFragmentManager(), "DialogIng");
+                            Log.d("O","_________  "+dialog.getNameIng());
+                        }
+                    }
 
                     @Override
-                    public void onClick(View v) {
-                        ((LinearLayout) addView.getParent()).removeView(addView);
-                        for (int i = 0; i < allIngredients.size(); ++i) {
-                            if (allIngredients.get(i).getName().equals(textOut.getText().toString()))
-                                allIngredients.remove(i);
-                        }
+                    public void onFailure(Exception e) {
+                        // Create and show the dialog.
+
+                        //addToArray(dialog.getNameIng());
                     }
                 });
 
-                container2.addView(addView);
             }
         });
 
@@ -252,68 +279,24 @@ public class AddRecipeFragment extends Fragment {
         return v;
 
     }
+
+    public void addToArray(String newIng){
+        Log.d("addToArray", "addToArray");
+        if(myListIng!=null) {
+            myListIng = Arrays.copyOf(myListIng, myListIng.length + 1);
+            myListIng[myListIng.length - 1] = newIng;
+            textIn.setAdapter(new ArrayAdapter<>(AddRecipeFragment.this.getContext(), android.R.layout.simple_list_item_1, myListIng));
+        }
+    }
+
+    @Override
+    public void sendInput(String input) {
+        Log.d("DDDialog", "sendInput: found incoming input: " + input);
+        if(myListIng!=null) {
+            myListIng = Arrays.copyOf(myListIng, myListIng.length + 1);
+            myListIng[myListIng.length - 1] = input;
+            textIn.setAdapter(new ArrayAdapter<>(AddRecipeFragment.this.getContext(), android.R.layout.simple_list_item_1, myListIng));
+        }
+        mInputDisplay.setText(input);
+    }
 }
-//package com.dvora.finalproject;
-//
-//import android.content.Context;
-//import android.content.Intent;
-//import android.os.Bundle;
-//
-//import androidx.fragment.app.Fragment;
-//
-//import android.util.Log;
-//import android.view.LayoutInflater;
-//import android.view.View;
-//import android.view.ViewGroup;
-//import android.widget.ArrayAdapter;
-//import android.widget.AutoCompleteTextView;
-//import android.widget.Button;
-//import android.widget.EditText;
-//import android.widget.LinearLayout;
-//import android.widget.ScrollView;
-//import android.widget.TextView;
-//import android.widget.Toast;
-//
-//import com.dvora.finalproject.activities.MainActivity;
-//import com.dvora.finalproject.entities.IngredientInfo;
-//import com.dvora.finalproject.entities.Recipe;
-//
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.List;
-//
-//import static com.dvora.finalproject.RecipeRepository.INGREDIENTS_PATH;
-//
-//
-//public class AddRecipeFragment extends Fragment {
-//    private AutoCompleteTextView textIn;
-//    private EditText quantity;
-//    private EditText prep;
-//    private EditText name;
-//    private EditText category;
-//    private EditText time;
-//    private Button buttonAdd;
-//    private Button buttonSave;
-//    private String qua;
-//    private String ing;
-//    private IngredientInfo ingr;
-//    //private Button btnAdd;
-////    private EditText nameRecipe;
-////    private EditText category;
-////    private EditText preparationTime;
-////    private EditText ingredients;
-////    private EditText preparationMethod;
-//    // private String nameIngredient;
-//    // private double quantityIngredient;
-//
-//    private RecipeRepository repo = new RecipeRepository();
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-////        IngredientInfo ing = new IngredientInfo("Pepper",5.5);
-////        List<IngredientInfo> allIngredients = new ArrayList<>();
-////        allIngredients.add(ing);
-////        Recipe recipe = new Recipe("Chicken","Chicken","200",allIngredients,"Deep cook");
-////        repo.saveNewRecipe(recipe, new RecipeRepository.OnAddNewRecipeListener() {

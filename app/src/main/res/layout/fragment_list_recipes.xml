@@ -40,7 +40,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="129dp"
-        android:text="My Recipes"
+        android:text="המתכונים שלי"
         android:textAlignment="center"
         android:textSize="30dp"
         android:textStyle="bold"
@@ -58,7 +58,6 @@
         android:layout_marginStart="-3dp"
         android:layout_marginTop="11dp"
         android:layout_marginEnd="64dp"
-        android:layout_toStartOf="@+id/textView2"
         android:background="#fff"
         android:src="@android:drawable/ic_input_add" />
 
