@@ -16,14 +16,21 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Repository {
-    private int per;
+    private int per =0;
     private int count = 0;
+    private List<Double> listPercent =new ArrayList<Double>();
+    private static final DecimalFormat df = new DecimalFormat("0.00");
+    private HashMap hm = new HashMap();
     public static final String RECIPES_PATH = "userRecipes";
     public static final String INGREDIENTS_PATH = "userIngredients";
     public DatabaseReference ref;
@@ -140,6 +147,21 @@ public class Repository {
     }
 
     public void getAllRecipes(OnSearchAllRecipes listener) {
+        getAllIngredients(new OnSearchAllIngredients() {
+            @Override
+            public void onIngredientsFound(List<Ingredient> matches) {
+                int numOfIngredients = 0;
+                for(Ingredient ingInventory :matches){
+                    hm.put(ingInventory.getName(),Double.valueOf(df.format(ingInventory.getQuantity())));
+                }
+            }
+
+            @Override
+            public void onNoIngredientsFound(String message) { }
+
+            @Override
+            public void onExceptionOccurred(Exception e) { }
+        });
         ref.child(RECIPES_PATH)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -151,13 +173,36 @@ public class Repository {
                             match = recipeSnapShot.getValue(Recipe.class);
                             if (match == null)
                                 continue;
-                            matches.add(match);
+                            else {
+                                count = 0;
+                                matches.add(match);
+                                List<IngredientInfo> l=match.getIngredients();
+                                int numOfIngs = l.size();
+                                for(IngredientInfo ingredientInfo:l){
+                                    if(!(hm.isEmpty())) {
+                                        if (hm.containsKey(ingredientInfo.getName()) && ((Double)(hm.get(ingredientInfo.getName())))>0.0) {
+                                            count++;
+
+                                        }
+                                    }
+                                }
+                                if(count==0)
+                                    listPercent.add(0.0);
+                                else {
+                                    Log.d("count","count___ "+count);
+                                    Log.d("numOfIngs","numOfIngs___ "+numOfIngs);
+                                    Log.d("(count / numOfIngs)","(count / numOfIngs)____"+(count / numOfIngs));
+                                    double d = (double)count / (double)numOfIngs;
+                                    d = Double.valueOf(df.format(d));
+                                    listPercent.add( (d * 100));
+                                }
+                            }
                             Log.d("TAG", "match===============" + match);
                         }
                         if (matches.isEmpty()) {
                             listener.onNoRecipesFound("No Recipes found");
                         } else {
-                            listener.onRecipesFound(matches);
+                            listener.onRecipesFound(matches,listPercent);
                         }
                     }
                 })
@@ -228,7 +273,7 @@ public class Repository {
     }
 
     interface OnSearchAllRecipes {
-        void onRecipesFound(List<Recipe> matches);
+        void onRecipesFound(List<Recipe> matches, List<Double> listPercent);
 
         void onNoRecipesFound(String message);
 
@@ -356,30 +401,31 @@ public class Repository {
         });
     }
 
-    public int getPercent(Recipe recipe, List<Ingredient> listInventory) {
-
-        List<IngredientInfo> listRecipe = recipe.getIngredients();
-        int numOfIngredients = listRecipe.size();
-        for (IngredientInfo ingredient : listRecipe) {
-            isExistIngredient(ingredient.getName(), new OnAddNewIngredientListener() {
-                @Override
-                public void onSuccess(String message) {
-                    if(message == "true") {
-                        count++;
-                        Log.d("count", "ingredient.getName() " + ingredient.getName());
-                        Log.d("count", "countttttttt " + count);
-                    }
-                }
-                @Override
-                public void onFailure(Exception e) {
-
-                }
-            });
-        }
-        per = (count / numOfIngredients) * 100;
-        Log.d("Perrrrrr","Perrrrrr Repository "+per);
-        return per;
-    }
+//    public int getPercent(Recipe recipe, List<Ingredient> listInventory) {
+//        per =0;
+//        count =0;
+//        List<IngredientInfo> listRecipe = recipe.getIngredients();
+//        int numOfIngredients = listRecipe.size();
+//        for (IngredientInfo ingredient : listRecipe) {
+//            isExistIngredient(ingredient.getName(), new OnAddNewIngredientListener() {
+//                @Override
+//                public void onSuccess(String message) {
+//                    if(message == "true") {
+//                        count++;
+//                        Log.d("count", "ingredient.getName() " + ingredient.getName());
+//                        Log.d("count", "countttttttt " + count);
+//                    }
+//                }
+//                @Override
+//                public void onFailure(Exception e) {
+//
+//                }
+//            });
+//        }
+//        per = (count / numOfIngredients) * 100;
+//        Log.d("Perrrrrr","Perrrrrr Repository "+per);
+//        return per;
+//    }
     public MutableLiveData<Exception> getExceptionsData() {
         return exceptionsData;
     }

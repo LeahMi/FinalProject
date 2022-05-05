@@ -26,7 +26,7 @@ public class IngAdapter extends BaseAdapter {
     public IngAdapter(List<Ingredient> dataIng, Context context)
     {
         this.dataIng=dataIng;
-        this.data=dataIng;
+        this.data=new ArrayList<>(dataIng);
         this.inflaterI=LayoutInflater.from(context);
     }
 
@@ -71,10 +71,10 @@ public class IngAdapter extends BaseAdapter {
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Ingredient> filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(dataIng);
+                filteredList.addAll(data);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for (Ingredient item : dataIng) {
+                for (Ingredient item : data) {
                     if (item.getName().toLowerCase().contains(filterPattern)  ) {
                         filteredList.add(item);
                     }
@@ -86,8 +86,8 @@ public class IngAdapter extends BaseAdapter {
         }
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            data.clear();
-            data.addAll((List) results.values);
+            dataIng.clear();
+            dataIng.addAll((List) results.values);
             notifyDataSetChanged();
         }
     };
