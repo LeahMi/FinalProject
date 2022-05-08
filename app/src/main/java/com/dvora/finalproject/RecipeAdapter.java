@@ -21,23 +21,16 @@ import java.util.List;
 
 public class RecipeAdapter extends BaseAdapter implements Filterable {
 
-    private int count = 0;
-    private int per =0;
-    private int numOfIngredients=0;
     private final List<Recipe> data;
     private final List<Recipe> exampleList;
     private final LayoutInflater inflater;
     private final ICallbackAdapter iCallbackAdapter;
-    private final List<String> filteredData = null;
-    private final List<Double> listPercent ;
-    private Repository repo = new Repository();
 
-    public RecipeAdapter(List<Recipe> data, List<Double> listPercent,  Context context, ICallbackAdapter callbackAdapter) {
+    public RecipeAdapter(List<Recipe> data, Context context, ICallbackAdapter callbackAdapter) {
         this.data = data;
         this.exampleList = new ArrayList<>(data);
         this.inflater = LayoutInflater.from(context);
         this.iCallbackAdapter = callbackAdapter;
-        this.listPercent =listPercent;
     }
 
     @Override
@@ -72,7 +65,7 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
         ImageView imageViewProfile = ROW.findViewById(R.id.img_profile);
         tv.setText(recipeRow.getNameRecipe());
         tv2.setText(recipeRow.getCategory());
-        tv3.setText(listPercent.get(pos).toString()+" %");
+        tv3.setText(recipeRow.getPercentIng().toString() + " %");
         imageViewProfile.setImageResource(R.drawable.image_recipe);
 
         ROW.setOnClickListener(new View.OnClickListener() {
@@ -117,4 +110,5 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
             notifyDataSetChanged();
         }
     };
+
 }

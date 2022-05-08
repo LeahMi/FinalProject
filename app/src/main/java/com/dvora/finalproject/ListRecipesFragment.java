@@ -28,10 +28,7 @@ public class ListRecipesFragment extends Fragment {
     private ListView list;
     private ImageButton btnAdd;
     private SearchView searchView;
-    private List<IngredientInfo> listIngredients;
-    private int count = 0;
-    private List<String> listInventory =new ArrayList<String>();
-    private List<Double> listPercent =new ArrayList<Double>();
+
 
     private Repository repo = new Repository();
     @Override
@@ -47,13 +44,11 @@ public class ListRecipesFragment extends Fragment {
         repo.getAllRecipes(new Repository.OnSearchAllRecipes() {
 
             @Override
-            public void onRecipesFound(List<Recipe> matches,List<Double> listPercent) {
+            public void onRecipesFound(List<Recipe> matches) {
                 list= v.findViewById(R.id.mainlistfragment_listv);
                 searchView= v.findViewById(R.id.search_bar);
-                //listPercent = getPercent(matches);
-                Log.d("1","1");
-                Log.d("ListPer_ ","ListPer_ "+listPercent);
-                RecipeAdapter adapter = new RecipeAdapter(matches, listPercent, getContext(), new ICallbackAdapter() {
+
+                RecipeAdapter adapter = new RecipeAdapter(matches, getContext(), new ICallbackAdapter() {
 
                     @Override
                     public void onClickItem(Recipe recipe) {
@@ -61,7 +56,6 @@ public class ListRecipesFragment extends Fragment {
                     }
                 });
                 list.setAdapter(adapter);
-                //list.setAdapter(arrayAdapter);
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
@@ -106,56 +100,5 @@ public class ListRecipesFragment extends Fragment {
     private void openDetailsFragment(Recipe recipe) {
         showFragment(ItemDetailsFragment.newInstance(recipe));
     }
-//    private List<Integer> getPercent(List<Recipe> recipes){
-//        Log.d("4","4");
-//        repo.getAllIngredients(new Repository.OnSearchAllIngredients() {
-//            @Override
-//            public void onIngredientsFound(List<Ingredient> matches) {
-//                Log.d("5","5");
-//                int numOfIngredients = 0;
-//                for(Ingredient ingInventory :matches){
-//                    Log.d("6","6");
-//                    listInventory.add(ingInventory.getName());
-//                    Log.d("7","7");
-//                }
-//                Log.d("listInventory","listInventory size___ "+listInventory.size() );
-//                Log.d("listInventory","listInventory___ "+listInventory );
-//                for (Recipe recipe:recipes) {
-//                    Log.d("8","8");
-//                    count = 0;
-//                    listIngredients = recipe.getIngredients();
-//                    numOfIngredients = listIngredients.size();
-//                    for (IngredientInfo ing :listIngredients) {
-//                        Log.d("9","9");
-//                        if(listInventory.contains(ing.getName()))
-//                            Log.d("10","10");
-//                            count++;
-//                    }
-//                    if(count!=0) {
-//                        Log.d("11","11");
-//                        int per =(count/numOfIngredients)*100;
-//                        Log.d("pppppper","perrrrrrrrrrrr___ "+per );
-//                        listPercent.add(per);
-//                    }
-//                    else
-//                        listPercent.add(0);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onNoIngredientsFound(String message) {
-//                for (Recipe recipe:recipes) {
-//                    listPercent.add(0);
-//                }
-//            }
-//
-//            @Override
-//            public void onExceptionOccurred(Exception e) {
-//
-//            }
-//        });
-//        return listPercent;
-//    }
 
 }

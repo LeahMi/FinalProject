@@ -29,7 +29,7 @@ public class InventoryFragment extends Fragment {
     private Button ListShopping;
     private ArrayAdapter<String> arrayAdapter;
     String[] nameList = {};
-    private SearchView searchViewInvetory;
+    private SearchView searchViewInventory;
 
     private Repository repo = new Repository();
 
@@ -43,7 +43,7 @@ public class InventoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_inventory, container, false);
-        searchViewInvetory=v.findViewById(R.id.search_bar_inventory);
+        searchViewInventory=v.findViewById(R.id.search_bar_inventory);
         repo.getAllIngredients(new Repository.OnSearchAllIngredients() {
             public void onIngredientsFound(List<Ingredient> matches){
                 Toast.makeText(getContext(),matches.size() + " Ingredients Found!",Toast.LENGTH_SHORT).show();
@@ -57,7 +57,7 @@ public class InventoryFragment extends Fragment {
                 //  arrayAdapter= new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,android.R.id.text1,nameList);
                 IngAdapter adapter= new IngAdapter(matches, getContext());
                 list.setAdapter(adapter);
-                searchViewInvetory.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+                searchViewInventory.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
                     @Override
                     public boolean onQueryTextSubmit(String s) {
                         adapter.getFilter().filter(s);

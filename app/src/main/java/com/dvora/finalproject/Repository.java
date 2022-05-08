@@ -26,9 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Repository {
-    private int per =0;
     private int count = 0;
-    private List<Double> listPercent =new ArrayList<Double>();
     private static final DecimalFormat df = new DecimalFormat("0.00");
     private HashMap hm = new HashMap();
     public static final String RECIPES_PATH = "userRecipes";
@@ -63,23 +61,6 @@ public class Repository {
         });
     }
 
-//    public void getAllRecipes(OnViewAllRecipes listener){
-//        ref.child(RECIPES_PATH)
-//                .get()
-//                .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-//                    @Override
-//                    public void onSuccess(DataSnapshot dataSnapshot) {
-//                        Recipe match = null;
-//                        for (DataSnapshot recipeSnapShot: dataSnapshot.getChildren()){
-//                            match=recipeSnapShot.getValue(Recipe.class);
-//                        }
-//                        if(match==null) {
-//                            System.out.println("No Recipes Found!");
-//                            listener.onNoRecipesFound1("No recipes found");
-//                        }else {
-//                        }
-//                });
-//    }
 
     public void getRecipesForIngredient(String ingredientName, OnSearchRecipesByIngredient listener) {
         ref.child(INGREDIENTS_PATH)
@@ -180,21 +161,19 @@ public class Repository {
                                 int numOfIngs = l.size();
                                 for(IngredientInfo ingredientInfo:l){
                                     if(!(hm.isEmpty())) {
-                                        if (hm.containsKey(ingredientInfo.getName()) && ((Double)(hm.get(ingredientInfo.getName())))>0.0) {
+                                        if (hm.containsKey(ingredientInfo.getName()) && ((Double)(hm.get(ingredientInfo.getName())))>=ingredientInfo.getQuantity()) {
                                             count++;
 
                                         }
                                     }
                                 }
-                                if(count==0)
-                                    listPercent.add(0.0);
-                                else {
+                                if(count != 0) {
                                     Log.d("count","count___ "+count);
                                     Log.d("numOfIngs","numOfIngs___ "+numOfIngs);
                                     Log.d("(count / numOfIngs)","(count / numOfIngs)____"+(count / numOfIngs));
                                     double d = (double)count / (double)numOfIngs;
                                     d = Double.valueOf(df.format(d));
-                                    listPercent.add( (d * 100));
+                                    ref.child(RECIPES_PATH).child(recipeSnapShot.getKey()).child("percentIng").setValue(d * 100);
                                 }
                             }
                             Log.d("TAG", "match===============" + match);
@@ -202,7 +181,7 @@ public class Repository {
                         if (matches.isEmpty()) {
                             listener.onNoRecipesFound("No Recipes found");
                         } else {
-                            listener.onRecipesFound(matches,listPercent);
+                            listener.onRecipesFound(matches);
                         }
                     }
                 })
@@ -273,7 +252,7 @@ public class Repository {
     }
 
     interface OnSearchAllRecipes {
-        void onRecipesFound(List<Recipe> matches, List<Double> listPercent);
+        void onRecipesFound(List<Recipe> matches);
 
         void onNoRecipesFound(String message);
 
@@ -304,7 +283,19 @@ public class Repository {
         void onFailure(Exception e);
     }
 
-    public  void saveNewIngredient(Ingredient ingredient,OnAddNewIngredientListener listener){
+    public void updateIngredient(Ingredient ingredient, OnSuccessListener listener){
+        DatabaseReference existingIngredient = ref.child(INGREDIENTS_PATH).child(ingredient.getName());
+        existingIngredient.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    ref.child(INGREDIENTS_PATH).child(ingredient.getName()).setValue(ingredient);
+                    listener.onSuccess("המוצר "+ingredient.getName()+ " עודכן במלאי ");
+                }
+            }
+        });
+    }
+    public void saveNewIngredient(Ingredient ingredient,OnAddNewIngredientListener listener){
         DatabaseReference existingIngredient = ref.child(INGREDIENTS_PATH).child(ingredient.getName());
         existingIngredient.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
@@ -401,31 +392,6 @@ public class Repository {
         });
     }
 
-//    public int getPercent(Recipe recipe, List<Ingredient> listInventory) {
-//        per =0;
-//        count =0;
-//        List<IngredientInfo> listRecipe = recipe.getIngredients();
-//        int numOfIngredients = listRecipe.size();
-//        for (IngredientInfo ingredient : listRecipe) {
-//            isExistIngredient(ingredient.getName(), new OnAddNewIngredientListener() {
-//                @Override
-//                public void onSuccess(String message) {
-//                    if(message == "true") {
-//                        count++;
-//                        Log.d("count", "ingredient.getName() " + ingredient.getName());
-//                        Log.d("count", "countttttttt " + count);
-//                    }
-//                }
-//                @Override
-//                public void onFailure(Exception e) {
-//
-//                }
-//            });
-//        }
-//        per = (count / numOfIngredients) * 100;
-//        Log.d("Perrrrrr","Perrrrrr Repository "+per);
-//        return per;
-//    }
     public MutableLiveData<Exception> getExceptionsData() {
         return exceptionsData;
     }
