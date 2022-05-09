@@ -2,32 +2,36 @@ package com.dvora.finalproject;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.Filter;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dvora.finalproject.entities.Ingredient;
-import com.dvora.finalproject.entities.IngredientInfo;
-import com.dvora.finalproject.entities.Recipe;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sql.RowSetWriter;
+import static android.graphics.Color.parseColor;
+import static android.graphics.Color.rgb;
 
 public class IngAdapter extends BaseAdapter {
     private List<Ingredient> dataIng;
     private List<Ingredient> data;
     private LayoutInflater inflaterI;
+    private Repository repo = new Repository();
     public IngAdapter(List<Ingredient> dataIng, Context context)
     {
-        this.dataIng=dataIng;
-        this.data=dataIng;
-        this.inflaterI=LayoutInflater.from(context);
+        this.dataIng = dataIng;
+        this.data = new ArrayList<>(dataIng);
+        this.inflaterI = LayoutInflater.from(context);
     }
 
 
@@ -55,11 +59,51 @@ public class IngAdapter extends BaseAdapter {
         else {
             Log.d("TAG", "reusing old row ROW");
         }
-        final Ingredient ingredientRow=dataIng.get(i);
+        final Ingredient ingredientRow = dataIng.get(i);
         TextView tv = Row.findViewById(R.id.inventorylistrow_text_v);
-        TextView tv_quantity = Row.findViewById(R.id.inventorylistrow_quantity);
+        TextView tv_type = Row.findViewById(R.id.inventorylistrow_type);
+        EditText edt_quantity = Row.findViewById(R.id.edt_quantity);
+        ImageButton btn_edit = Row.findViewById(R.id.btn_edit);
         tv.setText(ingredientRow.getName());
-        tv_quantity.setText(ingredientRow.getQuantity()+" "+ingredientRow.getType());
+        tv_type.setText(ingredientRow.getType());
+        edt_quantity.setText(ingredientRow.getQuantity()+"");
+        btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edt_quantity.setEnabled(true);
+                edt_quantity.setTextColor(rgb(255,165,0));
+            }
+        });
+
+        edt_quantity.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode==KeyEvent.KEYCODE_ENTER){
+                    try{
+                        Double d = Double.parseDouble(edt_quantity.getText().toString());
+                        if(d>=0) {
+                            edt_quantity.setTextColor(parseColor("#00DDFF"));
+                            edt_quantity.setEnabled(false);
+                            ingredientRow.setQuantity(d);
+                            repo.updateIngredient(ingredientRow, new OnSuccessListener() {
+                                @Override
+                                public void onSuccess(Object o) {
+                                    Toast.makeText(inflaterI.getContext(), o.toString(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else{
+                            edt_quantity.setError("נא הזן מספר מ0 ומעלה");
+                        }
+                    }catch (NumberFormatException e){
+                        edt_quantity.setError("הערך לא חוקי נא הזן מספר מ0 ומעלה");
+                    }
+                }
+                return false;
+            }
+        });
+
+
         return Row;
     }
 
@@ -71,10 +115,10 @@ public class IngAdapter extends BaseAdapter {
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Ingredient> filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(dataIng);
+                filteredList.addAll(data);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for (Ingredient item : dataIng) {
+                for (Ingredient item : data) {
                     if (item.getName().toLowerCase().contains(filterPattern)  ) {
                         filteredList.add(item);
                     }
@@ -86,8 +130,8 @@ public class IngAdapter extends BaseAdapter {
         }
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            data.clear();
-            data.addAll((List) results.values);
+            dataIng.clear();
+            dataIng.addAll((List) results.values);
             notifyDataSetChanged();
         }
     };

@@ -16,14 +16,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Repository {
-    private int per;
     private int count = 0;
+    private static final DecimalFormat df = new DecimalFormat("0.00");
+    private HashMap hm = new HashMap();
     public static final String RECIPES_PATH = "userRecipes";
     public static final String INGREDIENTS_PATH = "userIngredients";
     public DatabaseReference ref;
@@ -56,23 +61,6 @@ public class Repository {
         });
     }
 
-//    public void getAllRecipes(OnViewAllRecipes listener){
-//        ref.child(RECIPES_PATH)
-//                .get()
-//                .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-//                    @Override
-//                    public void onSuccess(DataSnapshot dataSnapshot) {
-//                        Recipe match = null;
-//                        for (DataSnapshot recipeSnapShot: dataSnapshot.getChildren()){
-//                            match=recipeSnapShot.getValue(Recipe.class);
-//                        }
-//                        if(match==null) {
-//                            System.out.println("No Recipes Found!");
-//                            listener.onNoRecipesFound1("No recipes found");
-//                        }else {
-//                        }
-//                });
-//    }
 
     public void getRecipesForIngredient(String ingredientName, OnSearchRecipesByIngredient listener) {
         ref.child(INGREDIENTS_PATH)
@@ -140,6 +128,21 @@ public class Repository {
     }
 
     public void getAllRecipes(OnSearchAllRecipes listener) {
+        getAllIngredients(new OnSearchAllIngredients() {
+            @Override
+            public void onIngredientsFound(List<Ingredient> matches) {
+                int numOfIngredients = 0;
+                for(Ingredient ingInventory :matches){
+                    hm.put(ingInventory.getName(),Double.valueOf(df.format(ingInventory.getQuantity())));
+                }
+            }
+
+            @Override
+            public void onNoIngredientsFound(String message) { }
+
+            @Override
+            public void onExceptionOccurred(Exception e) { }
+        });
         ref.child(RECIPES_PATH)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -151,7 +154,28 @@ public class Repository {
                             match = recipeSnapShot.getValue(Recipe.class);
                             if (match == null)
                                 continue;
-                            matches.add(match);
+                            else {
+                                count = 0;
+                                matches.add(match);
+                                List<IngredientInfo> l=match.getIngredients();
+                                int numOfIngs = l.size();
+                                for(IngredientInfo ingredientInfo:l){
+                                    if(!(hm.isEmpty())) {
+                                        if (hm.containsKey(ingredientInfo.getName()) && ((Double)(hm.get(ingredientInfo.getName())))>=ingredientInfo.getQuantity()) {
+                                            count++;
+
+                                        }
+                                    }
+                                }
+                                if(count != 0) {
+                                    Log.d("count","count___ "+count);
+                                    Log.d("numOfIngs","numOfIngs___ "+numOfIngs);
+                                    Log.d("(count / numOfIngs)","(count / numOfIngs)____"+(count / numOfIngs));
+                                    double d = (double)count / (double)numOfIngs;
+                                    d = Double.valueOf(df.format(d));
+                                    ref.child(RECIPES_PATH).child(recipeSnapShot.getKey()).child("percentIng").setValue(d * 100);
+                                }
+                            }
                             Log.d("TAG", "match===============" + match);
                         }
                         if (matches.isEmpty()) {
@@ -259,7 +283,19 @@ public class Repository {
         void onFailure(Exception e);
     }
 
-    public  void saveNewIngredient(Ingredient ingredient,OnAddNewIngredientListener listener){
+    public void updateIngredient(Ingredient ingredient, OnSuccessListener listener){
+        DatabaseReference existingIngredient = ref.child(INGREDIENTS_PATH).child(ingredient.getName());
+        existingIngredient.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    ref.child(INGREDIENTS_PATH).child(ingredient.getName()).setValue(ingredient);
+                    listener.onSuccess("המוצר "+ingredient.getName()+ " עודכן במלאי ");
+                }
+            }
+        });
+    }
+    public void saveNewIngredient(Ingredient ingredient,OnAddNewIngredientListener listener){
         DatabaseReference existingIngredient = ref.child(INGREDIENTS_PATH).child(ingredient.getName());
         existingIngredient.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
@@ -356,30 +392,6 @@ public class Repository {
         });
     }
 
-    public int getPercent(Recipe recipe, List<Ingredient> listInventory) {
-
-        List<IngredientInfo> listRecipe = recipe.getIngredients();
-        int numOfIngredients = listRecipe.size();
-        for (IngredientInfo ingredient : listRecipe) {
-            isExistIngredient(ingredient.getName(), new OnAddNewIngredientListener() {
-                @Override
-                public void onSuccess(String message) {
-                    if(message == "true") {
-                        count++;
-                        Log.d("count", "ingredient.getName() " + ingredient.getName());
-                        Log.d("count", "countttttttt " + count);
-                    }
-                }
-                @Override
-                public void onFailure(Exception e) {
-
-                }
-            });
-        }
-        per = (count / numOfIngredients) * 100;
-        Log.d("Perrrrrr","Perrrrrr Repository "+per);
-        return per;
-    }
     public MutableLiveData<Exception> getExceptionsData() {
         return exceptionsData;
     }
