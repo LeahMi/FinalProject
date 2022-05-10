@@ -8,21 +8,23 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.dvora.finalproject.ProfileFragment"
-        android:label="Profile"
+        android:label="הפרופיל שלי                                                      "
+        android:layout_width="400dp"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/listRecipesFragment2"
         android:name="com.dvora.finalproject.ListRecipesFragment"
-        android:label="Recipes List"
+        android:label="מתכונים                                                          "
         tools:layout="@layout/fragment_list_recipes" />
     <fragment
         android:id="@+id/inventoryFragment"
         android:name="com.dvora.finalproject.fragments.InventoryFragment"
-        android:label="Inventory"
+        android:label="מלאי                                                             "
         tools:layout="@layout/fragment_inventory" />
     <fragment
         android:id="@+id/ListShoppingFragment"
         android:name="com.dvora.finalproject.fragments.ListShoppingFragment"
-        android:label="List Shopping"
+        android:label="רשימת קניות                                                      "
+
         tools:layout="@layout/fragment_list_shopping" />
 </navigation>

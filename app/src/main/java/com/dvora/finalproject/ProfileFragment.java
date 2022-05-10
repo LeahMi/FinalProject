@@ -39,11 +39,11 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_profile, container, false);
         Name= (TextView) v.findViewById(R.id.texthello);
-        Name.setText("HELLO "+ FullName);
+        Name.setText("שלום "+ FullName);
         repo.getProfile(new Repository.OnSearchProfile() {
             @Override
             public void onSuccess(String message) {
-                Name.setText("HELLO "+ message);
+                Name.setText("שלום "+ message);
             }
 
             @Override

@@ -56,39 +56,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/add"
-                    android:layout_width="65dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:text="הוסף"
-                    app:backgroundTint="#009688" />
 
+                <EditText
+                    android:id="@+id/quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="91dp"
+                    android:layout_marginRight="12dp"
+
+                    android:hint="כמות" />
 
                 <AutoCompleteTextView
                     android:id="@+id/textin"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginRight="33dp"
-                    android:layout_toLeftOf="@id/quantity"
-                    android:hint="מרכיב" />
+                    android:layout_marginStart="341dp"
+                    android:layout_marginEnd="109dp"
 
-                <EditText
-                    android:id="@+id/quantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="12dp"
-                    android:layout_toLeftOf="@id/spinner2"
-                    android:hint="כמות" />
+
+                    android:hint="מרכיב" />
 
                 <Spinner
                     android:id="@+id/spinner2"
                     android:layout_width="101dp"
                     android:layout_height="42dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_toStartOf="@+id/add" />
+                    android:layout_marginEnd="40dp"
+                    android:layout_toStartOf="@+id/quantity" />
+
+                <Button
+                    android:id="@+id/add"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="343dp"
+                    android:text="הוסף"
+                    app:backgroundTint="#009688" />
             </RelativeLayout>
 
 
@@ -107,7 +111,7 @@
 
             <Button
                 android:id="@+id/saveBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="423dp"
                 android:layout_height="wrap_content"
                 android:text="שמור"
                 app:backgroundTint="#009688"></Button>

@@ -26,7 +26,7 @@ public class AddIngredient extends Fragment {
     private EditText name;
     private EditText amount;
     private Button buttonSave;
-    private String[] types = {"gr","ml","psc"};
+    private String[] types = {"גרם","מל","יחידה"};
     private Repository repo = new Repository();
 
 

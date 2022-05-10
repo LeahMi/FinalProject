@@ -39,7 +39,7 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
     private Button buttonAdd, buttonSave;
     private String qua, ing, type;
     private IngredientInfo ingr;
-    private String[] types = {"gr","ml","psc","tbsp"};
+    private String[] types = {"גרם","קורט","מל","יחידה","כפית","כף","כוס"};
     private String[] myListIng;
     private TextView mInputDisplay;
     private Repository repo = new Repository();
@@ -48,39 +48,7 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        IngredientInfo ing = new IngredientInfo("Pepper",5.5);
-//        List<IngredientInfo> allIngredients = new ArrayList<>();
-//        allIngredients.add(ing);
-//        Recipe recipe = new Recipe("Chicken","Chicken","200",allIngredients,"Deep cook");
-//        repo.saveNewRecipe(recipe, new RecipeRepository.OnAddNewRecipeListener() {
-//            @Override
-//            public void onSuccess(String message) {
-//                Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
-//                Log.d("saveNewRecipe::Succeed",message);
-//            }
-//
-//            @Override
-//            public void onFailure(Exception e) {
-//                Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
-//                Log.d("saveNewRecipe::Failure",e.getLocalizedMessage());
-//            }
-//        });
-//        repo.getRecipesForIngredient("Pepper", new RecipeRepository.OnSearchRecipesByIngredient() {
-//            @Override
-//            public void onRecipesFound(List<Recipe> matches) {
-//                Toast.makeText(getContext(),matches.size() + " Recipes Found!",Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onNoRecipesFound(String message) {
-//                Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onExceptionOcured(Exception e) {
-//                Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
     }
 
     @Override
@@ -187,9 +155,7 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
 
                     @Override
                     public void onFailure(Exception e) {
-                        // Create and show the dialog.
 
-                        //addToArray(dialog.getNameIng());
                     }
                 });
 
@@ -223,58 +189,6 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
                 getActivity().startActivity(intent);
             }
         });
-
-
-//        EditText nameRecipe= (EditText) v.findViewById(R.id.nameRecipe);
-//        EditText category= (EditText)v.findViewById(R.id.category);
-//        EditText preparationTime= (EditText)v.findViewById(R.id.preparationTime);
-//        EditText ingredients= (EditText)v.findViewById(R.id.ingredients);
-//        EditText preparationMethod= (EditText) v.findViewById(R.id.preparationMethod);
-//        Button btnAdd= (Button) v.findViewById(R.id.addRecipeBtn);
-//
-//        btnAdd.setOnClickListener((vi)->{
-//            String NameRecipe= nameRecipe.getText().toString();
-//            String Category= category.getText().toString();
-//            String PreparationTime= preparationTime.getText().toString();
-//            String PreparationMethod= preparationMethod.getText().toString();
-//            String Ingredients= ingredients.getText().toString();
-//            Log.d("TAG","Ingredients====="+Ingredients);
-//            List<IngredientInfo> allIngredients;
-//
-//            String[] str = Ingredients.split("\r\n");
-//            Log.d("","Arrays.toString(str)========"+Arrays.toString(str));
-//
-//            Log.d("TAG","str====="+str);
-//            IngredientInfo ing;
-//            allIngredients = new ArrayList<>();
-//            for (String s: str) {
-//                Log.d("TAG", "s=====" + s);
-//                String[] ing1 = s.split(" ");
-//
-//                Log.d("TAG", "ing1=====" + ing1);
-//                ing = new IngredientInfo(ing1[0], Double.parseDouble(ing1[1]));
-//                Log.d("TAG", "ing====" + ing);
-//                allIngredients.add(ing);
-//            }
-//
-//            Recipe recipe = new Recipe(NameRecipe,Category,PreparationTime,allIngredients,PreparationMethod);
-//            repo.saveNewRecipe(recipe, new RecipeRepository.OnAddNewRecipeListener() {
-//                @Override
-//                public void onSuccess(String message) {
-//                    Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
-//                    Log.d("saveNewRecipe::Succeed",message);
-//                }
-//
-//                @Override
-//                public void onFailure(Exception e) {
-//                    Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
-//                    Log.d("saveNewRecipe::Failure",e.getLocalizedMessage());
-//                }
-//            });
-//            Intent intent=new Intent();
-//            intent.setClass(getActivity(), MainActivity.class);
-//            getActivity().startActivity(intent);
-//        });
 
         return v;
 
