@@ -1,10 +1,12 @@
-package com.dvora.finalproject;
+package com.dvora.finalproject.fragments;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 
 import android.util.Log;
@@ -22,11 +24,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dvora.finalproject.R;
+import com.dvora.finalproject.Repository;
 import com.dvora.finalproject.activities.MainActivity;
+import com.dvora.finalproject.entities.Category;
 import com.dvora.finalproject.entities.Ingredient;
 import com.dvora.finalproject.entities.IngredientInfo;
 import com.dvora.finalproject.entities.Recipe;
-import com.dvora.finalproject.fragments.DialogIng;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -184,9 +188,11 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
                         Log.d("saveNewRecipe::Failure",e.getLocalizedMessage());
                     }
                 });
-                Intent intent=new Intent();
-                intent.setClass(getActivity(), MainActivity.class);
-                getActivity().startActivity(intent);
+                getFragmentManager().popBackStackImmediate();
+//                Intent intent=new Intent();
+//                intent.setClass(getActivity(), MainActivity.class);
+//                getActivity().startActivity(intent);
+
             }
         });
 
@@ -201,6 +207,12 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
             myListIng[myListIng.length - 1] = newIng;
             textIn.setAdapter(new ArrayAdapter<>(AddRecipeFragment.this.getContext(), android.R.layout.simple_list_item_1, myListIng));
         }
+    }
+    public void showFragment(Fragment frag) {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction tran = manager.beginTransaction();
+        tran.replace(R.id.fragment, frag);
+        tran.commit();
     }
 
     @Override

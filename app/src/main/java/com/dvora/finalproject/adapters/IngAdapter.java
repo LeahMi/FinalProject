@@ -1,4 +1,4 @@
-package com.dvora.finalproject;
+package com.dvora.finalproject.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dvora.finalproject.R;
+import com.dvora.finalproject.Repository;
 import com.dvora.finalproject.entities.Ingredient;
 import com.google.android.gms.tasks.OnSuccessListener;
 

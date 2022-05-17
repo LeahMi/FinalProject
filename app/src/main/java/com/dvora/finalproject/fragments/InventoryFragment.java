@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.dvora.finalproject.IngAdapter;
+import com.dvora.finalproject.adapters.IngAdapter;
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
 import com.dvora.finalproject.entities.Ingredient;

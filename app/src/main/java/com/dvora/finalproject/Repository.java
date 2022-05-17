@@ -1,10 +1,14 @@
 package com.dvora.finalproject;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.dvora.finalproject.entities.Category;
 import com.dvora.finalproject.entities.Ingredient;
 import com.dvora.finalproject.entities.IngredientInfo;
 import com.dvora.finalproject.entities.Recipe;
@@ -15,15 +19,17 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+
 
 public class Repository {
     private int count = 0;
@@ -32,6 +38,7 @@ public class Repository {
     public static final String RECIPES_PATH = "userRecipes";
     public static final String INGREDIENTS_PATH = "userIngredients";
     public DatabaseReference ref;
+    private StorageReference storageReference;
     public MutableLiveData<List<Recipe>> recipesData = new MutableLiveData<>();
     public MutableLiveData<Exception> exceptionsData = new MutableLiveData<>();
     public Repository() {
@@ -251,14 +258,20 @@ public class Repository {
         void onExceptionOccurred(Exception e);
     }
 
-    interface OnSearchAllRecipes {
+    public interface OnSearchAllRecipes {
         void onRecipesFound(List<Recipe> matches);
 
         void onNoRecipesFound(String message);
 
         void onExceptionOccurred(Exception e);
     }
+    public interface OnSearchAllCategories{
+        void onCategoriesFound(List<Category> matches);
 
+        void onNoCategoriesFound(String message);
+
+        void onExceptionOccurred(Exception e);
+    }
     interface OnSearchRecipesByIngredient {
         void onRecipesFound(List<Recipe> matches);
         void onNoRecipesFound(String message);
@@ -391,7 +404,67 @@ public class Repository {
             }
         });
     }
+    public void addCategory(Category category, OnSuccessListener listener){
+        ref.child("categories").child(category.getName()).setValue(category)
+                .addOnSuccessListener(aVoid -> listener.onSuccess("Successfully added " + category.getName() + " to the categories"))
+                .addOnFailureListener(e -> Log.d("no added",category.getName()+" no added to the categories"));
+    }
+    public void getAllCategories(OnSearchAllCategories listener){
+        ref.child("categories")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                    @Override
+                    public void onSuccess(DataSnapshot dataSnapshot) {
+                        Category match = null;
+                        List<Category> matches = new ArrayList<>();
+                        for (DataSnapshot categorySnapShot : dataSnapshot.getChildren()) {
+                            match = categorySnapShot.getValue(Category.class);
+                            if (match == null)
+                                continue;
+                            else {
+                                matches.add(match);
+                            }
+                        }
+                        if (matches.isEmpty()){
+                            listener.onNoCategoriesFound("No categories found");
+                        }else {
+                            listener.onCategoriesFound(matches);
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        listener.onExceptionOccurred(e);
+                    }
+                });
 
+    }
+    public void updateInventory(Recipe recipe,OnSuccessListener listener){
+        getAllIngredients(new OnSearchAllIngredients() {
+            @Override
+            public void onIngredientsFound(List<Ingredient> matches) {
+                List<IngredientInfo> list = recipe.getIngredients();
+                for(IngredientInfo ing :list) {
+                    for (Ingredient ingredientInventory : matches) {
+                        if(ingredientInventory.getName().equals(ing.getName())){
+                            ingredientInventory.setQuantity(ingredientInventory.getQuantity()-ing.getQuantity());
+                            updateIngredient(ingredientInventory, new OnSuccessListener() {
+                                @Override
+                                public void onSuccess(Object o) { }
+                            });
+                        }
+                    }
+                }
+                listener.onSuccess("המלאי עודכן");
+            }
+
+            @Override
+            public void onNoIngredientsFound(String message) { }
+
+            @Override
+            public void onExceptionOccurred(Exception e) { }
+        });
+    }
     public MutableLiveData<Exception> getExceptionsData() {
         return exceptionsData;
     }

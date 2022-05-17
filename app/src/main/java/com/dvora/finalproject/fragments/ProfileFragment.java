@@ -1,4 +1,4 @@
-package com.dvora.finalproject;
+package com.dvora.finalproject.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.dvora.finalproject.R;
+import com.dvora.finalproject.Repository;
 import com.dvora.finalproject.entities.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;

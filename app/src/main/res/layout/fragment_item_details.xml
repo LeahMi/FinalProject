@@ -17,7 +17,7 @@
         android:textSize="30sp" />
 
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/image_view"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_below="@+id/txtHeader"
@@ -45,19 +45,19 @@
 
                 <EditText
                     android:id="@+id/edt_category"
-                    android:layout_width="299dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:enabled="false"
                     android:inputType="textPersonName"
-                    android:textSize="30sp" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="קטגוריה: "
-                    android:textSize="30sp" />
+                    android:textSize="24sp" />
 
             </LinearLayout>
 
@@ -69,21 +69,20 @@
 
                 <EditText
                     android:id="@+id/edt_name"
-                    android:layout_width="361dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
                     android:ems="10"
                     android:enabled="false"
                     android:inputType="textPersonName"
-                    android:textSize="30sp" />
+                    android:textSize="24sp" />
 
 
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="שם: "
-                    android:textSize="30sp" />
+                    android:textSize="24sp" />
 
 
             </LinearLayout>
@@ -96,19 +95,19 @@
 
                 <EditText
                     android:id="@+id/edt_time"
-                    android:layout_width="214dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:enabled="false"
                     android:inputType="time"
-                    android:textSize="30sp" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/textView3"
-                    android:layout_width="197dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="זמן הכנה: "
-                    android:textSize="30sp" />
+                    android:textSize="24sp" />
 
             </LinearLayout>
 
@@ -122,14 +121,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="מרכיבים: "
-                    android:textSize="30sp" />
+                    android:textSize="24sp" />
 
                 <EditText
                     android:id="@+id/edt_ing"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
-                    android:textSize="30sp" />
+                    android:textSize="24sp" />
 
 
             </LinearLayout>
@@ -144,14 +143,14 @@
                     android:layout_width="400dp"
                     android:layout_height="wrap_content"
                     android:text="אופן ההכנה: "
-                    android:textSize="30sp" />
+                    android:textSize="24sp" />
 
                 <EditText
                     android:id="@+id/edt_prep_method"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
-                    android:textSize="30sp" />
+                    android:textSize="24sp" />
 
                 <Button
                     android:id="@+id/button"
