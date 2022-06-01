@@ -140,7 +140,8 @@ public class Repository {
             public void onIngredientsFound(List<Ingredient> matches) {
                 int numOfIngredients = 0;
                 for(Ingredient ingInventory :matches){
-                    hm.put(ingInventory.getName(),Double.valueOf(df.format(ingInventory.getQuantity())));
+//                    hm.put(ingInventory.getName(),Double.valueOf(df.format(ingInventory.getQuantity())));
+                    hm.put(ingInventory.getName(),ingInventory);
                 }
             }
 
@@ -168,8 +169,13 @@ public class Repository {
                                 int numOfIngs = l.size();
                                 for(IngredientInfo ingredientInfo:l){
                                     if(!(hm.isEmpty())) {
-                                        if (hm.containsKey(ingredientInfo.getName()) && ((Double)(hm.get(ingredientInfo.getName())))>=ingredientInfo.getQuantity()) {
-                                            count++;
+//                                        if (hm.containsKey(ingredientInfo.getName()) && ((Double)(hm.get(ingredientInfo.getName())))>=ingredientInfo.getQuantity()) {
+//                                            count++;
+                                        if (hm.containsKey(ingredientInfo.getName())) {
+                                            Ingredient ingInventory = (Ingredient)(hm.get(ingredientInfo.getName()));
+                                            Double quantity = convert(ingInventory,ingredientInfo);
+                                            if(ingInventory.getQuantity()>=quantity)
+                                                count++;
 
                                         }
                                     }
@@ -447,7 +453,13 @@ public class Repository {
                 for(IngredientInfo ing :list) {
                     for (Ingredient ingredientInventory : matches) {
                         if(ingredientInventory.getName().equals(ing.getName())){
-                            ingredientInventory.setQuantity(ingredientInventory.getQuantity()-ing.getQuantity());
+//                            if(ingredientInventory.getType().equals(ing.getType())){
+//
+//                            }
+//                            else{
+                                Double amount = convert(ingredientInventory,ing);
+//                            }
+                            ingredientInventory.setQuantity(ingredientInventory.getQuantity() - amount);
                             updateIngredient(ingredientInventory, new OnSuccessListener() {
                                 @Override
                                 public void onSuccess(Object o) { }
@@ -464,6 +476,81 @@ public class Repository {
             @Override
             public void onExceptionOccurred(Exception e) { }
         });
+    }
+    Double convert(Ingredient ingInventory ,IngredientInfo ingRecipe){
+        Double amount = 0.0;
+        switch (ingRecipe.getName()){
+            case "מלפפון":
+            case "עגבניה":
+            case "בצל":
+            case "כרישה":
+            case "תפוח אדמה":
+                amount = convertGrUnit(ingInventory,ingRecipe,200.0);
+                break;
+            case "גזר":
+                amount = convertGrUnit(ingInventory,ingRecipe,100.0);
+                break;
+            case "חציל":
+                amount = convertGrUnit(ingInventory,ingRecipe,350.0);
+                break;
+            case "קישוא":
+                amount = convertGrUnit(ingInventory,ingRecipe,170.0);
+                break;
+            case "בטטה":
+                amount = convertGrUnit(ingInventory,ingRecipe,290.0);
+                break;
+            case "דלורית":
+                amount = convertGrUnit(ingInventory,ingRecipe,700.0);
+                break;
+            case "ברוקולי":
+                amount = convertGrUnit(ingInventory,ingRecipe,600.0);
+                break;
+            case "קולורבי":
+                amount = convertGrUnit(ingInventory,ingRecipe,400.0);
+                break;
+            case "כרוב":
+                amount = convertGrUnit(ingInventory,ingRecipe,1500.0);
+                break;
+            case "גמבה":
+                amount = convertGrUnit(ingInventory,ingRecipe,150.0);
+                break;
+            case "לימון":
+                amount = convertGrUnit(ingInventory,ingRecipe,180.0);
+                break;
+            case "סלק":
+                amount = convertGrUnit(ingInventory,ingRecipe,270.0);
+                break;
+            default:
+                amount = ingRecipe.getQuantity();
+                break;
+        }
+        return amount;
+    }
+    public Double convertGrUnit(Ingredient ingInventory ,IngredientInfo ingRecipe, Double quantity){
+        Double amount = 0.0;
+        switch (ingInventory.getType()){
+            case "גרם":
+                switch (ingRecipe.getType()) {
+                    case "גרם":
+                        amount = ingRecipe.getQuantity();
+                        break;
+                    case "יחידה":
+                        amount = ingRecipe.getQuantity() * quantity;
+                        break;
+                }
+                break;
+            case "יחידה":
+                switch (ingRecipe.getType()) {
+                    case "יחידה":
+                        amount = ingRecipe.getQuantity();
+                        break;
+                    case "גרם":
+                        amount = ingRecipe.getQuantity() / quantity;
+                        break;
+                }
+                break;
+        }
+        return amount;
     }
     public MutableLiveData<Exception> getExceptionsData() {
         return exceptionsData;

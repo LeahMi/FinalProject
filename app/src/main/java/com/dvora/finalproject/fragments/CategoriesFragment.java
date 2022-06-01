@@ -25,6 +25,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
+
 public class CategoriesFragment extends Fragment {
 
     private ImageButton btnAdd;
@@ -55,6 +56,7 @@ public class CategoriesFragment extends Fragment {
                     }
                 });
                 rvCategories.setAdapter(adapter);
+//                rvCategories.setItemAnimator(new SlideInUpAnimator());
                 rvCategories.setLayoutManager(new LinearLayoutManager(getContext()));
             }
 

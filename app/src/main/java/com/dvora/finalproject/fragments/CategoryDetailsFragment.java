@@ -127,7 +127,7 @@ public class CategoryDetailsFragment extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFragment(new AddRecipeFragment());
+                openDetailsFragment1(category);
             }
         });
 
@@ -142,6 +142,8 @@ public class CategoryDetailsFragment extends Fragment {
     private void openDetailsFragment(Recipe recipe) {
         showFragment(ItemDetailsFragment.newInstance(recipe));
     }
-
+    private void openDetailsFragment1(Category category) {
+        showFragment(AddRecipeFragment.newInstance(category));
+    }
 
 }
