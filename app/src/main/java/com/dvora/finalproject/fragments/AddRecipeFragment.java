@@ -1,10 +1,12 @@
-package com.dvora.finalproject;
+package com.dvora.finalproject.fragments;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 
 import android.util.Log;
@@ -22,11 +24,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dvora.finalproject.R;
+import com.dvora.finalproject.Repository;
 import com.dvora.finalproject.activities.MainActivity;
+import com.dvora.finalproject.entities.Category;
 import com.dvora.finalproject.entities.Ingredient;
 import com.dvora.finalproject.entities.IngredientInfo;
 import com.dvora.finalproject.entities.Recipe;
-import com.dvora.finalproject.fragments.DialogIng;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +38,8 @@ import java.util.List;
 
 
 public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSelected{
+    public final static String CATEGORY_KEY = "CATEGORY_KEY";
+    private Category category1;
     private AutoCompleteTextView textIn;
     private EditText quantity, prep, name, category, time;
     private Button buttonAdd, buttonSave;
@@ -44,19 +50,35 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
     private TextView mInputDisplay;
     private Repository repo = new Repository();
 
+
+    public static AddRecipeFragment newInstance(Category category) {
+        AddRecipeFragment fragment = new AddRecipeFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(CATEGORY_KEY, category);
+        fragment.setArguments(args);
+        return fragment;
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        if(getArguments()!=null) {
+            Bundle bundle = getArguments();
+            category1 = (Category) bundle.getSerializable(CATEGORY_KEY);
+        }
     }
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_recipe, container, false);
         Spinner spinner =(Spinner) v.findViewById(R.id.spinner2);
-
+        Toast.makeText(getContext(),category1.getName(),Toast.LENGTH_SHORT).show();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, types);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -96,7 +118,7 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
 
         quantity = (EditText) v.findViewById(R.id.quantity);
         name = (EditText) v.findViewById(R.id.name);
-        category = (EditText) v.findViewById(R.id.category);
+        //category = (EditText) v.findViewById(R.id.category);
         time = (EditText) v.findViewById(R.id.time);
         prep = (EditText) v.findViewById(R.id.prep);
         buttonAdd = (Button) v.findViewById(R.id.add);
@@ -168,9 +190,9 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
                 Log.d("LLLLLLLLLLLLL", "allIngredients=====" + allIngredients);
                 String Name = name.getText().toString().trim();
                 String Time = time.getText().toString().trim();
-                String Category = category.getText().toString().trim();
+                //String Category = category.getText().toString().trim();
                 String Prep = prep.getText().toString().trim();
-                Recipe recipe = new Recipe(Name,Category,Time,allIngredients,Prep);
+                Recipe recipe = new Recipe(Name,category1.getName(),Time,allIngredients,Prep);
                 repo.saveNewRecipe(recipe, new Repository.OnAddNewRecipeListener() {
                     @Override
                     public void onSuccess(String message) {
@@ -184,9 +206,12 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
                         Log.d("saveNewRecipe::Failure",e.getLocalizedMessage());
                     }
                 });
-                Intent intent=new Intent();
-                intent.setClass(getActivity(), MainActivity.class);
-                getActivity().startActivity(intent);
+//                openDetailsFragment(category1);
+//                getFragmentManager().popBackStackImmediate();
+//                Intent intent=new Intent();
+//                intent.setClass(getActivity(), MainActivity.class);
+//                getActivity().startActivity(intent);
+
             }
         });
 
@@ -202,7 +227,15 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
             textIn.setAdapter(new ArrayAdapter<>(AddRecipeFragment.this.getContext(), android.R.layout.simple_list_item_1, myListIng));
         }
     }
-
+    public void showFragment(Fragment frag) {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction tran = manager.beginTransaction();
+        tran.replace(R.id.fragment, frag);
+        tran.commit();
+    }
+    private void openDetailsFragment(Category category) {
+        showFragment(CategoryDetailsFragment.newInstance(category));
+    }
     @Override
     public void sendInput(String input) {
         Log.d("DDDialog", "sendInput: found incoming input: " + input);

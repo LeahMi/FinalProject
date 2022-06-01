@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingEnd="30dp"
+    android:paddingStart="30dp"
+    android:background="#33c5c9cc"
+    tools:context=".fragments.AddCategoryFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="הוספת קטגוריה"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+
+    <EditText
+        android:id="@+id/nameCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:hint="שם" />
+
+    <Button
+        android:id="@+id/btn_upload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="בחר תמונה"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white" />
+
+    <Button
+        android:id="@+id/btn_add_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="הוסף"
+        app:backgroundTint="#32BDAC" />
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"/>
+
+
+
+</LinearLayout>

@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/listRecipesFragment2">
+    app:startDestination="@id/categoriesFragment">
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.dvora.finalproject.ProfileFragment"
-        android:label="הפרופיל שלי                                                      "
+        android:name="com.dvora.finalproject.fragments.ProfileFragment"
+        android:label="פרופיל                                                          "
         android:layout_width="400dp"
         tools:layout="@layout/fragment_profile" />
     <fragment
@@ -27,4 +27,35 @@
         android:label="רשימת קניות                                                      "
 
         tools:layout="@layout/fragment_list_shopping" />
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="com.dvora.finalproject.fragments.CategoriesFragment"
+        android:label="קטגוריות                                                         "
+        tools:layout="@layout/fragment_categories" >
+        <action
+            android:id="@+id/action_categoriesFragment_to_categoryDetailsFragment"
+            app:destination="@id/categoryDetailsFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/categoryDetailsFragment"
+        android:name="com.dvora.finalproject.fragments.CategoryDetailsFragment"
+        android:label="fragment_category_details"
+        tools:layout="@layout/fragment_category_details" >
+        <action
+            android:id="@+id/action_categoryDetailsFragment_to_itemDetailsFragment"
+            app:destination="@id/itemDetailsFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/itemDetailsFragment"
+        android:name="com.dvora.finalproject.fragments.ItemDetailsFragment"
+        android:label="fragment_item_details"
+        tools:layout="@layout/fragment_item_details" />
 </navigation>

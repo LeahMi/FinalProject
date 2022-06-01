@@ -6,8 +6,8 @@
         android:id="@+id/profileFragment"
         android:icon="@drawable/profile" />
     <item
-        android:id="@+id/listRecipesFragment2"
-        android:title="מתכונים"
+        android:id="@+id/categoriesFragment"
+        android:title="קטגוריות"
         android:icon="@drawable/ic_baseline_menu_book"/>
     <item
         android:title="מלאי"

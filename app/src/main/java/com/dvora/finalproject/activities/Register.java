@@ -1,4 +1,4 @@
-package com.dvora.finalproject;
+package com.dvora.finalproject.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dvora.finalproject.R;
-import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.entities.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;

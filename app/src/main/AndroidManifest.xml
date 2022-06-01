@@ -3,6 +3,8 @@
     package="com.dvora.finalproject">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -13,8 +15,8 @@
         android:theme="@style/Theme.FinalProject">
         <activity android:name=".activities.MainActivity"
             android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".Login" />
-        <activity android:name=".Register">
+        <activity android:name=".activities.Login" />
+        <activity android:name=".activities.Register">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
