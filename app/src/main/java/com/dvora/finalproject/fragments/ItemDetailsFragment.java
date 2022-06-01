@@ -73,9 +73,9 @@ public class ItemDetailsFragment extends Fragment implements View.OnClickListene
         String strList = "";
         for (int i = 0; i < list.size(); ++i) {
             if(i==list.size()-1)
-                strList = strList + list.get(i).getName()+" "+list.get(i).getQuantity()+" "+list.get(i).getType();
+                strList = strList + list.get(i).getQuantity()+" "+list.get(i).getType()+" "+list.get(i).getName();
             else
-                strList = strList + list.get(i).getName()+" "+list.get(i).getQuantity()+" "+list.get(i).getType()+ '\n';
+                strList = strList + list.get(i).getQuantity()+" "+list.get(i).getType()+" "+list.get(i).getName()+ '\n';
         }
         IngEt.setText(strList);
         return view;

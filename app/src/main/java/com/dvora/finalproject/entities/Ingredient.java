@@ -13,6 +13,9 @@ public class Ingredient {
 
     public Ingredient(String name, Double q, HashMap<String, Boolean> linkedRecipes, String[] type) {}
 
+    public Ingredient() {}
+
+
     public Ingredient(String name, double quantity, HashMap<String, Boolean> linkedRecipes,String type) {
         this.name=name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
         this.quantity = quantity;

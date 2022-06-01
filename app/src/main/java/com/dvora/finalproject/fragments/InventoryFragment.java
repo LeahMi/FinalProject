@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -25,8 +26,8 @@ import java.util.List;
 public class InventoryFragment extends Fragment {
     private AutoCompleteTextView textIn;
     private ListView list;
-    private Button buttonAdd;
-    private Button ListShopping;
+    private ImageButton buttonAdd;
+    private ImageButton ListShopping;
     private ArrayAdapter<String> arrayAdapter;
     String[] nameList = {};
     private SearchView searchViewInventory;
@@ -46,7 +47,7 @@ public class InventoryFragment extends Fragment {
         searchViewInventory=v.findViewById(R.id.search_bar_inventory);
         repo.getAllIngredients(new Repository.OnSearchAllIngredients() {
             public void onIngredientsFound(List<Ingredient> matches){
-                Toast.makeText(getContext(),matches.size() + " Ingredients Found!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),matches.size() + " מרכיבים נמצאו",Toast.LENGTH_SHORT).show();
                 list= v.findViewById(R.id.mainlistinventory_listv);
                 int i=0;
                 nameList=new String[matches.size()];
@@ -71,10 +72,7 @@ public class InventoryFragment extends Fragment {
                     }
                 });
             }
-            // @Override
-//            public void onIngredientsFound(List <Ingredient>) {
-//
-//            }
+
 
             @Override
             public void onNoIngredientsFound(String message) {
@@ -87,8 +85,7 @@ public class InventoryFragment extends Fragment {
                 Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
-        //ScrollView InventoryScroll = (ScrollView) v.findViewById(R.id.InventoryScroll);
-        // textIn = v.findViewById(R.id.textin);
+
         ListShopping=v.findViewById(R.id.btn_list_shopping);
         ListShopping.setOnClickListener(new View.OnClickListener() {
             @Override
