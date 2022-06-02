@@ -85,20 +85,6 @@ public class CategoryDetailsFragment extends Fragment {
                 });
                 rvRecipes.setAdapter(adapter);
                 rvRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
-//                list= v.findViewById(R.id.list_view);
-//                searchView= v.findViewById(R.id.search_bar_category);
-//                for (Recipe recipe:matches){
-//                    if(recipe.getCategory().equals(category.getName()))
-//                        recipesList.add(recipe);
-//                }
-//                RecipeAdapter adapter = new RecipeAdapter(recipesList, getContext(), new ICallbackAdapter() {
-//
-//                    @Override
-//                    public void onClickItem(Recipe recipe) {
-//                        openDetailsFragment(recipe);
-//                    }
-//                });
-//                list.setAdapter(adapter);
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {

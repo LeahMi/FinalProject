@@ -21,7 +21,7 @@ import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
 import com.dvora.finalproject.adapters.CategoryAdapter;
 import com.dvora.finalproject.entities.Category;
-import com.google.firebase.storage.StorageReference;
+
 
 import java.util.List;
 
@@ -30,7 +30,6 @@ public class CategoriesFragment extends Fragment {
 
     private ImageButton btnAdd;
     private RecyclerView rvCategories;
-    private StorageReference storageReference;
     private Repository repo = new Repository();
 
     @Override

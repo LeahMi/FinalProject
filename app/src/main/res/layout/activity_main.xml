@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
@@ -16,9 +17,9 @@
         app:itemRippleColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_menu" />
-
 
     <fragment
         android:id="@+id/fragment"

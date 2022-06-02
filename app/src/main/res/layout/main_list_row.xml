@@ -18,7 +18,7 @@
         android:layout_toEndOf="@+id/img_profile"
         android:text="example."
         android:textAlignment="textStart"
-        android:textColor="@android:color/holo_blue_bright"
+        android:textColor="@color/black"
         android:textSize="30sp" />
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_toEndOf="@+id/img_profile"
         android:text="Category"
         android:textAlignment="textStart"
-        android:textColor="@android:color/holo_blue_bright"
+        android:textColor="@color/black"
         android:textSize="25sp" />
 
     <ImageView
