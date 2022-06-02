@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
+import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.entities.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,6 +41,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_profile, container, false);
+        //((MainActivity)getActivity()).changeActionBarTitle("פרופיל",false);
         Name= (TextView) v.findViewById(R.id.texthello);
         Name.setText("שלום "+ FullName);
         repo.getProfile(new Repository.OnSearchProfile() {

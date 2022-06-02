@@ -52,7 +52,6 @@ public class ListShoppingFragment extends Fragment {
             public void onClick(View view) {
                 String ListS = testEditText.getText().toString().trim();
                 repo.SaveListShopping(ListS);
-
             }
         });
         return v;

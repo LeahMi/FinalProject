@@ -7,8 +7,8 @@
         android:icon="@drawable/profile" />
     <item
         android:id="@+id/categoriesFragment"
-        android:title="קטגוריות"
-        android:icon="@drawable/ic_baseline_menu_book"/>
+        android:icon="@drawable/ic_baseline_menu_book"
+        android:title="מתכונים" />
     <item
         android:title="מלאי"
         android:id="@+id/inventoryFragment"

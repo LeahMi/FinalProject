@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import com.dvora.finalproject.ICallBackAdapterCategory;
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
+import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.adapters.CategoryAdapter;
 import com.dvora.finalproject.entities.Category;
 import com.google.firebase.storage.StorageReference;
@@ -30,13 +31,11 @@ public class CategoriesFragment extends Fragment {
 
     private ImageButton btnAdd;
     private RecyclerView rvCategories;
-    private StorageReference storageReference;
     private Repository repo = new Repository();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -44,7 +43,6 @@ public class CategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v=inflater.inflate(R.layout.fragment_categories, container, false);
-
         repo.getAllCategories(new Repository.OnSearchAllCategories() {
             @Override
             public void onCategoriesFound(List<Category> matches) {
@@ -84,9 +82,11 @@ public class CategoriesFragment extends Fragment {
     public void showFragment(Fragment frag) {
         FragmentManager manager = getFragmentManager();
         FragmentTransaction tran = manager.beginTransaction();
+
         tran.replace(R.id.fragment, frag).addToBackStack(null);
         tran.commit();
     }
+
     private void openDetailsFragment(Category category) {
         showFragment(CategoryDetailsFragment.newInstance(category));
     }

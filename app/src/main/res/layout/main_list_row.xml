@@ -15,7 +15,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="61dp"
-        android:layout_toEndOf="@+id/img_profile"
+        android:layout_toEndOf="@+id/img_recipe"
         android:text="example."
         android:textAlignment="textStart"
         android:textColor="@android:color/holo_blue_bright"
@@ -30,8 +30,8 @@
         android:layout_marginTop="6dp"
         android:layout_marginEnd="26dp"
         android:layout_toStartOf="@+id/mainlistrow_text_v3"
-        android:layout_toEndOf="@+id/img_profile"
-        android:text="Category"
+        android:layout_toEndOf="@+id/img_recipe"
+        android:text="Time"
         android:textAlignment="textStart"
         android:textColor="@android:color/holo_blue_bright"
         android:textSize="25sp" />
@@ -39,7 +39,7 @@
     <ImageView
         android:scaleType="centerInside"
         android:src="@drawable/image_recipe"
-        android:id="@+id/img_profile"
+        android:id="@+id/img_recipe"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentTop="true" />

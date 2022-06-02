@@ -10,6 +10,7 @@ public class Recipe implements Serializable {
     private List<IngredientInfo> ingredientInfo;
     private String preparationMethod;
     private Double percentIng = 0.0;
+    private String imgUrl;
 
     public Recipe() {
     }
@@ -29,6 +30,16 @@ public class Recipe implements Serializable {
         this.preparationMethod = preparationMethod;
         this.percentIng = percentIng;
     }
+    public Recipe(String nameRecipe, String category, String preparationTime, List<IngredientInfo> ingredientInfo, String preparationMethod, Double percentIng, String imgUrl) {
+        this.nameRecipe = nameRecipe;
+        this.category = category;
+        this.preparationTime = preparationTime;
+        this.ingredientInfo = ingredientInfo;
+        this.preparationMethod = preparationMethod;
+        this.percentIng = percentIng;
+        this.imgUrl = imgUrl;
+    }
+
 
     public void setNameRecipe(String nameRecipe) {
         this.nameRecipe = nameRecipe;
@@ -69,6 +80,8 @@ public class Recipe implements Serializable {
     public String getPreparationMethod() {
         return preparationMethod;
     }
+
+    public String getImgUrl() { return imgUrl; }
 
     @Override
     public String toString() {

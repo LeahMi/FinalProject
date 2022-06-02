@@ -60,6 +60,7 @@ public class ItemDetailsFragment extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_item_details, container, false);
+        //((MainActivity)getActivity()).changeActionBarTitle(recipe.getCategory()  + ": " + recipe.getNameRecipe(),false);
         repo.getAllCategories(new Repository.OnSearchAllCategories() {
             @Override
             public void onCategoriesFound(List<Category> matches) {

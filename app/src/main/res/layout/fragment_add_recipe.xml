@@ -5,19 +5,21 @@
     android:id="@+id/fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#6F009688"
     android:baselineAligned="true"
     android:orientation="vertical"
     android:paddingLeft="0dp"
     android:paddingTop="35dp"
+    android:background="#33c5c9cc"
     android:paddingRight="0dp"
     android:paddingBottom="0dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:text="הוספת מתכון"
-        android:textSize="20dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <ScrollView
@@ -29,21 +31,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp">
 
             <EditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="11dp"
                 android:hint="שם" />
 
             <EditText
                 android:id="@+id/time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="11dp"
                 android:hint="זמן הכנה" />
+<!--                android:layout_marginRight="11dp"-->
+
+
+
+            <Spinner
+                android:id="@+id/spinner_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+<!--                android:layout_marginRight="11dp" -->
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -65,7 +76,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="16dp"
                     android:hint="מרכיב" />
 
                 <Spinner
@@ -87,26 +97,40 @@
                     app:backgroundTint="#009688" />
             </RelativeLayout>
 
-
             <LinearLayout
                 android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical">
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/prep"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="11dp"
                 android:hint="אופן ההכנה" />
+
+            <ImageView
+                android:id="@+id/image_view_recipe_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+            <Button
+                android:id="@+id/btn_upload_recipe_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="בחר תמונה"
+                android:textColor="@color/black"
+                app:backgroundTint="@color/white" />
 
             <Button
                 android:id="@+id/saveBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="שמור"
-                app:backgroundTint="#009688"></Button>
+                app:backgroundTint="#009688">
+            </Button>
 
 
         </LinearLayout>

@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.adapters.IngAdapter;
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
@@ -44,6 +45,7 @@ public class InventoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_inventory, container, false);
+        //((MainActivity)getActivity()).changeActionBarTitle("מלאי",false);
         searchViewInventory=v.findViewById(R.id.search_bar_inventory);
         repo.getAllIngredients(new Repository.OnSearchAllIngredients() {
             public void onIngredientsFound(List<Ingredient> matches){

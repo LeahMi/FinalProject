@@ -8,6 +8,7 @@
     android:paddingEnd="30dp"
     android:paddingStart="30dp"
     android:background="#33c5c9cc"
+    android:paddingTop="35dp"
     tools:context=".fragments.AddCategoryFragment">
 
     <TextView
