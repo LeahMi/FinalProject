@@ -41,40 +41,46 @@
                 android:layout_height="wrap_content"
                 android:hint="שם" />
 
-            <EditText
-                android:id="@+id/time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="זמן הכנה" />
 <!--                android:layout_marginRight="11dp"-->
-
-
+            <Spinner
+                android:id="@+id/spinner_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </Spinner>
 
             <Spinner
                 android:id="@+id/spinner_level"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                />
 <!--                android:layout_marginRight="11dp" -->
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="רכיבים"
+                android:textSize="18sp">
+            </TextView>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@drawable/border">
 
 
                 <EditText
                     android:id="@+id/quantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="57dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="91dp"
+                    android:layout_marginEnd="108dp"
                     android:layout_marginRight="12dp"
 
                     android:hint="כמות" />
 
                 <AutoCompleteTextView
                     android:id="@+id/textin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="93dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:hint="מרכיב" />
 
@@ -82,27 +88,33 @@
                     android:id="@+id/spinner2"
                     android:layout_width="101dp"
                     android:layout_height="42dp"
-                    android:layout_marginEnd="31dp"
+                    android:layout_marginEnd="19dp"
                     android:layout_toStartOf="@+id/quantity" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
                     android:layout_marginStart="0dp"
                     android:layout_marginRight="308dp"
-                    android:text="הוסף"
-                    app:backgroundTint="#009688" />
+                    android:background="@drawable/ic_plus"/>
+
+                <LinearLayout
+                    android:id="@+id/container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="60dp"
+                    android:orientation="vertical">
+                </LinearLayout>
             </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-            </LinearLayout>
 
             <EditText
                 android:id="@+id/prep"
@@ -129,8 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="שמור"
-                app:backgroundTint="#009688">
-            </Button>
+                app:backgroundTint="@color/red_a"></Button>
 
 
         </LinearLayout>

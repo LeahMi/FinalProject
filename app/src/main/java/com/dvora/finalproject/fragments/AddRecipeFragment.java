@@ -4,7 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
+import android.graphics.Color;
+import android.graphics.ColorSpace;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -35,7 +40,6 @@ import android.widget.Toast;
 import com.dvora.finalproject.FirebaseManager;
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
-import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.entities.Category;
 import com.dvora.finalproject.entities.Ingredient;
 import com.dvora.finalproject.entities.IngredientInfo;
@@ -61,12 +65,16 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
     private ImageView imageView;
     private Category category1;
     private AutoCompleteTextView textIn;
-    private EditText quantity, prep, name, category, time;
-    private Button buttonAdd, buttonSave, btnUpload;
-    private String qua, ing, type, level;
+    private EditText quantity, prep, name;
+    private Button buttonSave, btnUpload;
+    private ImageButton buttonAdd;
+    private String qua, ing, type, level, Time;
     private IngredientInfo ingr;
+    private String[] times = {"זמן הכנה","10 דק'","15 דק'","30 דק'","45 דק'","שעה","שעה +"};
     private String[] types = {"גרם","קורט","מל","יחידה","כפית","כף","כוס"};
-    private String[] levels = {"קל","בינוני","קשה"};
+    private String[] levels = {"דרגת קושי","קל","בינוני","קשה"};
+    List<String> spinnerlist, spinnerListTime;
+    ArrayAdapter<String> arrayadapter, arrayadapterTimes;
     private String[] myListIng;
     private List<IngredientInfo> allIngredients = new ArrayList<>();
     private TextView mInputDisplay;
@@ -103,10 +111,46 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
         storageReference = storage.getReference();
         imageView = (ImageView) v.findViewById(R.id.image_view_recipe_img);
         Spinner spinner =(Spinner) v.findViewById(R.id.spinner2);
-        Spinner spinner1 = (Spinner) v.findViewById(R.id.spinner_level);
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, levels);
-        spinner1.setAdapter(adapter1);
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        Spinner spinnerLevel = (Spinner) v.findViewById(R.id.spinner_level);
+        Spinner spinnerTime = (Spinner) v.findViewById(R.id.spinner_time); 
+        spinnerlist = new ArrayList<>(Arrays.asList(levels));
+        spinnerListTime = new ArrayList<>(Arrays.asList(times));
+//        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, levels);
+//        spinnerLevel.setAdapter(adapter1);
+        /////////
+        arrayadapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,spinnerlist){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0) {
+                    //Disable the first item of spinner.
+                    return false;
+                }
+                else
+                    return true;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,ViewGroup parent)
+            {
+                View spinnerview = super.getDropDownView(position, convertView, parent);
+
+                TextView spinnertextview = (TextView) spinnerview;
+
+                if(position == 0) {
+                    //Set the disable spinner item color fade .
+                    spinnertextview.setTextColor(Color.parseColor("#bcbcbb"));
+                }
+                else 
+                    spinnertextview.setTextColor(Color.BLACK);
+                return spinnerview;
+            }
+        };
+
+        arrayadapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        spinnerLevel.setAdapter(arrayadapter);
+        /////////
+        spinnerLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.v("item", (String) parent.getItemAtPosition(position));
@@ -116,6 +160,50 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
         });
+        ///////////////////////////
+        arrayadapterTimes = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,spinnerListTime){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0) {
+                    //Disable the first item of spinner.
+                    return false;
+                }
+                else
+                    return true;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,ViewGroup parent)
+            {
+                View spinnerview = super.getDropDownView(position, convertView, parent);
+
+                TextView spinnertextview = (TextView) spinnerview;
+
+                if(position == 0) {
+                    //Set the disable spinner item color fade .
+                    spinnertextview.setTextColor(Color.parseColor("#bcbcbb"));
+                }
+                else
+                    spinnertextview.setTextColor(Color.BLACK);
+                return spinnerview;
+            }
+        };
+
+        arrayadapterTimes.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        spinnerTime.setAdapter(arrayadapterTimes);
+        spinnerTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.v("item", (String) parent.getItemAtPosition(position));
+                Time = (String)parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+        ///////////////////////////
+
         Toast.makeText(getContext(),category1.getName(),Toast.LENGTH_SHORT).show();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, types);
         spinner.setAdapter(adapter);
@@ -156,10 +244,8 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
 
         quantity = (EditText) v.findViewById(R.id.quantity);
         name = (EditText) v.findViewById(R.id.name);
-        //category = (EditText) v.findViewById(R.id.category);
-        time = (EditText) v.findViewById(R.id.time);
         prep = (EditText) v.findViewById(R.id.prep);
-        buttonAdd = (Button) v.findViewById(R.id.add);
+        buttonAdd = (ImageButton) v.findViewById(R.id.add);
         buttonSave = (Button) v.findViewById(R.id.saveBtn);
         btnUpload = (Button) v.findViewById(R.id.btn_upload_recipe_img);
         //buttonSave.setEnabled(false);
@@ -197,7 +283,7 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
                             allIngredients.add(ingr);
                             textIn.setText("");
                             quantity.setText("");
-                            Button buttonRemove = (Button) addView.findViewById(R.id.remove);
+                            ImageButton buttonRemove = (ImageButton) addView.findViewById(R.id.remove);
                             buttonRemove.setOnClickListener(new View.OnClickListener() {
 
                                 @Override
@@ -237,9 +323,19 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
 //                Intent intent=new Intent();
 //                intent.setClass(getActivity(), MainActivity.class);
 //                getActivity().startActivity(intent);
-                saveInFirebase();
-                FirebaseUser currentUser = FirebaseManager.currentUser;
-                String user =currentUser.getUid();
+                if(TextUtils.isEmpty(name.getText().toString().trim())){
+                    name.setError("הזן שם מתכון");
+                    return;
+                }
+                if(allIngredients.isEmpty()){
+                    textIn.setError("הזן רכיב");
+                    return;
+                }
+                else {
+                    saveInFirebase();
+                    FirebaseUser currentUser = FirebaseManager.currentUser;
+                    String user = currentUser.getUid();
+                }
             }
         });
 
@@ -287,10 +383,8 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
                             public void onSuccess(Uri uri) {
                                 Log.d("LLLLLLLLLLLLL", "allIngredients=====" + allIngredients);
                                 String Name = name.getText().toString().trim();
-                                String Time = time.getText().toString().trim();
-                                //String Category = category.getText().toString().trim();
                                 String Prep = prep.getText().toString().trim();
-                                Recipe recipe = new Recipe(Name,category1.getName(),Time,allIngredients,Prep,0.0,uri.toString());
+                                Recipe recipe = new Recipe(Name,category1.getName(),Time,allIngredients,Prep,0.0,uri.toString(),level);
                                 repo.saveNewRecipe(recipe, new Repository.OnAddNewRecipeListener() {
                                     @Override
                                     public void onSuccess(String message) {
@@ -340,7 +434,6 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
         else{
             Log.d("LLLLLLLLLLLLL", "allIngredients=====" + allIngredients);
             String Name = name.getText().toString().trim();
-            String Time = time.getText().toString().trim();
             //String Category = category.getText().toString().trim();
             String Prep = prep.getText().toString().trim();
             Recipe recipe = new Recipe(Name,category1.getName(),Time,allIngredients,Prep,0.0,"null");

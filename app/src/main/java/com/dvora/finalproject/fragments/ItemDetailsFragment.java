@@ -120,6 +120,7 @@ public class ItemDetailsFragment extends Fragment implements View.OnClickListene
     private void openDetailsFragment(Category category) {
         showFragment(CategoryDetailsFragment.newInstance(category));
     }
+
     @Override
     public void onClick(View v) {
         if(v == btn_back){

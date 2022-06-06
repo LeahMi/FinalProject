@@ -176,7 +176,6 @@ public class Repository {
                                             Double quantity = convert(ingInventory,ingredientInfo);
                                             if(ingInventory.getQuantity()>=quantity)
                                                 count++;
-
                                         }
                                     }
                                 }
@@ -187,6 +186,9 @@ public class Repository {
                                     double d = (double)count / (double)numOfIngs;
                                     d = Double.valueOf(df.format(d));
                                     ref.child(RECIPES_PATH).child(recipeSnapShot.getKey()).child("percentIng").setValue(d * 100);
+                                }
+                                else{
+                                    ref.child(RECIPES_PATH).child(recipeSnapShot.getKey()).child("percentIng").setValue(0);
                                 }
                             }
                             Log.d("TAG", "match===============" + match);
@@ -479,51 +481,55 @@ public class Repository {
     }
     Double convert(Ingredient ingInventory ,IngredientInfo ingRecipe){
         Double amount = 0.0;
-        switch (ingRecipe.getName()){
-            case "מלפפון":
-            case "עגבניה":
-            case "בצל":
-            case "כרישה":
-            case "תפוח אדמה":
-                amount = convertGrUnit(ingInventory,ingRecipe,200.0);
-                break;
-            case "גזר":
-                amount = convertGrUnit(ingInventory,ingRecipe,100.0);
-                break;
-            case "חציל":
-                amount = convertGrUnit(ingInventory,ingRecipe,350.0);
-                break;
-            case "קישוא":
-                amount = convertGrUnit(ingInventory,ingRecipe,170.0);
-                break;
-            case "בטטה":
-                amount = convertGrUnit(ingInventory,ingRecipe,290.0);
-                break;
-            case "דלורית":
-                amount = convertGrUnit(ingInventory,ingRecipe,700.0);
-                break;
-            case "ברוקולי":
-                amount = convertGrUnit(ingInventory,ingRecipe,600.0);
-                break;
-            case "קולורבי":
-                amount = convertGrUnit(ingInventory,ingRecipe,400.0);
-                break;
-            case "כרוב":
-                amount = convertGrUnit(ingInventory,ingRecipe,1500.0);
-                break;
-            case "גמבה":
-                amount = convertGrUnit(ingInventory,ingRecipe,150.0);
-                break;
-            case "לימון":
-                amount = convertGrUnit(ingInventory,ingRecipe,180.0);
-                break;
-            case "סלק":
-                amount = convertGrUnit(ingInventory,ingRecipe,270.0);
-                break;
-            default:
-                amount = ingRecipe.getQuantity();
-                break;
-        }
+            switch (ingRecipe.getName()) {
+                case "מלפפון":
+                case "עגבניה":
+                case "בצל":
+                case "כרישה":
+                case "תפוח אדמה":
+                    amount = convertGrUnit(ingInventory, ingRecipe, 200.0);
+                    break;
+                case "גזר":
+                    amount = convertGrUnit(ingInventory, ingRecipe, 100.0);
+                    break;
+                case "חציל":
+                    amount = convertGrUnit(ingInventory, ingRecipe, 350.0);
+                    break;
+                case "קישוא":
+                    amount = convertGrUnit(ingInventory, ingRecipe, 170.0);
+                    break;
+                case "בטטה":
+                    amount = convertGrUnit(ingInventory, ingRecipe, 290.0);
+                    break;
+                case "דלורית":
+                    amount = convertGrUnit(ingInventory, ingRecipe, 700.0);
+                    break;
+                case "ברוקולי":
+                    amount = convertGrUnit(ingInventory, ingRecipe, 600.0);
+                    break;
+                case "קולורבי":
+                    amount = convertGrUnit(ingInventory, ingRecipe, 400.0);
+                    break;
+                case "כרוב":
+                    amount = convertGrUnit(ingInventory, ingRecipe, 1500.0);
+                    break;
+                case "גמבה":
+                    amount = convertGrUnit(ingInventory, ingRecipe, 150.0);
+                    break;
+                case "לימון":
+                    amount = convertGrUnit(ingInventory, ingRecipe, 180.0);
+                    break;
+                case "סלק":
+                    amount = convertGrUnit(ingInventory, ingRecipe, 270.0);
+                    break;
+                case "שמן":
+                case "חלב":
+                    amount = convertMlUnit(ingInventory, ingRecipe, 1000.0);
+                    break;
+                default:
+                    amount = ingRecipe.getQuantity();
+                    break;
+            }
         return amount;
     }
     public Double convertGrUnit(Ingredient ingInventory ,IngredientInfo ingRecipe, Double quantity){
@@ -545,6 +551,32 @@ public class Repository {
                         amount = ingRecipe.getQuantity();
                         break;
                     case "גרם":
+                        amount = ingRecipe.getQuantity() / quantity;
+                        break;
+                }
+                break;
+        }
+        return amount;
+    }
+    public Double convertMlUnit(Ingredient ingInventory ,IngredientInfo ingRecipe, Double quantity){
+        Double amount = 0.0;
+        switch (ingInventory.getType()){
+            case "מל":
+                switch (ingRecipe.getType()) {
+                    case "מל":
+                        amount = ingRecipe.getQuantity();
+                        break;
+                    case "יחידה":
+                        amount = ingRecipe.getQuantity() * quantity;
+                        break;
+                }
+                break;
+            case "יחידה":
+                switch (ingRecipe.getType()) {
+                    case "יחידה":
+                        amount = ingRecipe.getQuantity();
+                        break;
+                    case "מל":
                         amount = ingRecipe.getQuantity() / quantity;
                         break;
                 }

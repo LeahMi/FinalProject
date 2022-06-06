@@ -56,6 +56,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                     .load(data.get(position).getImgUrl())
                     .into(holder.imageViewRecipe);
         }
+        if(holder.recipeRow.getPercentIng()==100.0)
+            holder.imgFood.setImageResource(R.drawable.food_green);
+        else
+            holder.imgFood.setImageResource(R.drawable.food_red);
         //holder.image.setImageResource(data.get(position).getImgUrl());
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
@@ -81,13 +85,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         TextView tv2;
         TextView tv3;
         View layout;
-        ImageView imageViewRecipe;
+        ImageView imageViewRecipe, imgFood;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tv = itemView.findViewById(R.id.mainlistrow_text_v);
             tv2 = itemView.findViewById(R.id.mainlistrow_text_v2);
             tv3 =itemView.findViewById(R.id.mainlistrow_text_v3);
             imageViewRecipe = itemView.findViewById(R.id.img_recipe);
+            imgFood = itemView.findViewById(R.id.img_food);
             layout =itemView.findViewById(R.id.mainlistrow_lay);
         }
     }

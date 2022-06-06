@@ -11,47 +11,69 @@
         android:id="@+id/mainlistrow_text_v"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="25dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="61dp"
-        android:layout_toEndOf="@+id/img_recipe"
-        android:text="example."
-        android:textAlignment="textStart"
-        android:textColor="@android:color/holo_blue_bright"
-        android:textSize="30sp" />
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@+id/img_recipe"
+        android:text="Name"
+        android:textAlignment="textEnd"
+        android:textColor="@color/black"
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/mainlistrow_text_v2"
-        android:layout_width="167dp"
-        android:layout_height="34dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/mainlistrow_text_v"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="26dp"
-        android:layout_toStartOf="@+id/mainlistrow_text_v3"
-        android:layout_toEndOf="@+id/img_recipe"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="6dp"
+        android:layout_toStartOf="@+id/imageView3"
         android:text="Time"
-        android:textAlignment="textStart"
-        android:textColor="@android:color/holo_blue_bright"
-        android:textSize="25sp" />
+        android:textAlignment="textEnd"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
 
     <ImageView
-        android:scaleType="centerInside"
-        android:src="@drawable/image_recipe"
         android:id="@+id/img_recipe"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="2dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image_recipe" />
 
     <TextView
         android:id="@+id/mainlistrow_text_v3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/mainlistrow_text_v"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="19dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="6dp"
+        android:layout_toStartOf="@+id/img_food"
         android:text="TextView"
+        android:textAlignment="textEnd"
         android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mainlistrow_text_v"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="4dp"
+        android:layout_toStartOf="@+id/img_recipe"
+        app:srcCompat="@drawable/timer" />
+
+    <ImageView
+        android:id="@+id/img_food"
+        android:layout_width="33dp"
+        android:layout_height="22dp"
+        android:layout_alignTop="@+id/mainlistrow_text_v2"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="13dp"
+        android:layout_toStartOf="@+id/mainlistrow_text_v2"
+        app:srcCompat="@drawable/food_black" />
+
 </RelativeLayout>

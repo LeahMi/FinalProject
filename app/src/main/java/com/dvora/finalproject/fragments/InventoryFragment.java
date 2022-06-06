@@ -45,7 +45,7 @@ public class InventoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_inventory, container, false);
-        //((MainActivity)getActivity()).changeActionBarTitle("מלאי",false);
+//        ((MainActivity)getActivity()).changeActionBarTitle("מלאי",false);
         searchViewInventory=v.findViewById(R.id.search_bar_inventory);
         repo.getAllIngredients(new Repository.OnSearchAllIngredients() {
             public void onIngredientsFound(List<Ingredient> matches){

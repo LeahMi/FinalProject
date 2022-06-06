@@ -5,28 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <Button
+    <ImageButton
         android:id="@+id/remove"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentLeft="true"
-        android:text="Remove"
-        app:backgroundTint="#DAD9D9" />
+        android:background="@drawable/ic_remove" />
+
     <TextView
         android:id="@+id/textout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/textout2"/>
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@id/textout2" />
+
     <TextView
         android:id="@+id/textout2"
-        android:layout_width="60dp"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/textout3"/>
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@id/textout3" />
 
     <TextView
         android:id="@+id/textout3"
-        android:layout_width="60dp"
+        android:layout_width="35dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="35dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/remove" />
 </RelativeLayout>
