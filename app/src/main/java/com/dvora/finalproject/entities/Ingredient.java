@@ -2,6 +2,8 @@ package com.dvora.finalproject.entities;
 
 import com.google.firebase.database.Exclude;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 
 public class Ingredient {
@@ -50,7 +52,9 @@ public class Ingredient {
         this.name = name;
     }
     public void setQuantity(double quantity) {
-        this.quantity = quantity;
+        BigDecimal newQuantity = new BigDecimal(quantity).setScale(2, RoundingMode.HALF_UP);
+        this.quantity = newQuantity.doubleValue();
+        //this.quantity = Math.round((quantity * 100.0) / 100.0);
     }
 
     @Override

@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.dvora.finalproject.ICallbackAdapter;
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
+import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.adapters.RecipeAdapter;
 import com.dvora.finalproject.entities.Category;
 import com.dvora.finalproject.entities.Recipe;
@@ -57,8 +58,10 @@ public class CategoryDetailsFragment extends Fragment {
         if(getArguments()!=null) {
             Bundle bundle = getArguments();
             category = (Category) bundle.getSerializable(CATEGORY_KEY);
+
         }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +71,7 @@ public class CategoryDetailsFragment extends Fragment {
         btnAdd = (ImageButton) v.findViewById(R.id.btn_add_rec);
         name = (TextView) v.findViewById(R.id.name_category_tv);
         name.setText(category.getName());
+        //((MainActivity) getActivity()).changeActionBarTitle(category.getName(),false);
         repo.getAllRecipes(new Repository.OnSearchAllRecipes() {
             @Override
             public void onRecipesFound(List<Recipe> matches) {
@@ -122,7 +126,7 @@ public class CategoryDetailsFragment extends Fragment {
     public void showFragment(Fragment frag) {
         FragmentManager manager = getFragmentManager();
         FragmentTransaction tran = manager.beginTransaction();
-        tran.replace(R.id.fragment, frag);
+        tran.replace(R.id.fragment, frag).addToBackStack(null);
         tran.commit();
     }
     private void openDetailsFragment(Recipe recipe) {

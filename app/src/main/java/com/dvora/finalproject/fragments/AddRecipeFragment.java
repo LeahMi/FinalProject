@@ -1,14 +1,25 @@
 package com.dvora.finalproject.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.ColorSpace;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,36 +29,59 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dvora.finalproject.FirebaseManager;
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
-import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.entities.Category;
 import com.dvora.finalproject.entities.Ingredient;
 import com.dvora.finalproject.entities.IngredientInfo;
 import com.dvora.finalproject.entities.Recipe;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 
 public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSelected{
     public final static String CATEGORY_KEY = "CATEGORY_KEY";
+    private ImageView imageView;
     private Category category1;
     private AutoCompleteTextView textIn;
-    private EditText quantity, prep, name, category, time;
-    private Button buttonAdd, buttonSave;
-    private String qua, ing, type;
+    private EditText quantity, prep, name;
+    private Button buttonSave, btnUpload;
+    private ImageButton buttonAdd;
+    private String qua, ing, type, level, Time;
     private IngredientInfo ingr;
+    private String[] times = {"זמן הכנה","10 דק'","15 דק'","30 דק'","45 דק'","שעה","שעה +"};
     private String[] types = {"גרם","קורט","מל","יחידה","כפית","כף","כוס"};
+    private String[] levels = {"דרגת קושי","קל","בינוני","קשה"};
+    List<String> spinnerlist, spinnerListTime;
+    ArrayAdapter<String> arrayadapter, arrayadapterTimes;
     private String[] myListIng;
+    private List<IngredientInfo> allIngredients = new ArrayList<>();
     private TextView mInputDisplay;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+    private final int IMG_REQUEST_ID = 10;
+    private Uri imgUri;
     private Repository repo = new Repository();
 
 
@@ -68,16 +102,108 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
             category1 = (Category) bundle.getSerializable(CATEGORY_KEY);
         }
     }
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_recipe, container, false);
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        imageView = (ImageView) v.findViewById(R.id.image_view_recipe_img);
         Spinner spinner =(Spinner) v.findViewById(R.id.spinner2);
+        Spinner spinnerLevel = (Spinner) v.findViewById(R.id.spinner_level);
+        Spinner spinnerTime = (Spinner) v.findViewById(R.id.spinner_time); 
+        spinnerlist = new ArrayList<>(Arrays.asList(levels));
+        spinnerListTime = new ArrayList<>(Arrays.asList(times));
+//        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, levels);
+//        spinnerLevel.setAdapter(adapter1);
+        /////////
+        arrayadapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,spinnerlist){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0) {
+                    //Disable the first item of spinner.
+                    return false;
+                }
+                else
+                    return true;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,ViewGroup parent)
+            {
+                View spinnerview = super.getDropDownView(position, convertView, parent);
+
+                TextView spinnertextview = (TextView) spinnerview;
+
+                if(position == 0) {
+                    //Set the disable spinner item color fade .
+                    spinnertextview.setTextColor(Color.parseColor("#bcbcbb"));
+                }
+                else 
+                    spinnertextview.setTextColor(Color.BLACK);
+                return spinnerview;
+            }
+        };
+
+        arrayadapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        spinnerLevel.setAdapter(arrayadapter);
+        /////////
+        spinnerLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.v("item", (String) parent.getItemAtPosition(position));
+                level = (String)parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+        ///////////////////////////
+        arrayadapterTimes = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,spinnerListTime){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0) {
+                    //Disable the first item of spinner.
+                    return false;
+                }
+                else
+                    return true;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,ViewGroup parent)
+            {
+                View spinnerview = super.getDropDownView(position, convertView, parent);
+
+                TextView spinnertextview = (TextView) spinnerview;
+
+                if(position == 0) {
+                    //Set the disable spinner item color fade .
+                    spinnertextview.setTextColor(Color.parseColor("#bcbcbb"));
+                }
+                else
+                    spinnertextview.setTextColor(Color.BLACK);
+                return spinnerview;
+            }
+        };
+
+        arrayadapterTimes.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        spinnerTime.setAdapter(arrayadapterTimes);
+        spinnerTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.v("item", (String) parent.getItemAtPosition(position));
+                Time = (String)parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+        ///////////////////////////
+
         Toast.makeText(getContext(),category1.getName(),Toast.LENGTH_SHORT).show();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, types);
         spinner.setAdapter(adapter);
@@ -118,13 +244,18 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
 
         quantity = (EditText) v.findViewById(R.id.quantity);
         name = (EditText) v.findViewById(R.id.name);
-        //category = (EditText) v.findViewById(R.id.category);
-        time = (EditText) v.findViewById(R.id.time);
         prep = (EditText) v.findViewById(R.id.prep);
-        buttonAdd = (Button) v.findViewById(R.id.add);
+        buttonAdd = (ImageButton) v.findViewById(R.id.add);
         buttonSave = (Button) v.findViewById(R.id.saveBtn);
+        btnUpload = (Button) v.findViewById(R.id.btn_upload_recipe_img);
+        //buttonSave.setEnabled(false);
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestImage();
+            }
+        });
         LinearLayout container2 = (LinearLayout) v.findViewById(R.id.container);
-        List<IngredientInfo> allIngredients = new ArrayList<>();
 
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +283,7 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
                             allIngredients.add(ingr);
                             textIn.setText("");
                             quantity.setText("");
-                            Button buttonRemove = (Button) addView.findViewById(R.id.remove);
+                            ImageButton buttonRemove = (ImageButton) addView.findViewById(R.id.remove);
                             buttonRemove.setOnClickListener(new View.OnClickListener() {
 
                                 @Override
@@ -187,31 +318,24 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("LLLLLLLLLLLLL", "allIngredients=====" + allIngredients);
-                String Name = name.getText().toString().trim();
-                String Time = time.getText().toString().trim();
-                //String Category = category.getText().toString().trim();
-                String Prep = prep.getText().toString().trim();
-                Recipe recipe = new Recipe(Name,category1.getName(),Time,allIngredients,Prep);
-                repo.saveNewRecipe(recipe, new Repository.OnAddNewRecipeListener() {
-                    @Override
-                    public void onSuccess(String message) {
-                        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
-                        Log.d("saveNewRecipe::Succeed",message);
-                    }
-
-                    @Override
-                    public void onFailure(Exception e) {
-                        Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                        Log.d("saveNewRecipe::Failure",e.getLocalizedMessage());
-                    }
-                });
 //                openDetailsFragment(category1);
 //                getFragmentManager().popBackStackImmediate();
 //                Intent intent=new Intent();
 //                intent.setClass(getActivity(), MainActivity.class);
 //                getActivity().startActivity(intent);
-
+                if(TextUtils.isEmpty(name.getText().toString().trim())){
+                    name.setError("הזן שם מתכון");
+                    return;
+                }
+                if(allIngredients.isEmpty()){
+                    textIn.setError("הזן רכיב");
+                    return;
+                }
+                else {
+                    saveInFirebase();
+                    FirebaseUser currentUser = FirebaseManager.currentUser;
+                    String user = currentUser.getUid();
+                }
             }
         });
 
@@ -219,6 +343,115 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
 
     }
 
+    private void requestImage(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select Picture"),IMG_REQUEST_ID);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
+        if(requestCode == IMG_REQUEST_ID && resultCode == RESULT_OK && data != null && data.getData() != null){
+            imgUri = data.getData();
+            try {
+                Bitmap bitmapImg = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(),imgUri);
+                imageView.setImageBitmap(bitmapImg);
+                btnUpload.setEnabled(false);
+//                btnAddCategory.setEnabled(true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private void saveInFirebase(){
+        if(imgUri != null){
+            final ProgressDialog progressDialog = new ProgressDialog(getContext());
+            progressDialog.setTitle("Please Wait...");
+            progressDialog.show();
+            FirebaseUser currentUser = FirebaseManager.currentUser;
+            String user = currentUser.getUid();
+            String Name = name.getText().toString().trim();
+            StorageReference reference = storageReference.child(user).child("recipes").child(Name + ".jpg");
+            try {
+                reference.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.dismiss();
+                        storageReference = FirebaseStorage.getInstance().getReference().child(user).child("recipes").child(Name +".jpg");
+                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Log.d("LLLLLLLLLLLLL", "allIngredients=====" + allIngredients);
+                                String Name = name.getText().toString().trim();
+                                String Prep = prep.getText().toString().trim();
+                                Recipe recipe = new Recipe(Name,category1.getName(),Time,allIngredients,Prep,0.0,uri.toString(),level);
+                                repo.saveNewRecipe(recipe, new Repository.OnAddNewRecipeListener() {
+                                    @Override
+                                    public void onSuccess(String message) {
+                                        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+                                        Log.d("saveNewRecipe::Succeed",message);
+                                    }
+
+                                    @Override
+                                    public void onFailure(Exception e) {
+                                        Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                                        Log.d("saveNewRecipe::Failure",e.getLocalizedMessage());
+                                    }
+                                });
+//                                Category category = new Category(uri.toString(),Name,0);
+//                                repo.addCategory(category, new OnSuccessListener() {
+//                                    @Override
+//                                    public void onSuccess(Object o) {
+//                                        Toast.makeText(getContext(),o.toString(),Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                            }
+                        });
+                        Toast.makeText(getContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Error Occurred" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                        double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                        progressDialog.setMessage("saved " + (int) progress + "%");
+                        btnUpload.setEnabled(true);
+                        //btnAddCategory.setEnabled(false);
+                    }
+                });
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            Log.d("LLLLLLLLLLLLL", "allIngredients=====" + allIngredients);
+            String Name = name.getText().toString().trim();
+            //String Category = category.getText().toString().trim();
+            String Prep = prep.getText().toString().trim();
+            Recipe recipe = new Recipe(Name,category1.getName(),Time,allIngredients,Prep,0.0,"null");
+            repo.saveNewRecipe(recipe, new Repository.OnAddNewRecipeListener() {
+                @Override
+                public void onSuccess(String message) {
+                    Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+                    Log.d("saveNewRecipe::Succeed",message);
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                    Log.d("saveNewRecipe::Failure",e.getLocalizedMessage());
+                }
+            });
+        }
+    }
     public void addToArray(String newIng){
         Log.d("addToArray", "addToArray");
         if(myListIng!=null) {

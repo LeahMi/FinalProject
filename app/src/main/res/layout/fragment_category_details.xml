@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.CategoryDetailsFragment">
 
     <SearchView
@@ -13,21 +13,24 @@
         android:layout_below="@+id/btn_add_rec"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="39dp"
-        app:iconifiedByDefault="false"
-        app:queryHint="Search Name">
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="6dp"
+        android:background="#33c5c9cc"
+        android:iconifiedByDefault="false"
+        android:layoutDirection="rtl"
+        android:queryHint="חיפוש חופשי"
+        app:iconifiedByDefault="true">
 
     </SearchView>
 
-<!--    <ListView-->
-<!--        android:id="@+id/list_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="652dp"-->
-<!--        android:layout_marginTop="80dp">-->
+    <!--    <ListView-->
+    <!--        android:id="@+id/list_view"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="652dp"-->
+    <!--        android:layout_marginTop="80dp">-->
 
-<!--    </ListView>-->
+    <!--    </ListView>-->
 
     <TextView
         android:id="@+id/name_category_tv"
@@ -35,8 +38,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="92dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="33dp"
+        android:fontFamily="@font/heebo"
         android:text=" שם קטגוריה "
         android:textAlignment="center"
         android:textSize="30dp"
@@ -62,7 +66,7 @@
         android:id="@+id/rv_recipes"
         android:layout_width="match_parent"
         android:layout_height="651dp"
-        android:layout_marginTop="80dp" />
+        android:layout_marginTop="94dp" />
 
 
 </RelativeLayout>

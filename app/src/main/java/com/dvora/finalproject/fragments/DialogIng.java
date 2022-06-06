@@ -50,19 +50,19 @@ public class DialogIng extends DialogFragment {
         Context context = getContext();
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.VERTICAL);
-        alert.setTitle("׳¦׳•׳¨ ׳�׳¨׳›׳™׳‘ ׳—׳“׳© ׳‘׳�׳�׳�׳™                        ");
+        alert.setTitle("מוצר חדש");
         et_name = new EditText(context);
-        et_name.setHint("׳�׳¨׳›׳™׳‘");
+        et_name.setHint("שם");
         layout.addView(et_name);
         et_quantity = new EditText(context);
-        et_quantity.setHint("׳›׳�׳•׳×");
+        et_quantity.setHint("כמות");
         layout.addView(et_quantity);
         et_type = new EditText(context);
-        et_type.setHint("׳�׳�/׳™׳—׳™׳“׳”/׳’׳¨׳�");
+        et_type.setHint("יחידה/ליטר/גרם");
         layout.addView(et_type);
         alert.setView(layout);
 
-        alert.setPositiveButton("׳”׳•׳¡׳£", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton("אישור", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 Name = et_name.getText().toString().trim();
                 Quantity = et_quantity.getText().toString().trim();
@@ -86,7 +86,7 @@ public class DialogIng extends DialogFragment {
             }
         });
 
-        alert.setNegativeButton("׳‘׳˜׳�", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton("ביטול", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
             }

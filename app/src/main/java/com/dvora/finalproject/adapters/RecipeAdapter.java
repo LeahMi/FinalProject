@@ -1,13 +1,9 @@
 package com.dvora.finalproject.adapters;
 
 import android.content.Context;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -18,12 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.dvora.finalproject.ICallBackAdapterCategory;
 import com.dvora.finalproject.ICallbackAdapter;
 import com.dvora.finalproject.R;
-import com.dvora.finalproject.entities.Category;
-import com.dvora.finalproject.entities.Ingredient;
-import com.dvora.finalproject.entities.IngredientInfo;
 import com.dvora.finalproject.entities.Recipe;
 
 import java.util.ArrayList;
@@ -55,9 +47,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.recipeRow =data.get(position);
         holder.tv.setText(holder.recipeRow.getNameRecipe());
-        holder.tv2.setText(holder.recipeRow.getCategory());
+        holder.tv2.setText(holder.recipeRow.getPreparationTime());
         holder.tv3.setText(holder.recipeRow.getPercentIng().toString() + " %");
-        holder.imageViewProfile.setImageResource(R.drawable.image_recipe);
+        if(holder.recipeRow.getImgUrl().equals("null")){
+            holder.imageViewRecipe.setImageResource(R.drawable.image_recipe);
+        }else {
+            Glide.with(context)
+                    .load(data.get(position).getImgUrl())
+                    .into(holder.imageViewRecipe);
+        }
+        if(holder.recipeRow.getPercentIng()==100.0)
+            holder.imgFood.setImageResource(R.drawable.food_green);
+        else
+            holder.imgFood.setImageResource(R.drawable.food_red);
         //holder.image.setImageResource(data.get(position).getImgUrl());
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
@@ -83,13 +85,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         TextView tv2;
         TextView tv3;
         View layout;
-        ImageView imageViewProfile;
+        ImageView imageViewRecipe, imgFood;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tv = itemView.findViewById(R.id.mainlistrow_text_v);
             tv2 = itemView.findViewById(R.id.mainlistrow_text_v2);
             tv3 =itemView.findViewById(R.id.mainlistrow_text_v3);
-            imageViewProfile = itemView.findViewById(R.id.img_profile);
+            imageViewRecipe = itemView.findViewById(R.id.img_recipe);
+            imgFood = itemView.findViewById(R.id.img_food);
             layout =itemView.findViewById(R.id.mainlistrow_lay);
         }
     }

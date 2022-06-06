@@ -10,6 +10,8 @@ public class Recipe implements Serializable {
     private List<IngredientInfo> ingredientInfo;
     private String preparationMethod;
     private Double percentIng = 0.0;
+    private String imgUrl;
+    private String level;
 
     public Recipe() {
     }
@@ -29,6 +31,26 @@ public class Recipe implements Serializable {
         this.preparationMethod = preparationMethod;
         this.percentIng = percentIng;
     }
+    public Recipe(String nameRecipe, String category, String preparationTime, List<IngredientInfo> ingredientInfo, String preparationMethod, Double percentIng, String imgUrl) {
+        this.nameRecipe = nameRecipe;
+        this.category = category;
+        this.preparationTime = preparationTime;
+        this.ingredientInfo = ingredientInfo;
+        this.preparationMethod = preparationMethod;
+        this.percentIng = percentIng;
+        this.imgUrl = imgUrl;
+    }
+    public Recipe(String nameRecipe, String category, String preparationTime, List<IngredientInfo> ingredientInfo, String preparationMethod, Double percentIng, String imgUrl, String level) {
+        this.nameRecipe = nameRecipe;
+        this.category = category;
+        this.preparationTime = preparationTime;
+        this.ingredientInfo = ingredientInfo;
+        this.preparationMethod = preparationMethod;
+        this.percentIng = percentIng;
+        this.imgUrl = imgUrl;
+        this.level = level;
+    }
+
 
     public void setNameRecipe(String nameRecipe) {
         this.nameRecipe = nameRecipe;
@@ -48,6 +70,14 @@ public class Recipe implements Serializable {
 
     public void setPreparationMethod(String preparationMethod) {
         this.preparationMethod = preparationMethod;
+    }
+
+    public void setPercentIng(Double percentIng) {
+        this.percentIng = percentIng;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 
     public String getNameRecipe() {
@@ -70,6 +100,12 @@ public class Recipe implements Serializable {
         return preparationMethod;
     }
 
+    public Double getPercentIng() { return percentIng; }
+
+    public String getImgUrl() { return imgUrl; }
+
+    public String getLevel() { return level; }
+
     @Override
     public String toString() {
         return "Recipe:" +'\n'+
@@ -80,9 +116,5 @@ public class Recipe implements Serializable {
                 " preparationMethod: " + preparationMethod+'\n'
                 ;
     }
-
-    public Double getPercentIng() { return percentIng; }
-
-    public void setPercentIng(Double percentIng) { this.percentIng = percentIng; }
 
 }
