@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private Repository repo = new Repository();
     private Stack<String> prevTitle = new Stack<>();
     private TextView actionBarTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

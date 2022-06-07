@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,36 +8,47 @@
     android:orientation="vertical">
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:layout_marginTop="10dp"
         android:layout_width="396dp"
         android:layout_height="wrap_content"
         android:text="הוספת מרכיב"
         android:textAlignment="center"
         android:textSize="24sp" />
-
-
-    <EditText
-        android:id="@+id/nameIngredient"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="308dp"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:layout_marginRight="11dp"
-        android:hint="שם" />
+        android:orientation="vertical"
+        android:background="@drawable/border">
+        <EditText
+            android:id="@+id/nameIngredient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="11dp"
+            android:hint="שם" />
 
-    <EditText
-        android:id="@+id/amount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="11dp"
-        android:hint="כמות" />
+        <EditText
+            android:id="@+id/amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="11dp"
+            android:hint="כמות" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 
     <Button
+        android:layout_marginTop="20dp"
         android:id="@+id/button_Save_Ing"
-        android:layout_width="match_parent"
+        android:layout_width="308dp"
         android:layout_height="wrap_content"
-        android:text="הוסף" />
+        android:layout_gravity="center"
+        android:text="הוסף"
+        app:backgroundTint="@color/red_a" />
 
 </LinearLayout>

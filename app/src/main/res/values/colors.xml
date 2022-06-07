@@ -10,5 +10,11 @@
     <color name="peach_pink">#FFBBB6</color>
     <color name="red_c">#FA6559</color>
     <color name="red_a">#FF786F</color>
+    <color name="profilePrimaryDark">#FF3B30</color>
+    <color name="profileAccentColor">#F7F7F7</color>
+    <color name="whiteTextColor">#fff</color>
+    <color name="profileBackground">#fff</color>
+    <color name="blackTextColor">#000</color>
+    <color name="profileEditTextColor">#707070</color>
 
 </resources>
