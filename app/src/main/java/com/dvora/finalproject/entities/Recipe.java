@@ -16,6 +16,15 @@ public class Recipe implements Serializable {
     public Recipe() {
     }
 
+    public String getIngredientInfoToString() {
+        String all = "";
+        for(int i=0; i<ingredientInfo.size(); i++)
+        {
+            all += " " + ingredientInfo.get(i);
+        }
+        return all;
+    }
+
     public Recipe(String nameRecipe, String category, String preparationTime, List<IngredientInfo> ingredientInfo, String preparationMethod) {
         this.nameRecipe = nameRecipe;
         this.category = category;

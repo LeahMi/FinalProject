@@ -19,9 +19,9 @@ import java.util.Stack;
 public class MainActivity extends AppCompatActivity {
 
     private NavController navController;
-    private Repository repo = new Repository();
     private Stack<String> prevTitle = new Stack<>();
     private TextView actionBarTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,3 +59,4 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 }
+
