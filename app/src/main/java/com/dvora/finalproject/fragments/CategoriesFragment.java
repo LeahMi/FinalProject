@@ -49,9 +49,7 @@ public class CategoriesFragment extends Fragment {
                 rvCategories = v.findViewById(R.id.categories_list);
                 CategoryAdapter adapter = new CategoryAdapter(getContext(), matches, new ICallBackAdapterCategory() {
                     @Override
-                    public void onClickItem(Category category) {
-                        openDetailsFragment(category);
-                    }
+                    public void onClickItem(Category category) { openDetailsFragment(category); }
                 });
                 rvCategories.setAdapter(adapter);
 //                rvCategories.setItemAnimator(new SlideInUpAnimator());

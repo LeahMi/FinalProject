@@ -280,7 +280,7 @@ public class Repository {
 
         void onExceptionOccurred(Exception e);
     }
-    interface OnSearchRecipesByIngredient {
+    public interface OnSearchRecipesByIngredient {
         void onRecipesFound(List<Recipe> matches);
         void onNoRecipesFound(String message);
         void onExceptionOcured(Exception e);
@@ -374,8 +374,16 @@ public class Repository {
 
         }
         ref.child(RECIPES_PATH).push().setValue(recipe)
-                .addOnSuccessListener(aVoid -> listener.onSuccess("Successfuly added " + recipe.getNameRecipe() + " to the list"))
+                .addOnSuccessListener(aVoid -> listener.onSuccess("Successfully added " + recipe.getNameRecipe() + " to the list"))
                 .addOnFailureListener(e -> listener.onFailure(e));
+        ref.child("categories").child(recipe.getCategory()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                Category category = dataSnapshot.getValue(Category.class);
+                category.incNumOfRecipes();
+                ref.child("categories").child(recipe.getCategory()).setValue(category);
+            }
+        });
     }
     public void SaveListShopping(String listS){
 

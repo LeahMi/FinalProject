@@ -2,6 +2,7 @@ package com.dvora.finalproject.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -9,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -35,7 +38,7 @@ public class CategoryDetailsFragment extends Fragment {
     private RecyclerView rvRecipes;
     public final static String CATEGORY_KEY = "CATEGORY_KEY";
     private Category category;
-    private ImageButton btnAdd;
+    private ImageButton btnAdd, searchBtn;
     private TextView name;
     private ListView list;
     private SearchView searchView;
@@ -72,13 +75,14 @@ public class CategoryDetailsFragment extends Fragment {
         name = (TextView) v.findViewById(R.id.name_category_tv);
         name.setText(category.getName());
         //((MainActivity) getActivity()).changeActionBarTitle(category.getName(),false);
+        String s = "s";
         repo.getAllRecipes(new Repository.OnSearchAllRecipes() {
             @Override
             public void onRecipesFound(List<Recipe> matches) {
                 rvRecipes = v.findViewById(R.id.rv_recipes);
                 searchView= v.findViewById(R.id.search_bar_category);
                 for (Recipe recipe:matches){
-                    if(recipe.getCategory().equals(category.getName()))
+                    if(recipe.getCategory().equals(category.getName()) )
                         recipesList.add(recipe);
                 }
                 RecipeAdapter adapter = new RecipeAdapter(getContext(), recipesList, new ICallbackAdapter() {
@@ -123,6 +127,8 @@ public class CategoryDetailsFragment extends Fragment {
 
         return v;
     }
+
+
     public void showFragment(Fragment frag) {
         FragmentManager manager = getFragmentManager();
         FragmentTransaction tran = manager.beginTransaction();

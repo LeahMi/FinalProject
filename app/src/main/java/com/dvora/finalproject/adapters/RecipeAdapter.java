@@ -16,18 +16,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.dvora.finalproject.ICallbackAdapter;
 import com.dvora.finalproject.R;
+import com.dvora.finalproject.Repository;
 import com.dvora.finalproject.entities.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> implements Filterable{
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> implements Filterable {
     private final Context context;
     private final List<Recipe> data;
     private final List<Recipe> exampleList;
     private final ICallbackAdapter iCallbackAdapter;
+    private final Repository repo = new Repository();
+    private List<Recipe> filteredList = new ArrayList<>();
 
-    public RecipeAdapter(Context context, List<Recipe> data,  ICallbackAdapter callbackAdapter ) {
+    public RecipeAdapter(Context context, List<Recipe> data, ICallbackAdapter callbackAdapter) {
         this.context = context;
         this.data = data;
         this.exampleList = new ArrayList<>(data);
@@ -39,24 +42,24 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     public RecipeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        View v = inflater.inflate(R.layout.main_list_row,parent,false);
+        View v = inflater.inflate(R.layout.main_list_row, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.recipeRow =data.get(position);
+        holder.recipeRow = data.get(position);
         holder.tv.setText(holder.recipeRow.getNameRecipe());
         holder.tv2.setText(holder.recipeRow.getPreparationTime());
         holder.tv3.setText(holder.recipeRow.getPercentIng().toString() + " %");
-        if(holder.recipeRow.getImgUrl().equals("null")){
+        if (holder.recipeRow.getImgUrl().equals("null")) {
             holder.imageViewRecipe.setImageResource(R.drawable.image_recipe);
-        }else {
+        } else {
             Glide.with(context)
                     .load(data.get(position).getImgUrl())
                     .into(holder.imageViewRecipe);
         }
-        if(holder.recipeRow.getPercentIng()==100.0)
+        if (holder.recipeRow.getPercentIng() == 100.0)
             holder.imgFood.setImageResource(R.drawable.food_green);
         else
             holder.imgFood.setImageResource(R.drawable.food_red);
@@ -78,7 +81,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         return data.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         Recipe recipeRow;
         TextView tv;
@@ -86,14 +89,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         TextView tv3;
         View layout;
         ImageView imageViewRecipe, imgFood;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tv = itemView.findViewById(R.id.mainlistrow_text_v);
             tv2 = itemView.findViewById(R.id.mainlistrow_text_v2);
-            tv3 =itemView.findViewById(R.id.mainlistrow_text_v3);
+            tv3 = itemView.findViewById(R.id.mainlistrow_text_v3);
             imageViewRecipe = itemView.findViewById(R.id.img_recipe);
             imgFood = itemView.findViewById(R.id.img_food);
-            layout =itemView.findViewById(R.id.mainlistrow_lay);
+            layout = itemView.findViewById(R.id.mainlistrow_lay);
         }
     }
 
@@ -163,16 +167,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     public Filter getFilter() {
         return mFilter;
     }
-    private final Filter mFilter= new Filter() {
+
+    private final Filter mFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Recipe> filteredList = new ArrayList<>();
+            filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(exampleList);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for (Recipe item : exampleList) {
-                    if (item.getNameRecipe().toLowerCase().contains(filterPattern) || item.getCategory().toLowerCase().contains(filterPattern) ) {
+                    if (item.getNameRecipe().toLowerCase().contains(filterPattern) ||
+                            item.getCategory().toLowerCase().contains(filterPattern) ||
+                            item.getPercentIng().toString().toLowerCase().contains(filterPattern) ||
+                            item.getLevel().toLowerCase().contains(filterPattern) ||
+                            item.getPreparationTime().toLowerCase().contains(filterPattern) ||
+                            item.getIngredientInfoToString().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }
@@ -181,6 +191,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             results.values = filteredList;
             return results;
         }
+
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             data.clear();
