@@ -8,7 +8,10 @@ public class Category implements Serializable {
     private String name;
     private int numOfRecipes;
 
-    public Category(){}
+    public Category(){
+        this.name = "כל המתכונים";
+        this.imgUrl = null;
+    }
     public Category(String imgUrl, String name, int numOfRecipes) {
         this.name = name;
         this.imgUrl =imgUrl;
@@ -50,7 +53,9 @@ public class Category implements Serializable {
     public void incNumOfRecipes(){
         numOfRecipes++;
     }
-
+    public void setNumOfRecipes(int numOfRecipes){
+        this.numOfRecipes = numOfRecipes;
+    }
 
 }
 

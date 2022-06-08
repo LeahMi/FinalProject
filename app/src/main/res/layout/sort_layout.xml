@@ -11,11 +11,12 @@
         android:orientation="horizontal"
         android:layout_weight="1">
 
-        <Spinner
+        <com.dvora.finalproject.MultiSpinner
+            android:id="@+id/level_sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.7">
-        </Spinner>
+        </com.dvora.finalproject.MultiSpinner>
 
         <TextView
             android:layout_width="match_parent"
@@ -34,11 +35,12 @@
         android:orientation="horizontal"
         android:layout_weight="1">
 
-        <Spinner
+        <com.dvora.finalproject.MultiSpinner
+            android:id="@+id/num_of_recipes_sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.7">
-        </Spinner>
+        </com.dvora.finalproject.MultiSpinner>
 
         <TextView
             android:layout_width="match_parent"
@@ -57,11 +59,12 @@
         android:orientation="horizontal"
         android:layout_weight="1">
 
-        <Spinner
+        <com.dvora.finalproject.MultiSpinner
+            android:id="@+id/time_sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.7">
-        </Spinner>
+        </com.dvora.finalproject.MultiSpinner>
 
         <TextView
             android:layout_width="match_parent"
@@ -73,4 +76,11 @@
         </TextView>
 
     </LinearLayout>
+    <Button
+        android:id="@+id/ok_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="אישור">
+    </Button>
 </LinearLayout>

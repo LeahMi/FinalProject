@@ -5,12 +5,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
@@ -52,10 +55,18 @@ public class ListShoppingFragment extends Fragment {
             public void onClick(View view) {
                 String ListS = testEditText.getText().toString().trim();
                 repo.SaveListShopping(ListS);
+                Toast.makeText(getContext(),"הרשימה עודכנה",Toast.LENGTH_SHORT).show();
+                showFragment(new InventoryFragment());
             }
         });
         return v;
 
+    }
+    public void showFragment(Fragment frag) {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction tran = manager.beginTransaction();
+        tran.replace(R.id.fragment, frag).addToBackStack(null);
+        tran.commit();
     }
 }
 

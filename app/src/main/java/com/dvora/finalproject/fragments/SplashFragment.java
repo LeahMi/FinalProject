@@ -21,6 +21,7 @@ import com.dvora.finalproject.R;
 public class SplashFragment extends Fragment {
 
     View view;
+    public static String sort = "";
 
     public SplashFragment() {
         // Required empty public constructor
