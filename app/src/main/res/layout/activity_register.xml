@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wall"
     tools:context=".activities.Register">
 
     <ProgressBar
@@ -18,6 +19,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginTextView" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="103dp"></LinearLayout>
+
     <EditText
         android:id="@+id/password"
         android:layout_width="wrap_content"
@@ -25,6 +32,7 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="סיסמא"
+        android:background="#33c5c9cc"
         android:inputType="textPersonName"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -39,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:background="#33c5c9cc"
         android:hint="דואר אלקטרוני"
         android:inputType="textPersonName"
         android:textAlignment="center"
@@ -52,12 +61,11 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="116dp"
         android:fontFamily="sans-serif-smallcaps"
         android:text="יצירת חשבון חדש"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,15 +74,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
+        android:background="#33c5c9cc"
+        android:ellipsize="none"
         android:ems="10"
         android:hint="שם מלא"
         android:inputType="textPersonName"
         android:textAlignment="center"
         android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+
 
     <Button
         android:id="@+id/registerBtn"
