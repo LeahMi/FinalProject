@@ -15,6 +15,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.dvora.finalproject.adapters.RecipeAdapter;
+import com.dvora.finalproject.adapters.RecipeAdapter1;
 import com.dvora.finalproject.entities.Recipe;
 import com.dvora.finalproject.fragments.AddRecipeFragment;
 import com.dvora.finalproject.fragments.ItemDetailsFragment;
@@ -46,27 +47,27 @@ public class ListRecipesFragment extends Fragment {
                 list= v.findViewById(R.id.mainlistfragment_listv);
                 searchView= v.findViewById(R.id.search_bar);
 
-//                RecipeAdapter adapter = new RecipeAdapter(matches, getContext(), new ICallbackAdapter() {
-//
-//                    @Override
-//                    public void onClickItem(Recipe recipe) {
-//                        openDetailsFragment(recipe);
-//                    }
-//                });
-//                list.setAdapter(adapter);
-//                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//                    @Override
-//                    public boolean onQueryTextSubmit(String query) {
-//                        adapter.getFilter().filter(query);
-//                        return false;
-//                    }
-//                    @Override
-//                    public boolean onQueryTextChange(String newText) {
-//
-//                        adapter.getFilter().filter(newText);
-//                        return false;
-//                    }
-//                });
+                RecipeAdapter1 adapter = new RecipeAdapter1(matches, getContext(), new ICallbackAdapter() {
+
+                    @Override
+                    public void onClickItem(Recipe recipe) {
+                        openDetailsFragment(recipe);
+                    }
+                });
+                list.setAdapter(adapter);
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        adapter.getFilter().filter(query);
+                        return false;
+                    }
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+
+                        adapter.getFilter().filter(newText);
+                        return false;
+                    }
+                });
             }
             public void onNoRecipesFound(String message){
                 Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
@@ -91,7 +92,7 @@ public class ListRecipesFragment extends Fragment {
     public void showFragment(Fragment frag) {
         FragmentManager manager = getFragmentManager();
         FragmentTransaction tran = manager.beginTransaction();
-        tran.replace(R.id.fragment, frag);
+        tran.replace(R.id.fragment, frag).addToBackStack(null);
         tran.commit();
     }
 

@@ -54,10 +54,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.Name.setText(data.get(position).getNumOfRecipes()+ " מתכונים");
         holder.button.setText(data.get(position).getName());
-        Glide.with(context)
-                .load(data.get(position).getImgUrl())
-                .into(holder.image);
-        //holder.image.setImageResource(data.get(position).getImgUrl());
+        if(data.get(position).getImgUrl()!=null) {
+            Glide.with(context)
+                    .load(data.get(position).getImgUrl())
+                    .into(holder.image);
+        }else {
+            //holder.image.setImageResource(data.get(position).getImgUrl());
+            holder.image.setImageResource(R.drawable.image_recipe);
+        }
 
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override

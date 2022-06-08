@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -18,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
+import com.bumptech.glide.Glide;
 import com.dvora.finalproject.ListRecipesFragment;
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
@@ -35,6 +38,8 @@ public class ItemDetailsFragment extends Fragment implements View.OnClickListene
     public final static String RECIPE_KEY = "RECIPE_KEY";
     private Recipe recipe;
     private Button btn_updateInventory;
+    private ImageView imageRecipe;
+    private TextView nameRecipe;
     private ImageButton btn_back;
     private Repository repo = new Repository();
 
@@ -82,10 +87,13 @@ public class ItemDetailsFragment extends Fragment implements View.OnClickListene
         });
 
         final EditText categoryEt = view.findViewById(R.id.edt_category);
-        final EditText nameEt = view.findViewById(R.id.edt_name);
         final EditText timeEt = view.findViewById(R.id.edt_time);
         final EditText prepEt = view.findViewById(R.id.edt_prep_method);
         final EditText IngEt = view.findViewById(R.id.edt_ing);
+        final EditText levelEt = view.findViewById(R.id.level);
+        levelEt.setText(recipe.getLevel());
+        imageRecipe = view.findViewById(R.id.recipe_image);
+        nameRecipe = view.findViewById(R.id.name_recipe);
         btn_updateInventory = view.findViewById(R.id.button);
         if(recipe.getPercentIng()!=100)
             btn_updateInventory.setVisibility(View.GONE);
@@ -95,9 +103,17 @@ public class ItemDetailsFragment extends Fragment implements View.OnClickListene
 
         btn_back.setOnClickListener(this);
         categoryEt.setText(recipe.getCategory());
-        nameEt.setText(recipe.getNameRecipe());
+        nameRecipe.setText(recipe.getNameRecipe());
         timeEt.setText(recipe.getPreparationTime());
         prepEt.setText(recipe.getPreparationMethod());
+        if (recipe.getImgUrl().equals("null")) {
+            imageRecipe.setImageResource(R.drawable.image_recipe);
+        } else {
+            imageRecipe.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            Glide.with(getContext())
+                    .load(recipe.getImgUrl())
+                    .into(imageRecipe);
+        }
         List<IngredientInfo> list = recipe.getIngredients();
         String strList = "";
         for (int i = 0; i < list.size(); ++i) {
@@ -114,7 +130,7 @@ public class ItemDetailsFragment extends Fragment implements View.OnClickListene
     public void showFragment(Fragment frag) {
         FragmentManager manager = getFragmentManager();
         FragmentTransaction tran = manager.beginTransaction();
-        tran.replace(R.id.fragment, frag);
+        tran.replace(R.id.fragment, frag).addToBackStack(null);
         tran.commit();
     }
     private void openDetailsFragment(Category category) {
