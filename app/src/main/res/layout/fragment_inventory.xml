@@ -9,10 +9,13 @@
 
     <SearchView
         android:id="@+id/search_bar_inventory"
+        android:background="#33c5c9cc"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layoutDirection="rtl"
+        android:queryHint="חיפוש חופשי"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="2dp"
         android:layout_marginTop="35dp"
@@ -25,7 +28,7 @@
     <ListView
         android:id="@+id/mainlistinventory_listv"
         android:layout_width="match_parent"
-        android:layout_height="652dp"
+        android:layout_height="600dp"
         android:layout_marginTop="80dp">
 
     </ListView>

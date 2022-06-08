@@ -8,44 +8,65 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_centerInParent="true"
+        android:background="@drawable/profile_bk"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:id="@+id/linearLayout"
-        android:background="@drawable/profile_bk"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="9dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/profile_round" />
+            android:layout_width="126dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/user_24" />
 
         <TextView
+            android:layout_marginTop="30dp"
             android:id="@+id/texthello"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="\@appsnippuser"
             android:textSize="28dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
+            android:layout_marginTop="30dp"
             android:id="@+id/mail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="developer@appsnipp.com"
             android:textSize="12dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/log_out"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="התנתק"
+            app:backgroundTint="@color/red_c" />
 
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_name_c"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@android:drawable/editbox_background"
+        android:drawableEnd="@android:drawable/arrow_down_float"
+        android:drawablePadding="16dp"
+        android:hint="select category"
+        android:padding="12dp"
+
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="359dp"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
