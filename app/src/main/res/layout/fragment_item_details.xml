@@ -47,8 +47,21 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp"
-                android:layout_marginHorizontal="30dp">
+                android:layout_marginHorizontal="20dp">
 
+                <ImageButton
+                    android:id="@+id/btn_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="5dp"
+                    android:background="#00FFFFFF"
+                    android:src="@drawable/edit_shop" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.04" >
+                </Space>
                 <EditText
                     android:id="@+id/edt_category"
                     android:layout_width="wrap_content"
