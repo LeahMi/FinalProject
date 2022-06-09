@@ -3,7 +3,7 @@ package com.dvora.finalproject.entities;
 import java.io.Serializable;
 
 public class Category implements Serializable {
-//    private int image = 0;
+
     private String imgUrl;
     private String name;
     private int numOfRecipes;
@@ -18,20 +18,6 @@ public class Category implements Serializable {
         this.numOfRecipes = numOfRecipes;
     }
 
-    //    public Category(String name, int image) {
-//        this.Name = name;
-//        this.image = image;
-//        this.numOfRecipes = 0;
-//    }
-//    public Category(String name) {
-//        this.name = name;
-//        this.numOfRecipes = 0;
-//    }
-//    public Category(String name, String imgUrl) {
-//        this.name = name;
-//        this.imgUrl =imgUrl;
-//        this.numOfRecipes = 0;
-//    }
 
     public String getImgUrl() {
         return imgUrl;

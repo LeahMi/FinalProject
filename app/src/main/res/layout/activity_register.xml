@@ -19,11 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginTextView" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="103dp"></LinearLayout>
+
 
     <EditText
         android:id="@+id/password"
@@ -32,7 +28,7 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="סיסמא"
-        android:background="#33c5c9cc"
+
         android:inputType="textPersonName"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -47,7 +43,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:background="#33c5c9cc"
         android:hint="דואר אלקטרוני"
         android:inputType="textPersonName"
         android:textAlignment="center"
@@ -61,10 +56,12 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="161dp"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="יצירת חשבון חדש"
+
+        android:text="יצירת חשבון"
         android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -74,7 +71,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
-        android:background="#33c5c9cc"
         android:ellipsize="none"
         android:ems="10"
         android:hint="שם מלא"
@@ -94,7 +90,8 @@
         android:layout_height="44dp"
         android:layout_marginTop="68dp"
         android:text="הרשמה"
-        app:backgroundTint="@color/red_c"
+        android:textColor="@color/black"
+        app:backgroundTint="#FFC0A7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"

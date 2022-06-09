@@ -70,6 +70,7 @@ public class AddIngredient extends Fragment {
                     public void onSuccess(String message) {
                         Log.d("saveNewIng::Succeed",message);
                         Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override

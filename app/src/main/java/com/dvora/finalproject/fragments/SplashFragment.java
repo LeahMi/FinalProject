@@ -15,16 +15,13 @@ import android.view.ViewGroup;
 import com.dvora.finalproject.R;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SplashFragment extends Fragment {
 
     View view;
     public static String sort = "";
 
     public SplashFragment() {
-        // Required empty public constructor
+
     }
 
 

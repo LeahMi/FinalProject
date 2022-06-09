@@ -324,10 +324,11 @@ public class Repository {
                 if(!dataSnapshot.exists())
                 {
                     ref.child(INGREDIENTS_PATH).child(ingredient.getName()).setValue(ingredient);
-                    listener.onSuccess("the ingredient "+ ingredient.getName() + " added");
+                    listener.onSuccess(" המוצר "+ ingredient.getName() + " התווסף ");
+
                 }
                 else{
-                    listener.onFailure(new Exception("the ingredient "+ingredient.getName()+" is exist"));
+                    listener.onFailure(new Exception("המוצר "+ingredient.getName()+" קיים "));
                 }
             }
 
