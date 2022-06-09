@@ -60,17 +60,19 @@
         android:layout_height="651dp"
         android:layout_marginTop="115dp" />
 
-    <Button
+    <ImageButton
         android:id="@+id/sort_btn"
-        android:layout_width="64dp"
-        android:layout_height="37dp"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
         android:layout_below="@+id/name_category_tv"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="29dp"
         android:layout_marginEnd="-5dp"
         android:layout_toEndOf="@+id/search_bar_category"
-        android:text="Button" />
+        android:background="@color/white"
+        app:srcCompat="@drawable/ic_filter"
+        tools:ignore="VectorDrawableCompat" />
 
 
 </RelativeLayout>

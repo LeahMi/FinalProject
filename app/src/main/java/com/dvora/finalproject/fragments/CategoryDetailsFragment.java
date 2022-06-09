@@ -53,7 +53,7 @@ public class CategoryDetailsFragment extends Fragment {
     MultiSpinner timeSp, levelSp, numOfRecipesSp;
     ArrayList<String> timeList = new ArrayList<>(), levelList = new ArrayList<>(), numOfRecipesList = new ArrayList<>();
     Button okBtn;
-    Button sortBtn;
+    ImageButton sortBtn;
 
     public void createSortDialog() {
         d = new Dialog(getContext());
