@@ -91,7 +91,7 @@ public class ItemDetailsFragment extends Fragment implements View.OnClickListene
         final EditText prepEt = view.findViewById(R.id.edt_prep_method);
         final EditText IngEt = view.findViewById(R.id.edt_ing);
         final EditText levelEt = view.findViewById(R.id.level);
-        levelEt.setText(recipe.getLevel());
+        levelEt.setText(" "+recipe.getLevel());
         imageRecipe = view.findViewById(R.id.recipe_image);
         nameRecipe = view.findViewById(R.id.name_recipe);
         btn_updateInventory = view.findViewById(R.id.button);
@@ -102,9 +102,9 @@ public class ItemDetailsFragment extends Fragment implements View.OnClickListene
         btn_back = view.findViewById(R.id.btn_back);
 
         btn_back.setOnClickListener(this);
-        categoryEt.setText(recipe.getCategory());
+        categoryEt.setText(" "+recipe.getCategory());
         nameRecipe.setText(recipe.getNameRecipe());
-        timeEt.setText(recipe.getPreparationTime());
+        timeEt.setText(" "+recipe.getPreparationTime());
         prepEt.setText(recipe.getPreparationMethod());
         if (recipe.getImgUrl().equals("null")) {
             imageRecipe.setImageResource(R.drawable.image_recipe);

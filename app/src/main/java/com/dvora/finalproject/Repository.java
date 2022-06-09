@@ -185,7 +185,9 @@ public class Repository {
                                     Log.d("(count / numOfIngs)","(count / numOfIngs)____"+(count / numOfIngs));
                                     double d = (double)count / (double)numOfIngs;
                                     d = Double.valueOf(df.format(d));
-                                    ref.child(RECIPES_PATH).child(recipeSnapShot.getKey()).child("percentIng").setValue(d * 100);
+                                    d = Double.valueOf(df.format(d * 100));
+                                    System.out.println("d:   "+d);
+                                    ref.child(RECIPES_PATH).child(recipeSnapShot.getKey()).child("percentIng").setValue(d);
                                 }
                                 else{
                                     ref.child(RECIPES_PATH).child(recipeSnapShot.getKey()).child("percentIng").setValue(0);
