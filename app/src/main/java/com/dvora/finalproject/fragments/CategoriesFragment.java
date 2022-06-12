@@ -49,6 +49,7 @@ public class CategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v=inflater.inflate(R.layout.fragment_categories, container, false);
+        SplashFragment.sort="null";
         repo.getAllCategories(new Repository.OnSearchAllCategories() {
             @Override
             public void onCategoriesFound(List<Category> matches) {
@@ -64,10 +65,8 @@ public class CategoriesFragment extends Fragment {
                 CategoryAdapter adapter = new CategoryAdapter(getContext(), matches1, new ICallBackAdapterCategory() {
                     @Override
                     public void onClickItem(Category category) {
-                        if(category.getName().equals("כל המתכונים"))
-                            showFragment(new ListRecipesFragment());
-                        else
-                            openDetailsFragment(category); }
+                        openDetailsFragment(category);
+                    }
                 });
                 rvCategories.setAdapter(adapter);
 //                rvCategories.setItemAnimator(new SlideInUpAnimator());
@@ -103,7 +102,7 @@ public class CategoriesFragment extends Fragment {
     }
 
     private void openDetailsFragment(Category category) {
-        showFragment(CategoryDetailsFragment.newInstance(category));
+        showFragment(ListRecipesFragment.newInstance(category));
     }
 
 }

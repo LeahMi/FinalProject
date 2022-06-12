@@ -2,6 +2,7 @@ package com.dvora.finalproject.adapters;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.dvora.finalproject.ICallbackAdapter;
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.entities.Recipe;
+import com.dvora.finalproject.fragments.SplashFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +70,13 @@ public class RecipeAdapter1 extends BaseAdapter implements Filterable {
         TextView tv3 = ROW.findViewById(R.id.mainlistrow_text_v3);
         ImageView imageViewRecipe = ROW.findViewById(R.id.img_recipe);
         tv.setText(recipeRow.getNameRecipe());
-        tv2.setText(recipeRow.getCategory());
+        tv2.setText(recipeRow.getPreparationTime());
         tv3.setText(recipeRow.getPercentIng().toString() + " %");
+        if(recipeRow.getPercentIng()!=100.0) {
+            tv3.setTextColor(Color.RED);
+        } else{
+            tv3.setTextColor(Color.GREEN);
+        }
         imageViewRecipe.setImageResource(R.drawable.image_recipe);
         if (recipeRow.getImgUrl().equals("null")) {
             imageViewRecipe.setImageResource(R.drawable.image_recipe);
@@ -101,7 +108,11 @@ public class RecipeAdapter1 extends BaseAdapter implements Filterable {
         protected FilterResults performFiltering(CharSequence constraint) {
             filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(exampleList);
+                for (Recipe item : exampleList){
+                    if(isFilter(item))
+                        filteredList.add(item);
+                }
+//                filteredList.addAll(exampleList);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for (Recipe item : exampleList) {
@@ -111,7 +122,8 @@ public class RecipeAdapter1 extends BaseAdapter implements Filterable {
                             item.getLevel().toLowerCase().contains(filterPattern) ||
                             item.getPreparationTime().toLowerCase().contains(filterPattern) ||
                             item.getIngredientInfoToString().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
+                        if(isFilter(item))
+                            filteredList.add(item);
                     }
                 }
             }
@@ -127,4 +139,32 @@ public class RecipeAdapter1 extends BaseAdapter implements Filterable {
             notifyDataSetChanged();
         }
     };
+    public boolean isFilter(Recipe recipe){
+        Log.e("RAF isClock",""+isClock(recipe));
+        Log.e("RAF isLevel",""+isLevel(recipe));
+        Log.e("RAF isPercent",""+isPercent(recipe));
+        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe)) || SplashFragment.sort.equals("null");
+    }
+    public boolean isClock(Recipe recipe){
+        return SplashFragment.sort.contains(recipe.getPreparationTime()) || _isClock(recipe);
+    }
+    private boolean _isClock(Recipe recipe){
+        return SplashFragment.sort.contains("שעה") || SplashFragment.sort.contains("שעה+") || SplashFragment.sort.contains("בחר זמן") || SplashFragment.sort.contains("דק'");
+    }
+
+    public boolean isLevel(Recipe recipe){
+        return SplashFragment.sort.contains(recipe.getLevel()) || SplashFragment.sort.contains("בחר דרגה");
+    }
+
+    public boolean isPercent(Recipe recipe){
+        if(!SplashFragment.sort.contains("100%") || SplashFragment.sort.contains("בחר כמות מוצרים")){
+            return true;
+        }
+        if(recipe.getPercentIng()<100){
+            return SplashFragment.sort.contains("פחות מ 100%");
+        }
+        else{
+            return !SplashFragment.sort.contains("פחות מ 100%");
+        }
+    }
 }

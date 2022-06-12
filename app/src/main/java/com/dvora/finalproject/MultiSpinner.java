@@ -116,6 +116,7 @@ public class MultiSpinner extends androidx.appcompat.widget.AppCompatSpinner imp
                          MultiSpinnerListener listener) {
         this.items = items;
         this.defaultText = allText;
+        this.spinnerText = allText; // todo
         this.listener = listener;
 
         // all didn't selected by default

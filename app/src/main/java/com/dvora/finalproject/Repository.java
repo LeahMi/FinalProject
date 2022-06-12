@@ -68,7 +68,6 @@ public class Repository {
         });
     }
 
-
     public void getRecipesForIngredient(String ingredientName, OnSearchRecipesByIngredient listener) {
         ref.child(INGREDIENTS_PATH)
                 .get()

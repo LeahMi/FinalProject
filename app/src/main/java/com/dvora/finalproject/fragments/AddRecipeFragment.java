@@ -2,6 +2,7 @@ package com.dvora.finalproject.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -38,8 +40,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dvora.finalproject.FirebaseManager;
+import com.dvora.finalproject.ListRecipesFragment;
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
+import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.entities.Category;
 import com.dvora.finalproject.entities.Ingredient;
 import com.dvora.finalproject.entities.IngredientInfo;
@@ -68,13 +72,14 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
     private EditText quantity, prep, name;
     private Button buttonSave, btnUpload;
     private ImageButton buttonAdd;
-    private String qua, ing, type, level, Time;
+    private String qua, ing, type, level, Time, nameCategory;
     private IngredientInfo ingr;
     private String[] times = {"זמן הכנה","10 דק'","15 דק'","30 דק'","45 דק'","שעה","שעה +"};
     private String[] types = {"גרם","קורט","מל","יחידה","כפית","כף","כוס"};
     private String[] levels = {"דרגת קושי","קל","בינוני","קשה"};
-    List<String> spinnerlist, spinnerListTime;
-    ArrayAdapter<String> arrayadapter, arrayadapterTimes;
+    String all = "";
+    List<String> spinnerlist, spinnerListTime, spinnerListCategory;
+    ArrayAdapter<String> arrayadapter, arrayadapterTimes, arrayAdapterCategories;
     private String[] myListIng;
     private List<IngredientInfo> allIngredients = new ArrayList<>();
     private TextView mInputDisplay;
@@ -83,6 +88,7 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
     private final int IMG_REQUEST_ID = 10;
     private Uri imgUri;
     private Repository repo = new Repository();
+    List<Category> matches1 = new ArrayList<>();
 
 
     public static AddRecipeFragment newInstance(Category category) {
@@ -102,11 +108,82 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
             category1 = (Category) bundle.getSerializable(CATEGORY_KEY);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_recipe, container, false);
+        Spinner spinnerCategory = (Spinner) v.findViewById(R.id.spinner_category);
+
+        repo.getAllCategories(new Repository.OnSearchAllCategories() {
+            @Override
+            public void onCategoriesFound(List<Category> matches) {
+                matches1.addAll(matches);
+                Log.e("size ","size " + matches1.size());
+                Log.e("aaaaaaaaaaa "," "+matches1.get(0));
+                String[] categories = new String[matches1.size()+1];
+                categories[0] = "קטגוריה";
+                for(int i=1; i<=matches1.size(); ++i){
+                    categories[i] = matches1.get(i-1).getName();
+                }
+                spinnerListCategory = new ArrayList<>(Arrays.asList(categories));
+                Log.e("if","1111111111111111111111111111111111111111111111111");
+
+                arrayAdapterCategories = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, spinnerListCategory){
+                    @Override
+                    public boolean isEnabled(int position){
+                        if(position == 0) {
+                            //Disable the first item of spinner.
+                            return false;
+                        }
+                        else
+                            return true;
+                    }
+
+                    @Override
+                    public View getDropDownView(int position, View convertView,ViewGroup parent)
+                    {
+                        View spinnerview = super.getDropDownView(position, convertView, parent);
+
+                        TextView spinnertextview = (TextView) spinnerview;
+
+                        if(position == 0) {
+                            //Set the disable spinner item color fade .
+                            spinnertextview.setTextColor(Color.parseColor("#bcbcbb"));
+                        }
+                        else
+                            spinnertextview.setTextColor(Color.BLACK);
+                        return spinnerview;
+                    }
+                };
+
+                arrayAdapterCategories.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+                spinnerCategory.setAdapter(arrayAdapterCategories);
+                spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Log.v("item", (String) parent.getItemAtPosition(position));
+                        nameCategory = (String)parent.getItemAtPosition(position);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
+            }
+            @Override
+            public void onNoCategoriesFound(String message) {
+            }
+            @Override
+            public void onExceptionOccurred(Exception e) {
+            }
+        });
+        if(category1.getName().equals("כל המתכונים")){
+            spinnerCategory.setVisibility(View.VISIBLE);
+            //String[] categories = {"קטגוריה","בשר","חלבי","פיצות"};
+        }else{
+            nameCategory = category1.getName();
+        }
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         imageView = (ImageView) v.findViewById(R.id.image_view_recipe_img);
@@ -266,6 +343,19 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
                         (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 ing = textIn.getText().toString().trim();
                 qua = quantity.getText().toString().trim();
+                if(ing.isEmpty() && qua.isEmpty()){
+                    textIn.setError("הזן רכיב");
+                    quantity.setError("הזן כמות");
+                    return;
+                }
+                if(!ing.isEmpty() && qua.isEmpty()){
+                    quantity.setError("הזן כמות");
+                    return;
+                }
+                if(ing.isEmpty() && !qua.isEmpty()){
+                    textIn.setError("הזן רכיב");
+                    return;
+                }
                 //check if the ingredient exist
                 repo.isExistIngredient(ing, new Repository.OnAddNewIngredientListener() {
                     @Override
@@ -299,10 +389,11 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
                             container2.addView(addView);
                         }
                         else{
-                            DialogIng dialog = new DialogIng();
-                            dialog.setTargetFragment(AddRecipeFragment.this, 1);
-                            dialog.show(getFragmentManager(), "DialogIng");
-                            Log.d("O","_________  "+dialog.getNameIng());
+                            d();
+//                            DialogIng dialog = new DialogIng();
+//                            dialog.setTargetFragment(AddRecipeFragment.this, 1);
+//                            dialog.show(getFragmentManager(), "DialogIng");
+//                            Log.d("O","_________  "+dialog.getNameIng());
                         }
                     }
 
@@ -318,23 +409,56 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+//                openDetailsFragment(category1);
+//                getFragmentManager().popBackStackImmediate();
+//                Intent intent=new Intent();
+//                intent.setClass(getActivity(), MainActivity.class);
+//                getActivity().startActivity(intent);
+                ing = textIn.getText().toString().trim();
+                qua = quantity.getText().toString().trim();
+                String recipesNames = getAllRecipesString();
+                if(recipesNames.contains(name.getText().toString().trim())){
+                    name.setError("שם מתכון קיים ,הזן שם מתכון חדש");
+                }
                 if(TextUtils.isEmpty(name.getText().toString().trim())){
                     name.setError("הזן שם מתכון");
-                    return;
                 }
-                if(allIngredients.isEmpty()){
-                    textIn.setError("הזן רכיב");
-                    return;
+                if(nameCategory.equals("קטגוריה")){
+                    setSpinnerError(spinnerCategory, "בחר קטגוריה");
                 }
-                else {
+                if(Time.equals("זמן הכנה")){
+                    setSpinnerError(spinnerTime, "בחר זמן");
+                }
+                if(level.equals("דרגת קושי")){
+                    setSpinnerError(spinnerLevel, "בחר דרגת קושי");
+                }
+                if(allIngredients.isEmpty()) {
+                    if(ing.isEmpty() && qua.isEmpty()){
+                        textIn.setError("הזן רכיב");
+                        quantity.setError("הזן כמות");
+                    }
+                    if(!ing.isEmpty() && qua.isEmpty()){
+                        quantity.setError("הזן כמות");
+                    }
+                    if(ing.isEmpty() && !qua.isEmpty()){
+                        textIn.setError("הזן רכיב");
+                    }
+                }
+                if(TextUtils.isEmpty(prep.getText().toString().trim())){
+                    prep.setError("הזן אופן הכנה");
+                }
+                if(!(recipesNames.contains(name.getText().toString().trim()))
+                        && !(TextUtils.isEmpty(name.getText().toString().trim()))
+                        && !(nameCategory.equals("קטגוריה"))
+                        && !(Time.equals("זמן הכנה"))
+                        && !(level.equals("דרגת קושי"))
+                        && !(allIngredients.isEmpty())
+                        && !(TextUtils.isEmpty(prep.getText().toString().trim()))){
                     saveInFirebase();
-                    FirebaseUser currentUser = FirebaseManager.currentUser;
-                    String user = currentUser.getUid();
                 }
+                openDetailsFragment1(category1);
             }
         });
-
         return v;
 
     }
@@ -360,6 +484,9 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
         }
     }
     private void saveInFirebase(){
+        if(!category1.getName().equals("כל המתכונים")){
+            nameCategory = category1.getName();
+        }
         if(imgUri != null){
             final ProgressDialog progressDialog = new ProgressDialog(getContext());
             progressDialog.setTitle("Please Wait...");
@@ -380,7 +507,7 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
                                 Log.d("LLLLLLLLLLLLL", "allIngredients=====" + allIngredients);
                                 String Name = name.getText().toString().trim();
                                 String Prep = prep.getText().toString().trim();
-                                Recipe recipe = new Recipe(Name,category1.getName(),Time,allIngredients,Prep,0.0,uri.toString(),level);
+                                Recipe recipe = new Recipe(Name,nameCategory,Time,allIngredients,Prep,0.0,uri.toString(),level);
                                 repo.saveNewRecipe(recipe, new Repository.OnAddNewRecipeListener() {
                                     @Override
                                     public void onSuccess(String message) {
@@ -432,7 +559,7 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
             String Name = name.getText().toString().trim();
             //String Category = category.getText().toString().trim();
             String Prep = prep.getText().toString().trim();
-            Recipe recipe = new Recipe(Name,category1.getName(),Time,allIngredients,Prep,0.0,"null");
+            Recipe recipe = new Recipe(Name,nameCategory,Time,allIngredients,Prep,0.0,"null",level);
             repo.saveNewRecipe(recipe, new Repository.OnAddNewRecipeListener() {
                 @Override
                 public void onSuccess(String message) {
@@ -465,6 +592,9 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
     private void openDetailsFragment(Category category) {
         showFragment(CategoryDetailsFragment.newInstance(category));
     }
+    private void openDetailsFragment1(Category category) {
+        showFragment(ListRecipesFragment.newInstance(category));
+    }
     @Override
     public void sendInput(String input) {
         Log.d("DDDialog", "sendInput: found incoming input: " + input);
@@ -474,5 +604,79 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
             textIn.setAdapter(new ArrayAdapter<>(AddRecipeFragment.this.getContext(), android.R.layout.simple_list_item_1, myListIng));
         }
         mInputDisplay.setText(input);
+    }
+    public void setSpinnerError(Spinner spinner, String error){
+        View selectedView = spinner.getSelectedView();
+        if (selectedView != null && selectedView instanceof TextView) {
+            TextView selectedTextView = (TextView) selectedView;
+            selectedTextView.setError(error);
+        }
+    }
+    public String getAllRecipesString() {
+        repo.getAllRecipes(new Repository.OnSearchAllRecipes() {
+            @Override
+            public void onRecipesFound(List<Recipe> matches) {
+                for(int i=0; i<matches.size(); i++)
+                {
+                    all += " " + matches.get(i).getNameRecipe();
+                }
+            }
+
+            @Override
+            public void onNoRecipesFound(String message) {
+
+            }
+
+            @Override
+            public void onExceptionOccurred(Exception e) {
+
+            }
+        });
+        return all;
+    }
+    public void d(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(requireContext());
+        View view = getLayoutInflater().inflate(R.layout.dialog_spinner,null);
+        alert.setTitle("מוצר חדש");
+
+        Spinner mspinner = (Spinner) view.findViewById(R.id.spinner3);
+        EditText name = (EditText) view.findViewById(R.id.name_ing);
+        ArrayAdapter <String> marrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.typesList));
+        marrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mspinner.setAdapter(marrayAdapter);
+
+        alert.setPositiveButton("אישור", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(!mspinner.getSelectedItem().toString().equals("בחר סוג")){
+                    Toast.makeText(getContext(),mspinner.getSelectedItem().toString(),Toast.LENGTH_SHORT).show();
+                    Ingredient ingredient = new Ingredient(name.getText().toString().trim(), 0.0, null, mspinner.getSelectedItem().toString());
+                    repo.saveNewIngredient(ingredient, new Repository.OnAddNewIngredientListener() {
+                        @Override
+                        public void onSuccess(String message) {
+                            Log.d("saveNewIng::Succeed", message);
+                            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Exception e) {
+                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.d("saveNewIng::Failure", e.getLocalizedMessage());
+                        }
+                    });
+                    dialog.dismiss();
+                }
+            }
+        });
+        alert.setNegativeButton("ביטול", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alert.setView(view);
+        AlertDialog dialog = alert.create();
+        dialog.show();
     }
 }
