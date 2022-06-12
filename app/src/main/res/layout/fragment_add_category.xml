@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="הוסף"
-        app:backgroundTint="#32BDAC" />
+        app:backgroundTint="@color/red_c" />
 
     <ImageView
         android:id="@+id/image_view"
