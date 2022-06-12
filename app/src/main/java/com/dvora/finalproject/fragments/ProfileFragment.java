@@ -76,7 +76,6 @@ public class ProfileFragment extends Fragment {
                 selectC = new boolean[cArray.length];
                 for(int i=0;i<matches.size();++i)
                 {
-
                     cArray[i]=matches.get(i).getName();
                 }
             }

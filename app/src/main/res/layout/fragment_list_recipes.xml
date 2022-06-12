@@ -12,31 +12,28 @@
 
     <SearchView
         android:id="@+id/search_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="37dp"
+        android:layout_width="335dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/btn_add"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="39dp"
-        app:iconifiedByDefault="false"
-        app:queryHint="Search Name">
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:background="#33c5c9cc"
+        android:iconifiedByDefault="false"
+        android:layoutDirection="rtl"
+        android:queryHint="חיפוש חופשי"
+        app:iconifiedByDefault="true">
 
     </SearchView>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp">
-
-    </FrameLayout>
 
     <ListView
         android:id="@+id/mainlistfragment_listv"
         android:layout_width="match_parent"
-        android:layout_height="598dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_bar"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp">
 
     </ListView>
@@ -50,6 +47,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="92dp"
         android:text="@string/allRecipes"
+        android:clickable="false"
         android:textAlignment="center"
         android:textSize="30dp"
         android:textStyle="bold"
@@ -60,14 +58,25 @@
 
     <ImageButton
         android:id="@+id/btn_add"
-        android:layout_width="64dp"
-        android:layout_height="wrap_content"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="-3dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="11dp"
         android:layout_marginEnd="64dp"
         android:background="#fff"
-        android:src="@android:drawable/ic_input_add" />
+        android:src="@drawable/ic_plus" />
+
+    <ImageButton
+        android:id="@+id/sort_btn1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="7dp"
+        android:background="@color/white"
+        android:src="@drawable/ic_filter" />
 
 </RelativeLayout>

@@ -26,19 +26,19 @@
             android:src="@drawable/user_24" />
 
         <TextView
-            android:layout_marginTop="30dp"
             android:id="@+id/texthello"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:text="\@appsnippuser"
             android:textSize="28dp"
             android:textStyle="bold" />
 
         <TextView
-            android:layout_marginTop="30dp"
             android:id="@+id/mail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:text="developer@appsnipp.com"
             android:textSize="12dp"
             android:textStyle="bold" />
@@ -47,26 +47,33 @@
             android:id="@+id/log_out"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
             android:text="התנתק"
             app:backgroundTint="@color/red_c" />
 
-
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_name_c"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@android:drawable/editbox_background"
-        android:drawableEnd="@android:drawable/arrow_down_float"
-        android:drawablePadding="16dp"
-        android:hint="select category"
-        android:padding="12dp"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:ignore="MissingConstraints">
 
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="359dp"
-        tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/tv_name_c"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:background="@android:drawable/editbox_background"
+            android:drawableEnd="@android:drawable/arrow_down_float"
+            android:hint=" בחר קטגוריות מועדפות"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="12dp" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

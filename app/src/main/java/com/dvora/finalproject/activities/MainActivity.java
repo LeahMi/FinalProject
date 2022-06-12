@@ -7,11 +7,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.dvora.finalproject.FirebaseManager;
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
+import com.dvora.finalproject.fragments.SplashFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Stack;

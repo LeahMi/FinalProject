@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -100,10 +101,11 @@ public class CategoryDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 SplashFragment.sort = "";
-                SplashFragment.sort += "" + timeSp.getSpinnerText();
-                SplashFragment.sort += "" + levelSp.getSpinnerText();
-                SplashFragment.sort += "" + numOfRecipesSp.getSpinnerText();
+                SplashFragment.sort += " " + timeSp.getSpinnerText();
+                SplashFragment.sort += " " + levelSp.getSpinnerText();
+                SplashFragment.sort += " " + numOfRecipesSp.getSpinnerText();
                 Toast.makeText(getContext(),"" +SplashFragment.sort,Toast.LENGTH_LONG).show();
+                Log.e("CDF recipe filter:","" + SplashFragment.sort);
                 createNewListBySort(SplashFragment.sort);
 
                 d.dismiss();
@@ -112,16 +114,43 @@ public class CategoryDetailsFragment extends Fragment {
         d.show();
     }
 
+    public boolean isFilter(Recipe recipe){
+        Log.e("CDF name",""+recipe.getNameRecipe());
+        Log.e("CDF isClock",""+isClock(recipe));
+        Log.e("CDF isLevel",""+isLevel(recipe));
+        Log.e("CDF isPercent",""+isPercent(recipe));
+        return isClock(recipe) && isLevel(recipe) && isPercent(recipe);
+    }
+    public boolean isClock(Recipe recipe){
+        return SplashFragment.sort.contains(recipe.getPreparationTime()) || _isClock(recipe);
+    }
+    private boolean _isClock(Recipe recipe){
+        return SplashFragment.sort.contains("שעה") || SplashFragment.sort.contains("שעה+") || SplashFragment.sort.contains("בחר זמן") || SplashFragment.sort.contains("דק'");
+    }
+
+    public boolean isLevel(Recipe recipe){
+        return SplashFragment.sort.contains(recipe.getLevel()) || SplashFragment.sort.contains("בחר דרגה");
+    }
+
+    public boolean isPercent(Recipe recipe){
+        if(!SplashFragment.sort.contains("100%") || SplashFragment.sort.contains("בחר כמות מוצרים")){
+            return true;
+        }
+        if(recipe.getPercentIng()<100){
+            return SplashFragment.sort.contains("פחות מ 100%");
+        }
+        else{
+            return !SplashFragment.sort.contains("פחות מ 100%");
+        }
+    }
     public void createNewListBySort(String spinnerText) {
         repo.getAllRecipes(new Repository.OnSearchAllRecipes() {
             @Override
             public void onRecipesFound(List<Recipe> matches) {
                 for (Recipe recipe : matches) {
-                    if(spinnerText!="") {
+                    if(spinnerText!="null") {
                         if (recipe.getCategory().equals(category.getName())
-                                && spinnerText.contains(recipe.getPreparationTime())
-                                && spinnerText.contains(recipe.getLevel())
-                                && spinnerText.contains(recipe.getPercentIng().toString())) {
+                                && isFilter(recipe)) {
                             recipesList.add(recipe);
                         }
                     }

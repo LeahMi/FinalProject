@@ -15,4 +15,13 @@
     <string name="titleFragCategories">קטגוריות</string>
     <string name="logOutBtn">התנתקות</string>
     <string name="allRecipes">כל המתכונים</string>
+    <string name="title_activity_splash">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string-array name="typesList">
+        <item>"בחר סוג"</item>
+        <item>"גרם"</item>
+        <item>"מל"</item>
+        <item>"יחידה"</item>
+    </string-array>
 </resources>

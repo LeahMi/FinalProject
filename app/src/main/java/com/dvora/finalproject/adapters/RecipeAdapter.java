@@ -1,6 +1,7 @@
 package com.dvora.finalproject.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -28,7 +30,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     private final List<Recipe> data;
     private final List<Recipe> exampleList;
     private final ICallbackAdapter iCallbackAdapter;
-    private final Repository repo = new Repository();
     private List<Recipe> filteredList = new ArrayList<>();
 
     public RecipeAdapter(Context context, List<Recipe> data, ICallbackAdapter callbackAdapter) {
@@ -111,8 +112,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             filteredList = new ArrayList<>();
+            Log.e("exampleList", "" + exampleList.size());
             if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(exampleList);
+                // filteredList.addAll(exampleList);
+                for (Recipe item : exampleList){
+                    if(isFilter(item))
+                        filteredList.add(item);
+                }
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for (Recipe item : exampleList) {
@@ -124,10 +130,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                             item.getPreparationTime().toLowerCase().contains(filterPattern) ||
                             item.getIngredientInfoToString().toLowerCase().contains(filterPattern))
                     ) {
-                        filteredList.add(item);
+                        if(isFilter(item))
+                            filteredList.add(item);
                     }
                 }
             }
+            Log.e("RAF recipe filter:","" + SplashFragment.sort);
             FilterResults results = new FilterResults();
             results.values = filteredList;
             return results;
@@ -144,5 +152,35 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             notifyDataSetChanged();
         }
     };
+
+    public boolean isFilter(Recipe recipe){
+        Log.e("RAF isClock",""+isClock(recipe));
+        Log.e("RAF isLevel",""+isLevel(recipe));
+        Log.e("RAF isPercent",""+isPercent(recipe));
+        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe)) || SplashFragment.sort.equals("null");
+    }
+    public boolean isClock(Recipe recipe){
+        return SplashFragment.sort.contains(recipe.getPreparationTime()) || _isClock(recipe);
+    }
+    private boolean _isClock(Recipe recipe){
+        return SplashFragment.sort.contains("שעה") || SplashFragment.sort.contains("שעה+") || SplashFragment.sort.contains("בחר זמן") || SplashFragment.sort.contains("דק'");
+    }
+
+    public boolean isLevel(Recipe recipe){
+        return SplashFragment.sort.contains(recipe.getLevel()) || SplashFragment.sort.contains("בחר דרגה");
+    }
+
+    public boolean isPercent(Recipe recipe){
+        if(!SplashFragment.sort.contains("100%") || SplashFragment.sort.contains("בחר כמות מוצרים")){
+            return true;
+        }
+        if(recipe.getPercentIng()<100){
+            return SplashFragment.sort.contains("פחות מ 100%");
+        }
+        else{
+            return !SplashFragment.sort.contains("פחות מ 100%");
+        }
+    }
+
 
 }
