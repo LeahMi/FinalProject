@@ -71,15 +71,15 @@ public class Register extends AppCompatActivity{
                 fullName=mFullName.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
-                    mEmail.setError("Email is Recuired.");
+                    mEmail.setError("נדרש דואר אלקטרוני");
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
-                    mPassword.setError("Password is Recuired.");
+                    mPassword.setError("נדרשת סיסמא");
                     return;
                 }
                 if(password.length()<6){
-                    mPassword.setError("Password Must be >=6 Characters");
+                    mPassword.setError("סיסמא חייבת לכלול לפחות 6 תווים");
                     return;
                 }
 
@@ -111,7 +111,7 @@ public class Register extends AppCompatActivity{
                                 }
                             });
 
-                            Toast.makeText(Register.this, "User Created.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, "החשבון נוצר", Toast.LENGTH_SHORT).show();
 
 
 

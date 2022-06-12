@@ -3,7 +3,10 @@ package com.dvora.finalproject.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +53,6 @@ public class AddIngredient extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.v("item", (String) parent.getItemAtPosition(position));
                 type = (String)parent.getItemAtPosition(position);
-                //((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
             }
 
             @Override
@@ -65,11 +67,20 @@ public class AddIngredient extends Fragment {
                 String Name = name.getText().toString().trim();
                 String Amount = amount.getText().toString().trim();
                 Ingredient ingredient = new Ingredient(Name,Double.parseDouble(Amount), null,type);
+//                if(TextUtils.isEmpty(amount.getText().toString().trim())){
+//                    amount.setError("הזן כמות");
+//                    return;
+//                }
                 repo.saveNewIngredient(ingredient, new Repository.OnAddNewIngredientListener() {
                     @Override
                     public void onSuccess(String message) {
                         Log.d("saveNewIng::Succeed",message);
                         Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+//                        if(TextUtils.isEmpty(amount.getText().toString().trim())) {
+//                            amount.setError("הזן כמות");
+//                            return;
+//                        }
+                        showFragment(new InventoryFragment());
 
                     }
 
@@ -82,6 +93,12 @@ public class AddIngredient extends Fragment {
             }
         });
         return v;
+    }
+    public void showFragment(Fragment frag) {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction tran = manager.beginTransaction();
+        tran.replace(R.id.fragment, frag).addToBackStack(null);
+        tran.commit();
     }
 
 }

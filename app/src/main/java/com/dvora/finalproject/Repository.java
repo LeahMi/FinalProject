@@ -86,8 +86,8 @@ public class Repository {
                             }
                         }
                         if (match == null) {
-                            System.out.println("No Recipes Found!");
-                            listener.onNoRecipesFound("No recipes found for ingredient " + ingredientName);
+                            System.out.println("לא נמצאו מתכונים!");
+                            listener.onNoRecipesFound("לא נמצא מתכונים עם המוצר " + ingredientName);
                         } else {
                             Ingredient finalMatch = match;
                             ref.child(RECIPES_PATH)
@@ -246,7 +246,7 @@ public class Repository {
                         }
 
                         if(matches.isEmpty()) {
-                            listener.onNoIngredientsFound("No Ingredients found");
+                            listener.onNoIngredientsFound("לא נמצאו מרכיבים");
                         } else {
                             listener.onIngredientsFound(matches);
                         }
@@ -377,7 +377,7 @@ public class Repository {
 
         }
         ref.child(RECIPES_PATH).push().setValue(recipe)
-                .addOnSuccessListener(aVoid -> listener.onSuccess("Successfully added " + recipe.getNameRecipe() + " to the list"))
+                .addOnSuccessListener(aVoid -> listener.onSuccess("נוסף בהצלחה " + recipe.getNameRecipe() + " לרשימה"))
                 .addOnFailureListener(e -> listener.onFailure(e));
         ref.child("categories").child(recipe.getCategory()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
@@ -401,7 +401,7 @@ public class Repository {
                     String data=dataSnapshot.getValue().toString();
                     listener.onSuccess(data);
                 }
-                else {listener.onSuccess("Enter your Shopping List ");}
+                else {listener.onSuccess("הכנס את רשימת הקניות שלך ");}
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -425,8 +425,8 @@ public class Repository {
     }
     public void addCategory(Category category, OnSuccessListener listener){
         ref.child("categories").child(category.getName()).setValue(category)
-                .addOnSuccessListener(aVoid -> listener.onSuccess("Successfully added " + category.getName() + " to the categories"))
-                .addOnFailureListener(e -> Log.d("no added",category.getName()+" no added to the categories"));
+                .addOnSuccessListener(aVoid -> listener.onSuccess("נוסף בהצלחה " + category.getName() + " לקטגוריות "))
+                .addOnFailureListener(e -> Log.d("no added",category.getName()+" לא נוסף לקטגוריות "));
     }
     public void getAllCategories(OnSearchAllCategories listener){
         ref.child("categories")

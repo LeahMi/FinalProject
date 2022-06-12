@@ -28,13 +28,13 @@ public class SplashFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
         view = inflater.inflate(R.layout.fragment_splash, container, false);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_categoriesFragment);
+//                Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_categoriesFragment);
+
             }
         },3000);
         return view;

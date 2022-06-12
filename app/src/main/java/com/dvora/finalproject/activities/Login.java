@@ -52,15 +52,15 @@ public class Login extends AppCompatActivity {
                 String password = mPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
-                    mEmail.setError("Email is Recuired.");
+                    mEmail.setError("נדרש דואר אלקטרוני");
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
-                    mPassword.setError("Password is Recuired.");
+                    mPassword.setError("נדרש סיסמא");
                     return;
                 }
                 if(password.length()<6){
-                    mPassword.setError("Password Must be >=6 Characters");
+                    mPassword.setError("סיסמא חייבת לכלול לפחות 6 תווים");
                     return;
                 }
 
@@ -71,10 +71,10 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(Login.this, "Logged in Successfully.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "הכניסה הצליחה", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         }else{
-                            Toast.makeText(Login.this, "Error!"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "שגיאה!"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
                         }
                     }
@@ -94,11 +94,11 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 EditText resetMail = new EditText(v.getContext());
                 final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
-                passwordResetDialog.setTitle("Reset Password ?");
-                passwordResetDialog.setMessage("Enter Your Email To Received Reset Link.");
+                passwordResetDialog.setTitle("שחזור סיסמא ?");
+                passwordResetDialog.setMessage("הכנס את הדואר האלקטרוני לקבלת לינק לשחזור סיסמא");
                 passwordResetDialog.setView(resetMail);
 
-                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                passwordResetDialog.setPositiveButton("כן", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // extract the email and send reset link
@@ -106,18 +106,18 @@ public class Login extends AppCompatActivity {
                         fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(Login.this,"Reset Link Sent To Your Email.",Toast.LENGTH_LONG).show();
+                                Toast.makeText(Login.this,"נשלח לדואר האלקטרוני לינק לשחזור סיסמא",Toast.LENGTH_LONG).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(Login.this, "Error! Reset Link is Not Sent "+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, "שגיאה , לינק לשחזור סיסמא לא נשלח "+ e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
 
                     }
                 });
-                passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                passwordResetDialog.setNegativeButton("לא", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // close the dialog

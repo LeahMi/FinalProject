@@ -318,11 +318,7 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                openDetailsFragment(category1);
-//                getFragmentManager().popBackStackImmediate();
-//                Intent intent=new Intent();
-//                intent.setClass(getActivity(), MainActivity.class);
-//                getActivity().startActivity(intent);
+
                 if(TextUtils.isEmpty(name.getText().toString().trim())){
                     name.setError("הזן שם מתכון");
                     return;

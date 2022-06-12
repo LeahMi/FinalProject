@@ -1,5 +1,7 @@
 package com.dvora.finalproject.entities;
 
+import android.text.TextUtils;
+
 import com.google.firebase.database.Exclude;
 
 import java.math.BigDecimal;

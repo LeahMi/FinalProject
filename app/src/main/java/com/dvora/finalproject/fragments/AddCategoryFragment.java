@@ -140,7 +140,7 @@ public class AddCategoryFragment extends Fragment {
                                 Log.d("fff","FFFFFFFFFFFFFFFFFFFFFFF");
                             }
                         });
-                        Toast.makeText(getContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "נוסף בהצלחה", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
