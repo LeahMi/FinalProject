@@ -66,11 +66,20 @@ public class AddIngredient extends Fragment {
             public void onClick(View view) {
                 String Name = name.getText().toString().trim();
                 String Amount = amount.getText().toString().trim();
+                if(TextUtils.isEmpty(Name) && TextUtils.isEmpty(Amount)){
+                    name.setError("הזן מוצר");
+                    amount.setError("הזן כמות");
+                    return;
+                }
+                if(TextUtils.isEmpty(Name)){
+                    name.setError("הזן מוצר");
+                    return;
+                }
+                if(TextUtils.isEmpty(Amount)){
+                    amount.setError("הזן כמות");
+                    return;
+                }
                 Ingredient ingredient = new Ingredient(Name,Double.parseDouble(Amount), null,type);
-//                if(TextUtils.isEmpty(amount.getText().toString().trim())){
-//                    amount.setError("הזן כמות");
-//                    return;
-//                }
                 repo.saveNewIngredient(ingredient, new Repository.OnAddNewIngredientListener() {
                     @Override
                     public void onSuccess(String message) {

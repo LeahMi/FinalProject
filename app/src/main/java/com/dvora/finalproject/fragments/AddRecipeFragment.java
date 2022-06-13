@@ -455,8 +455,8 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
                         && !(allIngredients.isEmpty())
                         && !(TextUtils.isEmpty(prep.getText().toString().trim()))){
                     saveInFirebase();
+                    openDetailsFragment1(category1);
                 }
-                openDetailsFragment1(category1);
             }
         });
         return v;
@@ -586,7 +586,7 @@ public class AddRecipeFragment extends Fragment implements DialogIng.OnInputSele
     public void showFragment(Fragment frag) {
         FragmentManager manager = getFragmentManager();
         FragmentTransaction tran = manager.beginTransaction();
-        tran.replace(R.id.fragment, frag);
+        tran.replace(R.id.fragment, frag).addToBackStack(null);
         tran.commit();
     }
     private void openDetailsFragment(Category category) {

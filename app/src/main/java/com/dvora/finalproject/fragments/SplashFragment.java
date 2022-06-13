@@ -38,10 +38,10 @@ public class SplashFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_categoriesFragment);
+                Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_categoriesFragment);
 
             }
-        },3000);
+        },1000);
         return view;
     }
 
