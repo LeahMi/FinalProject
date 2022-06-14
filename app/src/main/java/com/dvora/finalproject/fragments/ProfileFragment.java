@@ -1,4 +1,5 @@
 package com.dvora.finalproject.fragments;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -40,8 +41,7 @@ import java.util.List;
 import static com.dvora.finalproject.FirebaseManager.currentUser;
 
 
-public class ProfileFragment<spinner> extends Fragment {
-
+public class ProfileFragment extends BaseFragment {
     private Repository repo = new Repository();
     private TextView Name;
     private TextView Mail;
@@ -68,13 +68,14 @@ public class ProfileFragment<spinner> extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment_profile, container, false);
+        View v = inflater.inflate(R.layout.fragment_profile, container, false);
         logOut = (Button) v.findViewById(R.id.log_out);
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getActivity(), Login.class));
+                getActivity().finish();
             }
         });
         Spinner spinner =(Spinner) v.findViewById(R.id.spinner_category_favorite);
@@ -247,7 +248,7 @@ public class ProfileFragment<spinner> extends Fragment {
         repo.getProfile(new Repository.OnSearchProfile() {
             @Override
             public void onSuccess(String message) {
-                Name.setText("שלום "+ message);
+                Name.setText("שלום " + message);
             }
 
             @Override
@@ -257,7 +258,7 @@ public class ProfileFragment<spinner> extends Fragment {
         });
 
         Mail = v.findViewById(R.id.mail);
-        Mail.setText(currentUser.getEmail());
+        Mail.setText( FirebaseManager.currentUser.getEmail());
 
         return v;
     }

@@ -3,7 +3,6 @@ package com.dvora.finalproject.fragments;
 
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -11,15 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 
-import com.dvora.finalproject.FirebaseManager;
 import com.dvora.finalproject.ICallBackAdapterCategory;
 import com.dvora.finalproject.ListRecipesFragment;
 import com.dvora.finalproject.R;
@@ -33,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CategoriesFragment extends Fragment {
+public class CategoriesFragment extends BaseFragment {
 
     private ImageButton btnAdd;
     private RecyclerView rvCategories;
@@ -49,7 +45,7 @@ public class CategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v=inflater.inflate(R.layout.fragment_categories, container, false);
-        SplashFragment.sort="null";
+        MainActivity.sort="null";
         repo.getAllCategories(new Repository.OnSearchAllCategories() {
             @Override
             public void onCategoriesFound(List<Category> matches) {
@@ -89,20 +85,15 @@ public class CategoriesFragment extends Fragment {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(getContext(),"message",Toast.LENGTH_SHORT).show();
-                showFragment(new AddCategoryFragment());
+                mListener.showFragment(R.id.nav_add_category);
             }
         });
         return v;
     }
-    public void showFragment(Fragment frag) {
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction tran = manager.beginTransaction();
-        tran.replace(R.id.fragment, frag).addToBackStack(null);
-        tran.commit();
-    }
+
 
     private void openDetailsFragment(Category category) {
-        showFragment(ListRecipesFragment.newInstance(category));
+        mListener.showFragment(R.id.listRecipesFragment2,ListRecipesFragment.newInstance(category));
     }
 
 }

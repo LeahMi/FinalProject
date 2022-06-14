@@ -3,19 +3,21 @@ package com.dvora.finalproject.activities;
 import android.annotation.SuppressLint;
 
 
-
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.Fragment;
 
 import com.dvora.finalproject.R;
 
 import com.dvora.finalproject.fragments.CategoriesFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -29,16 +31,17 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void showScreen() {
-        getSupportActionBar().hide();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                CategoriesFragment fragment = new Fragment();
-//                FragmentManager manager = getFragmentManager();
-//                FragmentTransaction transaction = manager.beginTransaction();
-//                transaction.add(R.id.container,fragment,"tag");
-//                transaction.addToBackStack(null);
-//                transaction.commit();
+                Intent intent = null;
+                if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                    intent = new Intent(SplashActivity.this, Register.class);
+                } else {
+                    intent = new Intent(SplashActivity.this, MainActivity.class);
+                }
+                startActivity(intent);
+                finish();
             }
         }, 3000);
     }

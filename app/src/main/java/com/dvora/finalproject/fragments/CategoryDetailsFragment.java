@@ -3,8 +3,6 @@ package com.dvora.finalproject.fragments;
 import android.app.Dialog;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,12 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -38,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CategoryDetailsFragment extends Fragment {
+public class CategoryDetailsFragment extends BaseFragment {
 
     private RecyclerView rvRecipes;
     public final static String CATEGORY_KEY = "CATEGORY_KEY";
@@ -100,13 +95,13 @@ public class CategoryDetailsFragment extends Fragment {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SplashFragment.sort = "";
-                SplashFragment.sort += " " + timeSp.getSpinnerText();
-                SplashFragment.sort += " " + levelSp.getSpinnerText();
-                SplashFragment.sort += " " + numOfRecipesSp.getSpinnerText();
-                Toast.makeText(getContext(),"" +SplashFragment.sort,Toast.LENGTH_LONG).show();
-                Log.e("CDF recipe filter:","" + SplashFragment.sort);
-                createNewListBySort(SplashFragment.sort);
+                MainActivity.sort = "";
+                MainActivity.sort += " " + timeSp.getSpinnerText();
+                MainActivity.sort += " " + levelSp.getSpinnerText();
+                MainActivity.sort += " " + numOfRecipesSp.getSpinnerText();
+                Toast.makeText(getContext(), "" + MainActivity.sort, Toast.LENGTH_LONG).show();
+                Log.e("CDF recipe filter:", "" + MainActivity.sort);
+                createNewListBySort(MainActivity.sort);
 
                 d.dismiss();
             }
@@ -114,47 +109,48 @@ public class CategoryDetailsFragment extends Fragment {
         d.show();
     }
 
-    public boolean isFilter(Recipe recipe){
-        Log.e("CDF name",""+recipe.getNameRecipe());
-        Log.e("CDF isClock",""+isClock(recipe));
-        Log.e("CDF isLevel",""+isLevel(recipe));
-        Log.e("CDF isPercent",""+isPercent(recipe));
+    public boolean isFilter(Recipe recipe) {
+        Log.e("CDF name", "" + recipe.getNameRecipe());
+        Log.e("CDF isClock", "" + isClock(recipe));
+        Log.e("CDF isLevel", "" + isLevel(recipe));
+        Log.e("CDF isPercent", "" + isPercent(recipe));
         return isClock(recipe) && isLevel(recipe) && isPercent(recipe);
     }
-    public boolean isClock(Recipe recipe){
-        return SplashFragment.sort.contains(recipe.getPreparationTime()) || _isClock(recipe);
-    }
-    private boolean _isClock(Recipe recipe){
-        return SplashFragment.sort.contains("שעה") || SplashFragment.sort.contains("שעה+") || SplashFragment.sort.contains("בחר זמן") || SplashFragment.sort.contains("דק'");
+
+    public boolean isClock(Recipe recipe) {
+        return MainActivity.sort.contains(recipe.getPreparationTime()) || _isClock(recipe);
     }
 
-    public boolean isLevel(Recipe recipe){
-        return SplashFragment.sort.contains(recipe.getLevel()) || SplashFragment.sort.contains("בחר דרגה");
+    private boolean _isClock(Recipe recipe) {
+        return MainActivity.sort.contains("שעה") || MainActivity.sort.contains("שעה+") || MainActivity.sort.contains("בחר זמן") || MainActivity.sort.contains("דק'");
     }
 
-    public boolean isPercent(Recipe recipe){
-        if(!SplashFragment.sort.contains("100%") || SplashFragment.sort.contains("בחר כמות מוצרים")){
+    public boolean isLevel(Recipe recipe) {
+        return MainActivity.sort.contains(recipe.getLevel()) || MainActivity.sort.contains("בחר דרגה");
+    }
+
+    public boolean isPercent(Recipe recipe) {
+        if (!MainActivity.sort.contains("100%") || MainActivity.sort.contains("בחר כמות מוצרים")) {
             return true;
         }
-        if(recipe.getPercentIng()<100){
-            return SplashFragment.sort.contains("פחות מ 100%");
-        }
-        else{
-            return !SplashFragment.sort.contains("פחות מ 100%");
+        if (recipe.getPercentIng() < 100) {
+            return MainActivity.sort.contains("פחות מ 100%");
+        } else {
+            return !MainActivity.sort.contains("פחות מ 100%");
         }
     }
+
     public void createNewListBySort(String spinnerText) {
         repo.getAllRecipes(new Repository.OnSearchAllRecipes() {
             @Override
             public void onRecipesFound(List<Recipe> matches) {
                 for (Recipe recipe : matches) {
-                    if(spinnerText!="null") {
+                    if (spinnerText != "null") {
                         if (recipe.getCategory().equals(category.getName())
                                 && isFilter(recipe)) {
                             recipesList.add(recipe);
                         }
-                    }
-                    else
+                    } else
                         recipesList.add(recipe);
                 }
                 RecipeAdapter adapter = new RecipeAdapter(getContext(), recipesList, new ICallbackAdapter() {
@@ -196,12 +192,10 @@ public class CategoryDetailsFragment extends Fragment {
         });
     }
 
-    public static CategoryDetailsFragment newInstance(Category category) {
-        CategoryDetailsFragment fragment = new CategoryDetailsFragment();
+    public static Bundle newInstance(Category category) {
         Bundle args = new Bundle();
         args.putSerializable(CATEGORY_KEY, category);
-        fragment.setArguments(args);
-        return fragment;
+        return args;
 
     }
 
@@ -287,19 +281,12 @@ public class CategoryDetailsFragment extends Fragment {
     }
 
 
-    public void showFragment(Fragment frag) {
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction tran = manager.beginTransaction();
-        tran.replace(R.id.fragment, frag).addToBackStack(null);
-        tran.commit();
-    }
-
     private void openDetailsFragment(Recipe recipe) {
-        showFragment(ItemDetailsFragment.newInstance(recipe));
+        mListener.showFragment(R.id.nav_item_details,ItemDetailsFragment.newInstance(recipe));
     }
 
     private void openDetailsFragment1(Category category) {
-        showFragment(AddRecipeFragment.newInstance(category));
+        mListener.showFragment(R.id.addRecipeFragment,AddRecipeFragment.newInstance(category));
     }
 
 }

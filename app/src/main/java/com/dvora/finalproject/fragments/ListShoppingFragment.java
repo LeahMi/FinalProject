@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
 
-public class ListShoppingFragment extends Fragment {
+public class ListShoppingFragment extends BaseFragment {
 
     private EditText testEditText;
     private Button buttonSave;
@@ -56,17 +56,12 @@ public class ListShoppingFragment extends Fragment {
                 String ListS = testEditText.getText().toString().trim();
                 repo.SaveListShopping(ListS);
                 Toast.makeText(getContext(),"הרשימה עודכנה",Toast.LENGTH_SHORT).show();
-                showFragment(new InventoryFragment());
+                mListener.showFragment(R.id.inventoryFragment);
             }
         });
         return v;
 
     }
-    public void showFragment(Fragment frag) {
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction tran = manager.beginTransaction();
-        tran.replace(R.id.fragment, frag).addToBackStack(null);
-        tran.commit();
-    }
+
 }
 

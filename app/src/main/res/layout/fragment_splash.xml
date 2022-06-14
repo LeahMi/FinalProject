@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="#8AECD477"
-    tools:context=".fragments.SplashFragment">
+    tools:context=".fragments.MainActivity">
 
     <!--suppress AndroidUnresolvableTag -->
     <pl.droidsonroids.gif.GifImageView

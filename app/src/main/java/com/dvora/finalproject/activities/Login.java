@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dvora.finalproject.FirebaseManager;
 import com.dvora.finalproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,14 +36,14 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
         progressBar = findViewById(R.id.progressBar);
         fAuth = FirebaseAuth.getInstance();
         mLoginBtn = findViewById(R.id.loginBtn);
         mCreateBtn = findViewById(R.id.registerTextView);
-        forgotTextLink= findViewById(R.id.forgotPassword);
+        forgotTextLink = findViewById(R.id.forgotPassword);
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +60,7 @@ public class Login extends AppCompatActivity {
                     mPassword.setError("נדרש סיסמא");
                     return;
                 }
-                if(password.length()<6){
+                if (password.length() < 6) {
                     mPassword.setError("סיסמא חייבת לכלול לפחות 6 תווים");
                     return;
                 }
@@ -67,14 +68,16 @@ public class Login extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
 
 
-                fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
+                            FirebaseManager.resetAfterLogin();
                             Toast.makeText(Login.this, "הכניסה הצליחה", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        }else{
-                            Toast.makeText(Login.this, "שגיאה!"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(Login.this, "שגיאה!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
                         }
                     }
@@ -86,6 +89,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), Register.class));
+                finish();
             }
         });
 
@@ -102,16 +106,16 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // extract the email and send reset link
-                        String mail=resetMail.getText().toString();
+                        String mail = resetMail.getText().toString();
                         fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(Login.this,"נשלח לדואר האלקטרוני לינק לשחזור סיסמא",Toast.LENGTH_LONG).show();
+                                Toast.makeText(Login.this, "נשלח לדואר האלקטרוני לינק לשחזור סיסמא", Toast.LENGTH_LONG).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(Login.this, "שגיאה , לינק לשחזור סיסמא לא נשלח "+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, "שגיאה , לינק לשחזור סיסמא לא נשלח " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
 

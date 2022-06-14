@@ -1,12 +1,13 @@
 package com.dvora.finalproject.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -16,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.adapters.IngAdapter;
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
@@ -24,7 +24,7 @@ import com.dvora.finalproject.entities.Ingredient;
 
 import java.util.List;
 
-public class InventoryFragment extends Fragment {
+public class InventoryFragment extends BaseFragment {
     private AutoCompleteTextView textIn;
     private ListView list;
     private ImageButton buttonAdd;
@@ -35,32 +35,30 @@ public class InventoryFragment extends Fragment {
 
     private Repository repo = new Repository();
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_inventory, container, false);
 //        ((MainActivity)getActivity()).changeActionBarTitle("מלאי",false);
-        searchViewInventory=v.findViewById(R.id.search_bar_inventory);
+
+        final Context context=getContext();
+        Log.v("TEST_FOR_US", "onCreateView-isNull? " + (getContext() == null));
+        searchViewInventory = v.findViewById(R.id.search_bar_inventory);
         repo.getAllIngredients(new Repository.OnSearchAllIngredients() {
-            public void onIngredientsFound(List<Ingredient> matches){
-                Toast.makeText(getContext(),matches.size() + " מרכיבים נמצאו",Toast.LENGTH_SHORT).show();
-                list= v.findViewById(R.id.mainlistinventory_listv);
-                int i=0;
-                nameList=new String[matches.size()];
-                for (Ingredient ingredient:matches) {
-                    nameList[i]=ingredient.getName();
+            public void onIngredientsFound(List<Ingredient> matches) {
+                Toast.makeText(context,matches.size() + " מרכיבים נמצאו",Toast.LENGTH_SHORT).show();
+                list = v.findViewById(R.id.mainlistinventory_listv);
+                int i = 0;
+                nameList = new String[matches.size()];
+                for (Ingredient ingredient : matches) {
+                    nameList[i] = ingredient.getName();
                     ++i;
                 }
                 //  arrayAdapter= new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,android.R.id.text1,nameList);
-                IngAdapter adapter= new IngAdapter(matches, getContext());
+                IngAdapter adapter = new IngAdapter(matches, context);
                 list.setAdapter(adapter);
-                searchViewInventory.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+                searchViewInventory.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String s) {
                         adapter.getFilter().filter(s);
@@ -78,38 +76,34 @@ public class InventoryFragment extends Fragment {
 
             @Override
             public void onNoIngredientsFound(String message) {
-                Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onExceptionOccurred(Exception e) {
-                Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
-        ListShopping=v.findViewById(R.id.btn_list_shopping);
+        ListShopping = v.findViewById(R.id.btn_list_shopping);
         ListShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showFragment(new ListShoppingFragment());
+                mListener.showFragment(R.id.ListShoppingFragment);
             }
         });
 
-        buttonAdd=v.findViewById(R.id.btn_Add_ing);
+        buttonAdd = v.findViewById(R.id.btn_Add_ing);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showFragment(new AddIngredient());
+                mListener.showFragment(R.id.nav_add_ingredient);
             }
         });
 
         return v;
     }
-    public void showFragment(Fragment frag) {
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction tran = manager.beginTransaction();
-        tran.replace(R.id.fragment, frag).addToBackStack(null);
-        tran.commit();
-    }
+
+
 }

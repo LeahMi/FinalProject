@@ -76,7 +76,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="7dp"
-        android:background="@color/white"
+        android:background="#00FFFFFF"
         android:src="@drawable/ic_filter" />
 
 </RelativeLayout>
