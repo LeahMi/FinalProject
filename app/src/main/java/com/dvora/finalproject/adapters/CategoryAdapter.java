@@ -60,7 +60,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                     .into(holder.image);
         }else {
             //holder.image.setImageResource(data.get(position).getImgUrl());
-            holder.image.setImageResource(R.drawable.image_recipe);
+            holder.image.setImageResource(R.drawable.images);
             //holder.image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         }
 

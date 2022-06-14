@@ -52,12 +52,12 @@ public class CategoriesFragment extends BaseFragment {
                 rvCategories = v.findViewById(R.id.categories_list);
                 List<Category> matches1 = new ArrayList<>();
                 int numRecipes=0;
-                matches1.add(new Category());
                 for (int i=0;i<matches.size();++i) {
                     matches1.add(matches.get(i));
                     numRecipes+=matches.get(i).getNumOfRecipes();
                 }
-                matches1.get(0).setNumOfRecipes(numRecipes);
+                matches1.add(new Category());
+                matches1.get(matches1.size()-1).setNumOfRecipes(numRecipes);
                 CategoryAdapter adapter = new CategoryAdapter(getContext(), matches1, new ICallBackAdapterCategory() {
                     @Override
                     public void onClickItem(Category category) {

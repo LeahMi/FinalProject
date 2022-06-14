@@ -98,7 +98,6 @@ public class ProfileFragment extends BaseFragment {
                         Log.v("item", (String) parent.getItemAtPosition(position));
                         favorite_c = (String)parent.getItemAtPosition(position);
                         repo.SaveFavoriteCategory(favorite_c);
-
                     }
 
                     @Override
@@ -107,29 +106,21 @@ public class ProfileFragment extends BaseFragment {
                 repo.getFavoriteCategory(new Repository.OnSearchFavoriteCategory() {
                     @Override
                     public void onSuccess(String message) {
-                        int i= Arrays.asList(types).indexOf(favorite_c);
+                        int i= Arrays.asList(types).indexOf(message);
+                        Log.d("aaa","iaaa  types "   +types.length);
                         spinner.setSelection(i);
                         Log.d("aaa","iaaa   "   +i);
                     }
-
                     @Override
-                    public void onFailure(Exception e) {
-
-                    }
+                    public void onFailure(Exception e) { }
                 });
 
             }
 
             @Override
-            public void onNoCategoriesFound(String message) {
-
-
-            }
-
+            public void onNoCategoriesFound(String message) { }
             @Override
-            public void onExceptionOccurred(Exception e) {
-
-            }
+            public void onExceptionOccurred(Exception e) { }
 
         });
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item , types );
