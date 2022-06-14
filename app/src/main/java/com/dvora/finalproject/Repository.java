@@ -319,6 +319,12 @@ public class Repository {
         void onFailure(Exception e);
     }
 
+    public interface OnSearchFavoriteCategory {
+        void onSuccess(String message);
+
+        void onFailure(Exception e);
+    }
+
     public void updateIngredient(Ingredient ingredient, OnSuccessListener listener) {
         DatabaseReference existingIngredient = ref.child(INGREDIENTS_PATH).child(ingredient.getName());
         existingIngredient.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -656,6 +662,29 @@ public class Repository {
                 break;
         }
         return amount;
+    }
+    public void SaveFavoriteCategory(String Favorite_c)
+    {
+        ref.child("favorite_category").setValue(Favorite_c);
+    }
+    public void getFavoriteCategory(OnSearchFavoriteCategory listener)
+    {
+        ref.child("favorite_category").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String favoriteCategory = dataSnapshot.getValue().toString();
+                    listener.onSuccess(favoriteCategory);
+
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                listener.onFailure(null);
+            }
+        });
+
     }
 
     public MutableLiveData<Exception> getExceptionsData() {

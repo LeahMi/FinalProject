@@ -35,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -88,6 +89,7 @@ public class ProfileFragment extends BaseFragment {
                 {
                     types[i]=matches.get(i).getName();
                 }
+
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,types );
                 spinner.setAdapter(adapter);
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -95,17 +97,32 @@ public class ProfileFragment extends BaseFragment {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         Log.v("item", (String) parent.getItemAtPosition(position));
                         favorite_c = (String)parent.getItemAtPosition(position);
+                        repo.SaveFavoriteCategory(favorite_c);
+
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) { }
                 });
+                repo.getFavoriteCategory(new Repository.OnSearchFavoriteCategory() {
+                    @Override
+                    public void onSuccess(String message) {
+                        int i= Arrays.asList(types).indexOf(favorite_c);
+                        spinner.setSelection(i);
+                        Log.d("aaa","iaaa   "   +i);
+                    }
 
+                    @Override
+                    public void onFailure(Exception e) {
+
+                    }
+                });
 
             }
 
             @Override
             public void onNoCategoriesFound(String message) {
+
 
             }
 
@@ -113,6 +130,7 @@ public class ProfileFragment extends BaseFragment {
             public void onExceptionOccurred(Exception e) {
 
             }
+
         });
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item , types );
 //        spinner.setAdapter(adapter);
