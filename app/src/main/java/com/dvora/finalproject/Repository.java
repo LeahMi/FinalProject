@@ -675,6 +675,7 @@ public class Repository {
                 if (dataSnapshot.exists()) {
                     String favoriteCategory = dataSnapshot.getValue().toString();
                     listener.onSuccess(favoriteCategory);
+//                    listener.onSuccess("נוסף בהצלחה " + favoriteCategory );
 
                 }
             }

@@ -45,6 +45,8 @@ import static com.dvora.finalproject.FirebaseManager.currentUser;
 public class ProfileFragment extends BaseFragment {
     private Repository repo = new Repository();
     private TextView Name;
+    private  TextView text;
+
     private TextView Mail;
     private Button logOut;
     private String[] types ;
@@ -71,6 +73,7 @@ public class ProfileFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         logOut = (Button) v.findViewById(R.id.log_out);
+        text=v.findViewById(R.id.favorita_c);
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
