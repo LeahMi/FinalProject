@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -15,16 +16,16 @@
             android:id="@+id/level_sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.7">
+            android:layout_weight="0.3">
         </com.dvora.finalproject.MultiSpinner>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
+            android:layout_weight="0.7"
             android:text="דרגת קושי"
             android:gravity="center"
-            android:textSize="24dp">
+            android:textSize="20dp">
         </TextView>
 
     </LinearLayout>
@@ -39,16 +40,16 @@
             android:id="@+id/num_of_recipes_sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.7">
+            android:layout_weight="0.3">
         </com.dvora.finalproject.MultiSpinner>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
+            android:layout_weight="0.7"
             android:text="כמות מוצרים"
             android:gravity="center"
-            android:textSize="24dp">
+            android:textSize="20dp">
         </TextView>
 
     </LinearLayout>
@@ -63,24 +64,25 @@
             android:id="@+id/time_sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.7">
+            android:layout_weight="0.3">
         </com.dvora.finalproject.MultiSpinner>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
+            android:layout_weight="0.7"
             android:text="זמן הכנה"
             android:gravity="center"
-            android:textSize="24dp">
+            android:textSize="20dp">
         </TextView>
 
     </LinearLayout>
+
     <Button
         android:id="@+id/ok_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:text="אישור">
-    </Button>
+        android:text="סנן"
+        app:backgroundTint="@color/red_c"></Button>
 </LinearLayout>
