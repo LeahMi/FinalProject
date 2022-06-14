@@ -184,18 +184,30 @@
                     android:layout_height="wrap_content"
                     android:text="סיימתי, עדכן מלאי"
                     app:backgroundTint="#FF9595" />
+<!--                <Button-->
+<!--                    android:id="@+id/btn_save"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="סיימתי, עדכן מלאי"-->
+<!--                    app:backgroundTint="#FF9595" />-->
+<!--                <Button-->
+<!--                    android:id="@+id/btn_cancel"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="סיימתי, עדכן מלאי"-->
+<!--                    app:backgroundTint="#FF9595" />-->
 
 
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
-    <ImageButton
-        android:id="@+id/btn_back"
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:background="#fff"
-        android:src="@drawable/back" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/btn_back"-->
+<!--        android:layout_width="80dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:background="#fff"-->
+<!--        android:src="@drawable/back" />-->
 
 
 </RelativeLayout>

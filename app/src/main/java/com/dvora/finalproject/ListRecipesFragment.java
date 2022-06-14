@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,27 +15,27 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dvora.finalproject.adapters.RecipeAdapter;
+import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.adapters.RecipeAdapter1;
 import com.dvora.finalproject.entities.Category;
 import com.dvora.finalproject.entities.Recipe;
 import com.dvora.finalproject.fragments.AddRecipeFragment;
-import com.dvora.finalproject.fragments.CategoryDetailsFragment;
+import com.dvora.finalproject.fragments.BaseFragment;
 import com.dvora.finalproject.fragments.ItemDetailsFragment;
-import com.dvora.finalproject.fragments.SplashFragment;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListRecipesFragment extends Fragment {
+public class ListRecipesFragment extends BaseFragment {
     private ListView list;
     private ImageButton btnAdd;
     private SearchView searchView;
     private Category category;
+    private TextView titleRecipe;
     public final static String CATEGORY_KEY = "CATEGORY_KEY";
 
     Dialog d;
@@ -47,12 +46,10 @@ public class ListRecipesFragment extends Fragment {
 
     private Repository repo = new Repository();
 
-    public static ListRecipesFragment newInstance(Category category) {
-        ListRecipesFragment fragment = new ListRecipesFragment();
+    public static Bundle newInstance(Category category) {
         Bundle args = new Bundle();
         args.putSerializable(CATEGORY_KEY, category);
-        fragment.setArguments(args);
-        return fragment;
+        return args;
     }
 
     public void createSortDialog() {
@@ -99,13 +96,13 @@ public class ListRecipesFragment extends Fragment {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SplashFragment.sort = "";
-                SplashFragment.sort += " " + timeSp.getSpinnerText();
-                SplashFragment.sort += " " + levelSp.getSpinnerText();
-                SplashFragment.sort += " " + numOfRecipesSp.getSpinnerText();
-                Toast.makeText(getContext(),"" +SplashFragment.sort,Toast.LENGTH_LONG).show();
-                Log.e("CDF recipe filter:","" + SplashFragment.sort);
-                createNewListBySort(SplashFragment.sort);
+                MainActivity.sort = "";
+                MainActivity.sort += " " + timeSp.getSpinnerText();
+                MainActivity.sort += " " + levelSp.getSpinnerText();
+                MainActivity.sort += " " + numOfRecipesSp.getSpinnerText();
+                //Toast.makeText(getContext(), "" + MainActivity.sort, Toast.LENGTH_LONG).show();
+                Log.e("CDF recipe filter:", "" + MainActivity.sort);
+                createNewListBySort(MainActivity.sort);
 
                 d.dismiss();
             }
@@ -113,44 +110,46 @@ public class ListRecipesFragment extends Fragment {
         d.show();
     }
 
-    public boolean isFilter(Recipe recipe){
-        Log.e("CDF name",""+recipe.getNameRecipe());
-        Log.e("CDF isClock",""+isClock(recipe));
-        Log.e("CDF isLevel",""+isLevel(recipe));
-        Log.e("CDF isPercent",""+isPercent(recipe));
-        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe)) || SplashFragment.sort.equals("null");
-    }
-    public boolean isClock(Recipe recipe){
-        return SplashFragment.sort.contains(recipe.getPreparationTime()) || _isClock(recipe);
-    }
-    private boolean _isClock(Recipe recipe){
-        return SplashFragment.sort.contains("שעה") || SplashFragment.sort.contains("שעה+") || SplashFragment.sort.contains("בחר זמן") || SplashFragment.sort.contains("דק'");
+    public boolean isFilter(Recipe recipe) {
+        Log.e("CDF name", "" + recipe.getNameRecipe());
+        Log.e("CDF isClock", "" + isClock(recipe));
+        Log.e("CDF isLevel", "" + isLevel(recipe));
+        Log.e("CDF isPercent", "" + isPercent(recipe));
+        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe)) || MainActivity.sort.equals("null");
     }
 
-    public boolean isLevel(Recipe recipe){
-        return SplashFragment.sort.contains(recipe.getLevel()) || SplashFragment.sort.contains("בחר דרגה");
+    public boolean isClock(Recipe recipe) {
+        return MainActivity.sort.contains(recipe.getPreparationTime()) || _isClock(recipe);
     }
 
-    public boolean isPercent(Recipe recipe){
-        if(!SplashFragment.sort.contains("100%") || SplashFragment.sort.contains("בחר כמות מוצרים")){
+    private boolean _isClock(Recipe recipe) {
+        return MainActivity.sort.contains("שעה") || MainActivity.sort.contains("שעה+") || MainActivity.sort.contains("בחר זמן") || MainActivity.sort.contains("דק'");
+    }
+
+    public boolean isLevel(Recipe recipe) {
+        return MainActivity.sort.contains(recipe.getLevel()) || MainActivity.sort.contains("בחר דרגה");
+    }
+
+    public boolean isPercent(Recipe recipe) {
+        if (!MainActivity.sort.contains("100%") || MainActivity.sort.contains("בחר כמות מוצרים")) {
             return true;
         }
-        if(recipe.getPercentIng()<100){
-            return SplashFragment.sort.contains("פחות מ 100%");
-        }
-        else{
-            return !SplashFragment.sort.contains("פחות מ 100%");
+        if (recipe.getPercentIng() < 100) {
+            return MainActivity.sort.contains("פחות מ 100%");
+        } else {
+            return !MainActivity.sort.contains("פחות מ 100%");
         }
     }
+
     public void createNewListBySort(String spinnerText) {
         repo.getAllRecipes(new Repository.OnSearchAllRecipes() {
             @Override
             public void onRecipesFound(List<Recipe> matches) {
                 ArrayList<Recipe> recipes = new ArrayList<Recipe>();
-                for(Recipe recipe: matches) {
-                    if(isFilter(recipe) && recipe.getCategory().equals(category.getName()))
+                for (Recipe recipe : matches) {
+                    if (isFilter(recipe) && recipe.getCategory().equals(category.getName()))
                         recipes.add(recipe);
-                    else if(isFilter(recipe) && category.getName().equals("כל המתכונים"))
+                    else if (isFilter(recipe) && category.getName().equals("כל המתכונים"))
                         recipes.add(recipe);
                 }
                 RecipeAdapter1 adapter = new RecipeAdapter1(recipes, getContext(), new ICallbackAdapter() {
@@ -166,6 +165,7 @@ public class ListRecipesFragment extends Fragment {
                         adapter.getFilter().filter(query);
                         return false;
                     }
+
                     @Override
                     public boolean onQueryTextChange(String newText) {
 
@@ -174,13 +174,14 @@ public class ListRecipesFragment extends Fragment {
                     }
                 });
             }
-            public void onNoRecipesFound(String message){
-                Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+
+            public void onNoRecipesFound(String message) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onExceptionOccurred(Exception e) {
-                Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -199,7 +200,7 @@ public class ListRecipesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment_list_recipes, container, false);
+        View v = inflater.inflate(R.layout.fragment_list_recipes, container, false);
         sortBtn = v.findViewById(R.id.sort_btn1);
         sortBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,19 +208,21 @@ public class ListRecipesFragment extends Fragment {
                 createSortDialog();
             }
         });
+        titleRecipe = v.findViewById(R.id.title_recipe);
+        if(category!=null)
+            titleRecipe.setText(category.getName());
         repo.getAllRecipes(new Repository.OnSearchAllRecipes() {
 
             @Override
             public void onRecipesFound(List<Recipe> matches) {
-                list= v.findViewById(R.id.mainlistfragment_listv);
-                searchView= v.findViewById(R.id.search_bar);
+                list = v.findViewById(R.id.mainlistfragment_listv);
+                searchView = v.findViewById(R.id.search_bar);
 
                 ArrayList<Recipe> recipes = new ArrayList<>();
-                for(Recipe recipe : matches)
-                {
-                    if(isFilter(recipe) && recipe.getCategory().equals(category.getName()))
+                for (Recipe recipe : matches) {
+                    if (isFilter(recipe) && recipe.getCategory().equals(category.getName()))
                         recipes.add(recipe);
-                    else if(isFilter(recipe) && category.getName().equals("כל המתכונים"))
+                    else if (isFilter(recipe) && category.getName().equals("כל המתכונים"))
                         recipes.add(recipe);
                 }
 
@@ -237,6 +240,7 @@ public class ListRecipesFragment extends Fragment {
                         adapter.getFilter().filter(query);
                         return false;
                     }
+
                     @Override
                     public boolean onQueryTextChange(String newText) {
 
@@ -245,35 +249,31 @@ public class ListRecipesFragment extends Fragment {
                     }
                 });
             }
-            public void onNoRecipesFound(String message){
-                Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+
+            public void onNoRecipesFound(String message) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onExceptionOccurred(Exception e) {
-                Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         btnAdd = (ImageButton) v.findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFragment(AddRecipeFragment.newInstance(category));
+                mListener.showFragment(R.id.addRecipeFragment,AddRecipeFragment.newInstance(category));
             }
         });
 
 
         return v;
     }
-    public void showFragment(Fragment frag) {
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction tran = manager.beginTransaction();
-        tran.replace(R.id.fragment, frag).addToBackStack(null);
-        tran.commit();
-    }
+
 
     private void openDetailsFragment(Recipe recipe) {
-        showFragment(ItemDetailsFragment.newInstance(recipe));
+        mListener.showFragment(R.id.nav_item_details,ItemDetailsFragment.newInstance(recipe));
     }
 
 

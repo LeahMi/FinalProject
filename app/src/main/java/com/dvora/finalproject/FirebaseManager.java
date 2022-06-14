@@ -9,4 +9,11 @@ public class FirebaseManager {
     public static DatabaseReference root= FirebaseDatabase.getInstance().getReference();
     public static FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
+
+
+    public static void resetAfterLogin(){
+        root= FirebaseDatabase.getInstance().getReference();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    }
+
 }

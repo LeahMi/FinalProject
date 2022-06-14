@@ -1,6 +1,7 @@
 package com.dvora.finalproject.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.graphics.Color.colorSpace;
 import static android.graphics.Color.parseColor;
 import static android.graphics.Color.rgb;
 
@@ -84,7 +86,8 @@ public class IngAdapter extends BaseAdapter {
                     try{
                         Double d = Double.parseDouble(edt_quantity.getText().toString());
                         if(d>=0) {
-                            edt_quantity.setTextColor(parseColor("#00DDFF"));
+//                            edt_quantity.setTextColor(parseColor("#00DDFF"));
+                            edt_quantity.setTextColor(Color.BLACK);
                             edt_quantity.setEnabled(false);
                             ingredientRow.setQuantity(d);
                             repo.updateIngredient(ingredientRow, new OnSuccessListener() {

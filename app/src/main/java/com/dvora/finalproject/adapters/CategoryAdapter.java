@@ -61,6 +61,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }else {
             //holder.image.setImageResource(data.get(position).getImgUrl());
             holder.image.setImageResource(R.drawable.image_recipe);
+            //holder.image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         }
 
         holder.image.setOnClickListener(new View.OnClickListener() {

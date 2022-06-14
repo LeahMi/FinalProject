@@ -12,15 +12,13 @@ import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dvora.finalproject.ICallbackAdapter;
 import com.dvora.finalproject.R;
-import com.dvora.finalproject.Repository;
+import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.entities.Recipe;
-import com.dvora.finalproject.fragments.SplashFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,15 +133,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                     }
                 }
             }
-            Log.e("RAF recipe filter:","" + SplashFragment.sort);
+            Log.e("RAF recipe filter:","" + MainActivity.sort);
             FilterResults results = new FilterResults();
             results.values = filteredList;
             return results;
         }
 
-// && (SplashFragment.sort.contains(item.getLevel())
-//                                || SplashFragment.sort.contains(item.getPercentIng().toString())
-//                            || (SplashFragment.sort.contains(item.getPreparationTime()))
+// && (MainActivity.sort.contains(item.getLevel())
+//                                || MainActivity.sort.contains(item.getPercentIng().toString())
+//                            || (MainActivity.sort.contains(item.getPreparationTime()))
 //                            )
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
@@ -157,28 +155,28 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         Log.e("RAF isClock",""+isClock(recipe));
         Log.e("RAF isLevel",""+isLevel(recipe));
         Log.e("RAF isPercent",""+isPercent(recipe));
-        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe)) || SplashFragment.sort.equals("null");
+        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe)) || MainActivity.sort.equals("null");
     }
     public boolean isClock(Recipe recipe){
-        return SplashFragment.sort.contains(recipe.getPreparationTime()) || _isClock(recipe);
+        return MainActivity.sort.contains(recipe.getPreparationTime()) || _isClock(recipe);
     }
     private boolean _isClock(Recipe recipe){
-        return SplashFragment.sort.contains("שעה") || SplashFragment.sort.contains("שעה+") || SplashFragment.sort.contains("בחר זמן") || SplashFragment.sort.contains("דק'");
+        return MainActivity.sort.contains("שעה") || MainActivity.sort.contains("שעה+") || MainActivity.sort.contains("בחר זמן") || MainActivity.sort.contains("דק'");
     }
 
     public boolean isLevel(Recipe recipe){
-        return SplashFragment.sort.contains(recipe.getLevel()) || SplashFragment.sort.contains("בחר דרגה");
+        return MainActivity.sort.contains(recipe.getLevel()) || MainActivity.sort.contains("בחר דרגה");
     }
 
     public boolean isPercent(Recipe recipe){
-        if(!SplashFragment.sort.contains("100%") || SplashFragment.sort.contains("בחר כמות מוצרים")){
+        if(!MainActivity.sort.contains("100%") || MainActivity.sort.contains("בחר כמות מוצרים")){
             return true;
         }
         if(recipe.getPercentIng()<100){
-            return SplashFragment.sort.contains("פחות מ 100%");
+            return MainActivity.sort.contains("פחות מ 100%");
         }
         else{
-            return !SplashFragment.sort.contains("פחות מ 100%");
+            return !MainActivity.sort.contains("פחות מ 100%");
         }
     }
 

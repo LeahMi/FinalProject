@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,7 @@ import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
 
-public class AddCategoryFragment extends Fragment {
+public class AddCategoryFragment extends BaseFragment {
 
     private EditText nameCategory;
     private String Name;
@@ -65,7 +66,7 @@ public class AddCategoryFragment extends Fragment {
         imageView = (ImageView) v.findViewById(R.id.image_view);
 
 
-        btnAddCategory.setEnabled(false);
+        //btnAddCategory.setEnabled(false);
         btnUpload = (Button) v.findViewById(R.id.btn_upload);
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,12 +79,12 @@ public class AddCategoryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Name = nameCategory.getText().toString().trim();
+                if(TextUtils.isEmpty(Name)){
+                    nameCategory.setError("הזן שם  קטגוריה");
+                    return;
+                }
                 saveInFirebase();
-                FirebaseUser currentUser = FirebaseManager.currentUser;
-                String user =currentUser.getUid();
-
-
-
+                mListener.showFragment(R.id.categoriesFragment);
             }
         });
         return v;
@@ -159,6 +160,14 @@ public class AddCategoryFragment extends Fragment {
             }catch (Exception e){
                 e.printStackTrace();
             }
+        }else{
+            Category category = new Category(null,Name,0);
+            repo.addCategory(category, new OnSuccessListener() {
+                @Override
+                public void onSuccess(Object o) {
+                    Toast.makeText(getContext(),o.toString(),Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }

@@ -23,7 +23,7 @@ import com.dvora.finalproject.Repository;
 import com.dvora.finalproject.entities.Ingredient;
 
 
-public class AddIngredient extends Fragment {
+public class AddIngredient extends BaseFragment {
 
     private String type;
     private EditText name;
@@ -89,7 +89,7 @@ public class AddIngredient extends Fragment {
 //                            amount.setError("הזן כמות");
 //                            return;
 //                        }
-                        showFragment(new InventoryFragment());
+                        mListener.showFragment(R.id.inventoryFragment);
 
                     }
 
@@ -103,11 +103,6 @@ public class AddIngredient extends Fragment {
         });
         return v;
     }
-    public void showFragment(Fragment frag) {
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction tran = manager.beginTransaction();
-        tran.replace(R.id.fragment, frag).addToBackStack(null);
-        tran.commit();
-    }
+
 
 }

@@ -1,4 +1,5 @@
 package com.dvora.finalproject.fragments;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -33,15 +34,15 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends BaseFragment {
     private Repository repo = new Repository();
     private TextView Name;
     private TextView Mail;
     private Button logOut;
     private TextView tv_c;
     boolean[] selectC;
-    ArrayList<Integer> cList= new ArrayList<>();
-    String[] cArray ;
+    ArrayList<Integer> cList = new ArrayList<>();
+    String[] cArray;
 
     public ProfileFragment() {
 
@@ -58,13 +59,14 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment_profile, container, false);
+        View v = inflater.inflate(R.layout.fragment_profile, container, false);
         logOut = (Button) v.findViewById(R.id.log_out);
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getActivity(), Login.class));
+                getActivity().finish();
             }
         });
 
@@ -72,11 +74,10 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onCategoriesFound(List<Category> matches) {
 
-                cArray= new String[matches.size()];
+                cArray = new String[matches.size()];
                 selectC = new boolean[cArray.length];
-                for(int i=0;i<matches.size();++i)
-                {
-                    cArray[i]=matches.get(i).getName();
+                for (int i = 0; i < matches.size(); ++i) {
+                    cArray[i] = matches.get(i).getName();
                 }
             }
 
@@ -97,7 +98,7 @@ public class ProfileFragment extends Fragment {
         tv_c.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new  AlertDialog.Builder(
+                AlertDialog.Builder builder = new AlertDialog.Builder(
 
                         getContext()
                 );
@@ -107,22 +108,22 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i, boolean b) {
 
-                      if (b){
-                          cList.add(i);
-                          Collections.sort(cList);
+                        if (b) {
+                            cList.add(i);
+                            Collections.sort(cList);
 
-                      }else {
+                        } else {
 //                          if(cList.size()==1)
 //                          {
 
-                              selectC[i]=false;
-                              cList.clear();
-                              stringBuilder.delete(cList.get(i),cList.get(i));
+                            selectC[i] = false;
+                            cList.clear();
+                            stringBuilder.delete(cList.get(i), cList.get(i));
 
 
 //                          }
 //                          else cList.remove(i);
-                      }
+                        }
                     }
                 });
 
@@ -130,11 +131,10 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 //                        StringBuilder stringBuilder = new StringBuilder();
-                        for(int j=0;j<cList.size();j++)
-                        {
+                        for (int j = 0; j < cList.size(); j++) {
                             stringBuilder.append(cArray[cList.get(j)]);
 
-                            if(j!=cList.size()-1){
+                            if (j != cList.size() - 1) {
 
                                 stringBuilder.append(", ");
 
@@ -159,8 +159,8 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        for(int j=0; j<selectC.length;++j){
-                            selectC[j]=false;
+                        for (int j = 0; j < selectC.length; ++j) {
+                            selectC[j] = false;
                             cList.clear();
                             tv_c.setText("");
                         }
@@ -175,12 +175,12 @@ public class ProfileFragment extends Fragment {
         });
 
 
-        Name= (TextView) v.findViewById(R.id.texthello);
+        Name = (TextView) v.findViewById(R.id.texthello);
 
         repo.getProfile(new Repository.OnSearchProfile() {
             @Override
             public void onSuccess(String message) {
-                Name.setText("שלום "+ message);
+                Name.setText("שלום " + message);
             }
 
             @Override
@@ -190,7 +190,7 @@ public class ProfileFragment extends Fragment {
         });
 
         Mail = v.findViewById(R.id.mail);
-        Mail.setText(FirebaseManager.currentUser.getEmail());
+        Mail.setText( FirebaseManager.currentUser.getEmail());
 
         return v;
     }
