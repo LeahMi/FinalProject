@@ -114,8 +114,9 @@ public class RecipeAdapter1 extends BaseAdapter implements Filterable {
             filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
                 for (Recipe item : exampleList){
-                    if(isFilter(item))
+                    if(isFilter(item)) {
                         filteredList.add(item);
+                    }
                 }
 //                filteredList.addAll(exampleList);
             } else {
@@ -148,10 +149,11 @@ public class RecipeAdapter1 extends BaseAdapter implements Filterable {
         Log.e("RAF isClock",""+isClock(recipe));
         Log.e("RAF isLevel",""+isLevel(recipe));
         Log.e("RAF isPercent",""+isPercent(recipe));
-        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe)) || MainActivity.sort.equals("null");
+        Log.v("isF","isF "+ isFavorite(recipe));
+        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe)) || isPercent(recipe)|| isFavorite(recipe)|| MainActivity.sort.equals("null");
     }
     public boolean isClock(Recipe recipe){
-        return MainActivity.sort.contains(recipe.getPreparationTime()) || _isClock(recipe);
+        return MainActivity.sort.contains(recipe.getPreparationTime()) && _isClock(recipe);
     }
     private boolean _isClock(Recipe recipe){
         return MainActivity.sort.contains("שעה") || MainActivity.sort.contains("שעה+") || MainActivity.sort.contains("בחר זמן") || MainActivity.sort.contains("דק'");
@@ -172,4 +174,12 @@ public class RecipeAdapter1 extends BaseAdapter implements Filterable {
             return !MainActivity.sort.contains("פחות מ 100%");
         }
     }
+    public boolean isFavorite(Recipe recipe) {
+        boolean b =MainActivity.sort.contains(recipe.getCategory()) ;
+        boolean b1 = MainActivity.sort.contains("noFavorite");
+        Log.v("b","b "+b);
+        Log.v("b1","b1 "+b1);
+        return MainActivity.sort.contains(recipe.getCategory()) || MainActivity.sort.contains("noFavorite");
+    }
+
 }

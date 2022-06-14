@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -42,6 +43,8 @@ public class ListRecipesFragment extends BaseFragment {
     MultiSpinner timeSp, levelSp, numOfRecipesSp;
     ArrayList<String> timeList = new ArrayList<>(), levelList = new ArrayList<>(), numOfRecipesList = new ArrayList<>();
     Button okBtn;
+    CheckBox simpleCheckBox;
+    String favorite = "";
     private ImageButton sortBtn;
 
     private Repository repo = new Repository();
@@ -88,10 +91,33 @@ public class ListRecipesFragment extends BaseFragment {
         numOfRecipesList.add("פחות מ 100%");
         numOfRecipesSp.setItems(numOfRecipesList, "בחר כמות מוצרים", new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(boolean[] selected) {
-
-            }
+            public void onItemsSelected(boolean[] selected) { }
         });
+        simpleCheckBox = (CheckBox) d.findViewById(R.id.checkBox);
+        if(category.getName().equals("כל המתכונים")) {
+            simpleCheckBox.setVisibility(View.VISIBLE);
+            simpleCheckBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.v("innnnnnnn","innn");
+                    if(simpleCheckBox.isChecked()){
+                        repo.getFavoriteCategory(new Repository.OnSearchFavoriteCategory() {
+                            @Override
+                            public void onSuccess(String message) {
+                                Log.v("m","mes "+ message);
+                                favorite = message;
+                            }
+                            @Override
+                            public void onFailure(Exception e) {
+                                favorite = "noFavorite";
+                            }
+                        });
+                    }else {
+                        favorite = "noFavorite";
+                    }
+                }
+            });
+        }
         okBtn = d.findViewById(R.id.ok_btn);
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +126,8 @@ public class ListRecipesFragment extends BaseFragment {
                 MainActivity.sort += " " + timeSp.getSpinnerText();
                 MainActivity.sort += " " + levelSp.getSpinnerText();
                 MainActivity.sort += " " + numOfRecipesSp.getSpinnerText();
+                MainActivity.sort += " " + favorite;
+
                 //Toast.makeText(getContext(), "" + MainActivity.sort, Toast.LENGTH_LONG).show();
                 Log.e("CDF recipe filter:", "" + MainActivity.sort);
                 createNewListBySort(MainActivity.sort);
@@ -115,11 +143,12 @@ public class ListRecipesFragment extends BaseFragment {
         Log.e("CDF isClock", "" + isClock(recipe));
         Log.e("CDF isLevel", "" + isLevel(recipe));
         Log.e("CDF isPercent", "" + isPercent(recipe));
-        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe)) || MainActivity.sort.equals("null");
+        Log.v("isF L","isF L "+ isFavorite(recipe));
+        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe))  ||  isPercent(recipe) || isFavorite(recipe)||  MainActivity.sort.equals("null");
     }
 
     public boolean isClock(Recipe recipe) {
-        return MainActivity.sort.contains(recipe.getPreparationTime()) || _isClock(recipe);
+        return MainActivity.sort.contains(recipe.getPreparationTime()) && _isClock(recipe);
     }
 
     private boolean _isClock(Recipe recipe) {
@@ -134,11 +163,18 @@ public class ListRecipesFragment extends BaseFragment {
         if (!MainActivity.sort.contains("100%") || MainActivity.sort.contains("בחר כמות מוצרים")) {
             return true;
         }
-        if (recipe.getPercentIng() < 100) {
+        if (recipe.getPercentIng() < 100.0) {
             return MainActivity.sort.contains("פחות מ 100%");
         } else {
             return !MainActivity.sort.contains("פחות מ 100%");
         }
+    }
+    public boolean isFavorite(Recipe recipe) {
+        boolean b =MainActivity.sort.contains(recipe.getCategory()) ;
+        boolean b1 = MainActivity.sort.contains("noFavorite");
+        Log.v("b","b "+b);
+        Log.v("b1","b1 "+b1);
+        return MainActivity.sort.contains(recipe.getCategory()) || MainActivity.sort.contains("noFavorite");
     }
 
     public void createNewListBySort(String spinnerText) {
