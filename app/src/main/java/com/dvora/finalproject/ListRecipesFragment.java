@@ -150,7 +150,7 @@ public class ListRecipesFragment extends BaseFragment {
     }
 
     public boolean isClock(Recipe recipe) {
-        return MainActivity.sort.contains(recipe.getPreparationTime()) && _isClock(recipe);
+        return (MainActivity.sort.contains(recipe.getPreparationTime()) && _isClock(recipe)) || MainActivity.sort.contains("בחר זמן");
     }
 
     private boolean _isClock(Recipe recipe) {

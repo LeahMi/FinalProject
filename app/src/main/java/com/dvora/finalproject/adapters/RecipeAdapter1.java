@@ -153,7 +153,7 @@ public class RecipeAdapter1 extends BaseAdapter implements Filterable {
         return (isClock(recipe) && isLevel(recipe) && isPercent(recipe) && isFavorite(recipe))|| MainActivity.sort.equals("null");
     }
     public boolean isClock(Recipe recipe){
-        return MainActivity.sort.contains(recipe.getPreparationTime()) && _isClock(recipe);
+        return (MainActivity.sort.contains(recipe.getPreparationTime()) && _isClock(recipe)) || MainActivity.sort.contains("בחר זמן");
     }
     private boolean _isClock(Recipe recipe){
         return MainActivity.sort.contains("שעה") || MainActivity.sort.contains("שעה+") || MainActivity.sort.contains("בחר זמן") || MainActivity.sort.contains("דק'");
@@ -167,6 +167,8 @@ public class RecipeAdapter1 extends BaseAdapter implements Filterable {
         if(!MainActivity.sort.contains("100%") || MainActivity.sort.contains("בחר כמות מוצרים")){
             return true;
         }
+        if(MainActivity.sort.contains("פחות מ 100%") && MainActivity.sort.contains("100%"))
+            return true;
         if(recipe.getPercentIng()<100){
             return MainActivity.sort.contains("פחות מ 100%");
         }
