@@ -3,9 +3,6 @@ package com.dvora.finalproject;
 import android.app.Dialog;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,7 +41,7 @@ public class ListRecipesFragment extends BaseFragment {
     ArrayList<String> timeList = new ArrayList<>(), levelList = new ArrayList<>(), numOfRecipesList = new ArrayList<>();
     Button okBtn;
     CheckBox simpleCheckBox;
-    String favorite = "";
+    String favorite = "noFavorite";
     private ImageButton sortBtn;
 
     private Repository repo = new Repository();
@@ -58,11 +55,11 @@ public class ListRecipesFragment extends BaseFragment {
     public void createSortDialog() {
         d = new Dialog(getContext());
         d.setContentView(R.layout.sort_layout); // *
-        //d.setTitle("הרשמה");
+        d.setTitle("סינון");
         d.setCancelable(true);
-        timeSp = (MultiSpinner) d.findViewById(R.id.time_sp);
-        levelSp = (MultiSpinner) d.findViewById(R.id.level_sp);
-        numOfRecipesSp = (MultiSpinner) d.findViewById(R.id.num_of_recipes_sp);
+        timeSp = d.findViewById(R.id.time_sp);
+        levelSp = d.findViewById(R.id.level_sp);
+        numOfRecipesSp = d.findViewById(R.id.num_of_recipes_sp);
         timeList.clear();
         timeList.add("10 דק'");
         timeList.add("15 דק'");
@@ -93,7 +90,7 @@ public class ListRecipesFragment extends BaseFragment {
             @Override
             public void onItemsSelected(boolean[] selected) { }
         });
-        simpleCheckBox = (CheckBox) d.findViewById(R.id.checkBox);
+        simpleCheckBox = d.findViewById(R.id.checkBox);
         if(category.getName().equals("כל המתכונים")) {
             simpleCheckBox.setVisibility(View.VISIBLE);
             simpleCheckBox.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +98,7 @@ public class ListRecipesFragment extends BaseFragment {
                 public void onClick(View v) {
                     Log.v("innnnnnnn","innn");
                     if(simpleCheckBox.isChecked()){
+                        Log.v("inn1","inn1");
                         repo.getFavoriteCategory(new Repository.OnSearchFavoriteCategory() {
                             @Override
                             public void onSuccess(String message) {
@@ -112,11 +110,16 @@ public class ListRecipesFragment extends BaseFragment {
                                 favorite = "noFavorite";
                             }
                         });
-                    }else {
+                    }
+                    if(simpleCheckBox.isChecked() == false){
                         favorite = "noFavorite";
+                        Log.v("check","CheckBox Text "+favorite);
                     }
                 }
             });
+            if(!simpleCheckBox.isChecked()) {
+                favorite = "noFavorite";
+            }
         }
         okBtn = d.findViewById(R.id.ok_btn);
         okBtn.setOnClickListener(new View.OnClickListener() {
@@ -127,9 +130,8 @@ public class ListRecipesFragment extends BaseFragment {
                 MainActivity.sort += " " + levelSp.getSpinnerText();
                 MainActivity.sort += " " + numOfRecipesSp.getSpinnerText();
                 MainActivity.sort += " " + favorite;
-
                 //Toast.makeText(getContext(), "" + MainActivity.sort, Toast.LENGTH_LONG).show();
-                Log.e("CDF recipe filter:", "" + MainActivity.sort);
+                Log.e("LRFSSSSSSSSSSSSSSSON:", "" + MainActivity.sort);
                 createNewListBySort(MainActivity.sort);
 
                 d.dismiss();
@@ -139,12 +141,12 @@ public class ListRecipesFragment extends BaseFragment {
     }
 
     public boolean isFilter(Recipe recipe) {
-        Log.e("CDF name", "" + recipe.getNameRecipe());
-        Log.e("CDF isClock", "" + isClock(recipe));
-        Log.e("CDF isLevel", "" + isLevel(recipe));
-        Log.e("CDF isPercent", "" + isPercent(recipe));
-        Log.v("isF L","isF L "+ isFavorite(recipe));
-        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe))  ||  isPercent(recipe) || isFavorite(recipe)||  MainActivity.sort.equals("null");
+        Log.e("LRF name", "" + recipe.getNameRecipe());
+        Log.e("LRF isClock", "" + isClock(recipe));
+        Log.e("LRF isLevel", "" + isLevel(recipe));
+        Log.e("LRF isPercent", "" + isPercent(recipe));
+        Log.v("LRF isFav",""+ isFavorite(recipe));
+        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe)  && isFavorite(recipe))  ||  MainActivity.sort.equals("null");
     }
 
     public boolean isClock(Recipe recipe) {
@@ -170,10 +172,6 @@ public class ListRecipesFragment extends BaseFragment {
         }
     }
     public boolean isFavorite(Recipe recipe) {
-        boolean b =MainActivity.sort.contains(recipe.getCategory()) ;
-        boolean b1 = MainActivity.sort.contains("noFavorite");
-        Log.v("b","b "+b);
-        Log.v("b1","b1 "+b1);
         return MainActivity.sort.contains(recipe.getCategory()) || MainActivity.sort.contains("noFavorite");
     }
 
@@ -237,6 +235,7 @@ public class ListRecipesFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list_recipes, container, false);
+        list = v.findViewById(R.id.mainlistfragment_listv);
         sortBtn = v.findViewById(R.id.sort_btn1);
         sortBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,7 +250,6 @@ public class ListRecipesFragment extends BaseFragment {
 
             @Override
             public void onRecipesFound(List<Recipe> matches) {
-                list = v.findViewById(R.id.mainlistfragment_listv);
                 searchView = v.findViewById(R.id.search_bar);
 
                 ArrayList<Recipe> recipes = new ArrayList<>();
@@ -295,7 +293,7 @@ public class ListRecipesFragment extends BaseFragment {
                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        btnAdd = (ImageButton) v.findViewById(R.id.btn_add);
+        btnAdd = v.findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="11dp"
+            android:inputType="text"
             android:hint="שם" />
 
         <EditText
@@ -33,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="11dp"
+            android:inputType="numberDecimal"
             android:hint="כמות" />
 
         <Spinner

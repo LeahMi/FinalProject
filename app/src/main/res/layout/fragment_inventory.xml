@@ -16,7 +16,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="6dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="34dp"
         android:background="#33c5c9cc"
         android:iconifiedByDefault="false"

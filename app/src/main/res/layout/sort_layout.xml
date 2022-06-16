@@ -4,14 +4,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1.15">
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp">
+        </Space>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="סינון"
+            android:textAlignment="center"
+            android:textSize="25dp">
+        </TextView>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp">
+        </Space>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:layout_weight="1">
-
         <com.dvora.finalproject.MultiSpinner
             android:id="@+id/level_sp"
             android:layout_width="match_parent"
@@ -99,7 +120,7 @@
         android:id="@+id/ok_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
         android:text="סנן"
-        app:backgroundTint="@color/red_c"></Button>
+        app:backgroundTint="@color/red_c">
+    </Button>
 </LinearLayout>

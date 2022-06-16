@@ -149,8 +149,8 @@ public class RecipeAdapter1 extends BaseAdapter implements Filterable {
         Log.e("RAF isClock",""+isClock(recipe));
         Log.e("RAF isLevel",""+isLevel(recipe));
         Log.e("RAF isPercent",""+isPercent(recipe));
-        Log.v("isF","isF "+ isFavorite(recipe));
-        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe)) || isPercent(recipe)|| isFavorite(recipe)|| MainActivity.sort.equals("null");
+        Log.v("RAF isFav",""+ isFavorite(recipe));
+        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe) && isFavorite(recipe))|| MainActivity.sort.equals("null");
     }
     public boolean isClock(Recipe recipe){
         return MainActivity.sort.contains(recipe.getPreparationTime()) && _isClock(recipe);
