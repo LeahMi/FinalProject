@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Recipe implements Serializable {
-    private String nameRecipe;
-    private String category;
-    private String preparationTime;
-    private List<IngredientInfo> ingredientInfo;
-    private String preparationMethod;
-    private Double percentIng = 0.0;
-    private String imgUrl;
-    private String level;
+    private transient String nameRecipe;
+    private transient String category;
+    private transient String preparationTime;
+    private transient List<IngredientInfo> ingredientInfo;
+    private transient String preparationMethod;
+    private transient Double percentIng = 0.0;
+    private transient String imgUrl;
+    private transient String level;
 
     public Recipe() {
     }

@@ -71,11 +71,11 @@ public class AddRecipeFragment extends BaseFragment implements DialogIng.OnInput
     private Recipe existRecipe;
     private AutoCompleteTextView textIn;
     private EditText quantity, prep, name;
-    private Button buttonSave, btnUpload;
+    private Button buttonSave, btnUpload, btnDelete;
     private ImageButton buttonAdd;
     private String qua, ing, type, level, Time, nameCategory;
     private IngredientInfo ingr;
-    private String[] times = {"זמן הכנה","10 דק'","15 דק'","30 דק'","45 דק'","שעה","שעה +"};
+    private String[] times = {"זמן הכנה","10 דק'","15 דק'","30 דק'","45 דק'","שעה","שעה+"};
     private String[] types = {"גרם","קורט","מל","יחידה","כפית","כף","כוס"};
     private String[] levels = {"דרגת קושי","קל","בינוני","קשה"};
     String all = "";
@@ -120,7 +120,9 @@ public class AddRecipeFragment extends BaseFragment implements DialogIng.OnInput
         View v = inflater.inflate(R.layout.fragment_add_recipe, container, false);
         LinearLayout container2 = (LinearLayout) v.findViewById(R.id.container);
         TextView title = v.findViewById(R.id.title_add_recipe);
+        btnDelete = v.findViewById(R.id.deleteBtn);
         if(!(existRecipe == null)){
+            btnDelete.setVisibility(View.VISIBLE);
             title.setText("עריכת מתכון");
             List<IngredientInfo> l = existRecipe.getIngredients();
             for (IngredientInfo ing:l){
@@ -149,6 +151,14 @@ public class AddRecipeFragment extends BaseFragment implements DialogIng.OnInput
 
                 container2.addView(addView);
             }
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String r = repo.deleteRecipe(existRecipe);
+                    Toast.makeText(getContext(),r,Toast.LENGTH_SHORT).show();
+                    mListener.showFragment(R.id.categoriesFragment);
+                }
+            });
         }
         Spinner spinnerCategory = (Spinner) v.findViewById(R.id.spinner_category);
 
@@ -526,7 +536,6 @@ public class AddRecipeFragment extends BaseFragment implements DialogIng.OnInput
                         if (category1.getName().equals("כל המתכונים") && (nameCategory.equals("קטגוריה")))
                             return;
                         saveInFirebase();
-                        openDetailsFragment1(category1);
                     }
                 }
             }
@@ -622,6 +631,12 @@ public class AddRecipeFragment extends BaseFragment implements DialogIng.OnInput
                             }
                         });
                         Toast.makeText(getContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                openDetailsFragment1(category1);
+                            }
+                        },2000);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -659,6 +674,14 @@ public class AddRecipeFragment extends BaseFragment implements DialogIng.OnInput
                     Log.d("saveNewRecipe::Succeed",message);
                     if(existRecipe!=null){
                         openDetailsFragment(recipe);
+                    }
+                    else{
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                openDetailsFragment1(category1);
+                            }
+                        },1000);
                     }
                 }
                 @Override

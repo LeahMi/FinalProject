@@ -146,7 +146,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="שמור"
-                app:backgroundTint="@color/red_a"></Button>
+                app:backgroundTint="@color/red_a">
+            </Button>
+            <Button
+                android:id="@+id/deleteBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="מחק מתכון"
+                android:visibility="invisible"
+                app:backgroundTint="@color/red_a">
+            </Button>
 
 
         </LinearLayout>

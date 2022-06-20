@@ -8,23 +8,24 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.entities.Category;
 import com.dvora.finalproject.entities.Ingredient;
 import com.dvora.finalproject.entities.IngredientInfo;
 import com.dvora.finalproject.entities.Recipe;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
-import java.io.IOException;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -687,7 +688,42 @@ public class Repository {
         });
 
     }
+    public String deleteRecipe(Recipe recipe){
+        List<IngredientInfo> l = recipe.getIngredients();
+        for (IngredientInfo ing:l){
+            ref.child(INGREDIENTS_PATH).child(ing.getName()).child("linkedRecipes").child(recipe.getNameRecipe()).removeValue();
+        }
+        ref.child("categories").child(recipe.getCategory()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                Category category = dataSnapshot.getValue(Category.class);
+                category.setNumOfRecipes(category.getNumOfRecipes()-1);
+                ref.child("categories").child(recipe.getCategory()).setValue(category);
+            }
+        });
+        String r = "נמחק בהצלחה";
 
+        ref.child(RECIPES_PATH).child(recipe.getNameRecipe()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    if (!recipe.getImgUrl().equals("null")) {
+                        StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(recipe.getImgUrl());
+                        photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.e("Picture", "#deleted");
+                            }
+                        });
+                    }
+                }
+                else {
+                    String r = "לא נמחק";
+                }
+            }
+        });
+        return r;
+    }
     public MutableLiveData<Exception> getExceptionsData() {
         return exceptionsData;
     }

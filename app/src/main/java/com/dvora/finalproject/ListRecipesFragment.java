@@ -171,6 +171,7 @@ public class ListRecipesFragment extends BaseFragment {
             return !MainActivity.sort.contains("פחות מ 100%");
         }
     }
+
     public boolean isFavorite(Recipe recipe) {
         return MainActivity.sort.contains(recipe.getCategory()) || MainActivity.sort.contains("noFavorite");
     }
@@ -236,6 +237,7 @@ public class ListRecipesFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list_recipes, container, false);
         list = v.findViewById(R.id.mainlistfragment_listv);
+
         sortBtn = v.findViewById(R.id.sort_btn1);
         sortBtn.setOnClickListener(new View.OnClickListener() {
             @Override
