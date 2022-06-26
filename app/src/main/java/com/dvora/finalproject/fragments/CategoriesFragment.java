@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 
+import com.dvora.finalproject.FirebaseManager;
 import com.dvora.finalproject.ICallBackAdapterCategory;
 import com.dvora.finalproject.ListRecipesFragment;
 import com.dvora.finalproject.R;
@@ -46,6 +47,7 @@ public class CategoriesFragment extends BaseFragment {
 
         View v=inflater.inflate(R.layout.fragment_categories, container, false);
         MainActivity.sort="null";
+        FirebaseManager.setAllergens();
         repo.getAllCategories(new Repository.OnSearchAllCategories() {
             @Override
             public void onCategoriesFound(List<Category> matches) {

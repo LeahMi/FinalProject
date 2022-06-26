@@ -159,7 +159,7 @@ public class Register extends AppCompatActivity {
         ref.child("userName").setValue(fullName);
 
         FirebaseManager.resetAfterLogin();
-
+        FirebaseManager.setAllergens();
 
 
 
@@ -183,7 +183,6 @@ public class Register extends AppCompatActivity {
 
             }
         });
-
 
         new Handler().postDelayed(new Runnable() {
             @Override

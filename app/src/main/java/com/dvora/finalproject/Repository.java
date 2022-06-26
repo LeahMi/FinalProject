@@ -271,6 +271,13 @@ public class Repository {
 
         void onExceptionOccurred(Exception e);
     }
+    public interface OnSearchAllAllergens {
+        void onAllergensFound(List<String> matches);
+
+        void onNoAllergensFound(String message);
+
+        void onExceptionOccurred(Exception e);
+    }
 
     public interface OnSearchAllRecipes {
         void onRecipesFound(List<Recipe> matches);
@@ -724,6 +731,42 @@ public class Repository {
         });
         return r;
     }
+
+    public void setAllergens(List<String> allergens) {
+
+        ref.child("allergens").setValue(allergens);
+        FirebaseManager.setAllergens();
+    }
+
+public void getAllergens(OnSearchAllAllergens listener) {
+    ref.child("allergens")
+            .get()
+            .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                @Override
+                public void onSuccess(DataSnapshot dataSnapshot) {
+                    String match = null;
+                    List<String> matches = new ArrayList<String>();
+                    for (DataSnapshot ingredientSnapShot : dataSnapshot.getChildren()) {
+                        match = ingredientSnapShot.getValue(String.class);
+                        if (match == null)
+                            continue;
+                        matches.add(match);
+                        Log.d("TAG", "match===============" + match);
+                    }
+                    if (matches.isEmpty()) {
+                        listener.onNoAllergensFound("לא נמצאו אלרגנים");
+                    } else {
+                        listener.onAllergensFound(matches);
+                    }
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    listener.onExceptionOccurred(e);
+                }
+            });
+}
     public MutableLiveData<Exception> getExceptionsData() {
         return exceptionsData;
     }

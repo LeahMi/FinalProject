@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.dvora.finalproject.FirebaseManager;
 import com.dvora.finalproject.ICallbackAdapter;
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.activities.MainActivity;
@@ -150,7 +151,8 @@ public class RecipeAdapter1 extends BaseAdapter implements Filterable {
         Log.e("RAF isLevel",""+isLevel(recipe));
         Log.e("RAF isPercent",""+isPercent(recipe));
         Log.v("RAF isFav",""+ isFavorite(recipe));
-        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe) && isFavorite(recipe))|| MainActivity.sort.equals("null");
+        Log.v("RAF isAll",""+ isAllergens(recipe));
+        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe) && isFavorite(recipe)) && isAllergens(recipe)|| MainActivity.sort.equals("null");
     }
     public boolean isClock(Recipe recipe){
         return (MainActivity.sort.contains(recipe.getPreparationTime()) && _isClock(recipe)) || MainActivity.sort.contains("בחר זמן");
@@ -182,6 +184,27 @@ public class RecipeAdapter1 extends BaseAdapter implements Filterable {
         Log.v("b","b "+b);
         Log.v("b1","b1 "+b1);
         return MainActivity.sort.contains(recipe.getCategory()) || MainActivity.sort.contains("noFavorite");
+    }
+    public boolean isAllergens(Recipe recipe) {
+        if(MainActivity.sort.contains("noAllergens")){
+            System.out.println("0000000 FirebaseManager.allergens-- ");
+            return true;
+        }
+        else if(MainActivity.sort.contains("allergens")){
+            if (FirebaseManager.allergens!=null) {
+                for (String s : FirebaseManager.allergens) {
+                    if (recipe.getIngredientInfoToString().contains(s))
+                        return false;
+                }
+                return true;
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            System.out.println("FirebaseManager.allergens-- ");
+            return true;}
     }
 
 }

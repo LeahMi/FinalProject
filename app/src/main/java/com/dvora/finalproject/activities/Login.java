@@ -73,6 +73,7 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseManager.resetAfterLogin();
+                            FirebaseManager.setAllergens();
                             Toast.makeText(Login.this, "הכניסה הצליחה", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();

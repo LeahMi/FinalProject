@@ -18,6 +18,23 @@
     <string name="title_activity_splash">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="allergens">אלרגנים</string>
+    <string name="dialog_title">בחר אלרגנים</string>
+    <string name="ok_label">אישור</string>
+    <string name="dismiss_label">ביטול</string>
+    <string name="clear_all_label">נקה הכל</string>
+    <string-array name="shopping_item">
+        <item>Onion</item>
+        <item>Sausage</item>
+        <item>Milk</item>
+        <item>Garlic</item>
+        <item>Beef</item>
+        <item>Veggies</item>
+        <item>Olive</item>
+        <item>Cheese</item>
+        <item>Tuna</item>
+        <item>Mushrooms</item>
+    </string-array>
     <string-array name="typesList">
         <item>"בחר סוג"</item>
         <item>"גרם"</item>

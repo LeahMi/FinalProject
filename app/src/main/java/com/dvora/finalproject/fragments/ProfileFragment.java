@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +14,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import androidx.fragment.app.Fragment;
-import androidx.work.Data;
 
 import com.dvora.finalproject.FirebaseManager;
 import com.dvora.finalproject.R;
@@ -25,33 +23,27 @@ import com.dvora.finalproject.Repository;
 import com.dvora.finalproject.activities.Login;
 import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.entities.Category;
-import com.dvora.finalproject.entities.User;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.dvora.finalproject.entities.Ingredient;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-
-import static com.dvora.finalproject.FirebaseManager.currentUser;
 
 
 public class ProfileFragment extends BaseFragment {
     private Repository repo = new Repository();
-    private TextView Name;
-    private  TextView text;
+    private TextView text;
 
-    private TextView Mail;
+    private TextView Mail,Name, selected;
     private Button logOut;
     private String[] types ;
 //    private TextView tv_c;
     private String favorite_c;
+    private TextView mItemSelected;
+    private String[] listItems;
+    private boolean[] checkedItems;
+    private ArrayList<Integer> mUserItems = new ArrayList<>();
 //    boolean[] selectC;
 //    ArrayList<Integer> cList= new ArrayList<>();
 //    String[] cArray ;
@@ -64,8 +56,6 @@ public class ProfileFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -272,6 +262,116 @@ public class ProfileFragment extends BaseFragment {
         Mail = v.findViewById(R.id.mail);
         Mail.setText( FirebaseManager.currentUser.getEmail());
 
+        // Allergens select
+        mItemSelected = (TextView) v.findViewById(R.id.tvItemSelected);
+        selected = (TextView) v.findViewById(R.id.selected);
+        System.out.println("FirebaseManager.setAllergens()--- "+ FirebaseManager.allergens);
+        if(FirebaseManager.allergens!=null) {
+            selected.setText(concatStrings(FirebaseManager.allergens));
+        }else {
+            selected.setText("");
+            selected.setHint("לבחירת אלרגנים לחץ כאן");
+        }
+            //listItems = getResources().getStringArray(R.array.shopping_item);
+//        checkedItems = new boolean[listItems.length];
+            repo.getAllIngredients(new Repository.OnSearchAllIngredients() {
+                @Override
+                public void onIngredientsFound(List<Ingredient> matches) {
+                    listItems = new String[matches.size()];
+                    for (int i = 0; i < matches.size(); ++i) {
+                        listItems[i] = matches.get(i).getName();
+                    }
+                    checkedItems = new boolean[listItems.length];
+                    selected.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+                            mBuilder.setTitle(R.string.dialog_title);
+                            mBuilder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
+//                        if (isChecked) {
+//                            if (!mUserItems.contains(position)) {
+//                                mUserItems.add(position);
+//                            }
+//                        } else if (mUserItems.contains(position)) {
+//                            mUserItems.remove(position);
+//                        }
+                                    if (isChecked) {
+                                        mUserItems.add(position);
+                                    } else {
+                                        mUserItems.remove((Integer.valueOf(position)));
+                                    }
+                                }
+                            });
+
+                            mBuilder.setCancelable(false);
+                            mBuilder.setPositiveButton(R.string.ok_label, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int which) {
+                                    String item = "";
+                                    List<String> allergens = new ArrayList<String>(mUserItems.size());
+                                    for (int i = 0; i < mUserItems.size(); i++) {
+                                        item = item + listItems[mUserItems.get(i)];
+                                        if (i != mUserItems.size() - 1) {
+                                            item = item + ", ";
+                                        }
+                                        allergens.add(listItems[mUserItems.get(i)]);
+                                    }
+                                    selected.setText(item);
+                                    repo.setAllergens(allergens);
+                                }
+                            });
+
+                            mBuilder.setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            });
+
+                            mBuilder.setNeutralButton(R.string.clear_all_label, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int which) {
+                                    for (int i = 0; i < checkedItems.length; i++) {
+                                        checkedItems[i] = false;
+                                        mUserItems.clear();
+                                        //mItemSelected.setText("");
+                                    }
+                                }
+                            });
+
+                            AlertDialog mDialog = mBuilder.create();
+                            mDialog.show();
+                        }
+                    });
+                }
+
+                @Override
+                public void onNoIngredientsFound(String message) {
+                    selected.setText("הוסף מרכיבים כדי לבחור אלרגנים");
+                }
+
+                @Override
+                public void onExceptionOccurred(Exception e) {
+                }
+            });
+
+
         return v;
+    }
+    public static String concatStrings(List<String> strings)
+    {
+        StringBuilder sb = new StringBuilder();
+        int i= 0;
+        for(String s: strings)
+        {
+            if (i == strings.size()-1 ) {
+                sb.append(s);
+            }
+            else{sb.append(s+", ");}
+            ++i;
+        }
+        return sb.toString();
     }
 }

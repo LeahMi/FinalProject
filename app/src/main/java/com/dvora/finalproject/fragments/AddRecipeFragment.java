@@ -609,6 +609,15 @@ public class AddRecipeFragment extends BaseFragment implements DialogIng.OnInput
                                         if(existRecipe!=null){
                                             openDetailsFragment(recipe);
                                         }
+                                        else{
+                                            Toast.makeText(getContext(), "נוסף בהצלחה", Toast.LENGTH_SHORT).show();
+                                            new Handler().postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    openDetailsFragment1(category1);
+                                                }
+                                            },2000);
+                                        }
                                     }
 
                                     @Override
@@ -630,13 +639,6 @@ public class AddRecipeFragment extends BaseFragment implements DialogIng.OnInput
                             public void onFailure(@NonNull Exception e) {
                             }
                         });
-                        Toast.makeText(getContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                openDetailsFragment1(category1);
-                            }
-                        },2000);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

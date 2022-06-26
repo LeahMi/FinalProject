@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,20 +36,25 @@ public class ListRecipesFragment extends BaseFragment {
     private Category category;
     private TextView titleRecipe;
     public final static String CATEGORY_KEY = "CATEGORY_KEY";
+    public enum ESort {
+        NOALLERGEN, ALLERGEN, NOFAVORITE, FAVORITE;
+    }
+
 
     Dialog d;
     MultiSpinner timeSp, levelSp, numOfRecipesSp;
     ArrayList<String> timeList = new ArrayList<>(), levelList = new ArrayList<>(), numOfRecipesList = new ArrayList<>();
     Button okBtn;
-    CheckBox simpleCheckBox;
-    String favorite = "noFavorite";
+    CheckBox simpleCheckBox, allergenCheckBox;;
+    String favorite = "noFavorite", allergen = ESort.NOALLERGEN.toString();
     private ImageButton sortBtn;
-
+    private List<String> listAllergens = null;
     private Repository repo = new Repository();
 
     public static Bundle newInstance(Category category) {
         Bundle args = new Bundle();
         args.putSerializable(CATEGORY_KEY, category);
+        FirebaseManager.setAllergens();
         return args;
     }
 
@@ -90,15 +96,26 @@ public class ListRecipesFragment extends BaseFragment {
             @Override
             public void onItemsSelected(boolean[] selected) { }
         });
+        allergenCheckBox = d.findViewById(R.id.allergenCheckBox);
+        allergenCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(allergenCheckBox.isChecked()){
+                    allergen = ESort.ALLERGEN.toString();
+                    listAllergens = FirebaseManager.allergens;
+                }
+                if(allergenCheckBox.isChecked() == false){
+                    allergen = ESort.NOALLERGEN.toString();
+                }
+            }
+        });
         simpleCheckBox = d.findViewById(R.id.checkBox);
         if(category.getName().equals("כל המתכונים")) {
             simpleCheckBox.setVisibility(View.VISIBLE);
             simpleCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.v("innnnnnnn","innn");
                     if(simpleCheckBox.isChecked()){
-                        Log.v("inn1","inn1");
                         repo.getFavoriteCategory(new Repository.OnSearchFavoriteCategory() {
                             @Override
                             public void onSuccess(String message) {
@@ -130,10 +147,15 @@ public class ListRecipesFragment extends BaseFragment {
                 MainActivity.sort += " " + levelSp.getSpinnerText();
                 MainActivity.sort += " " + numOfRecipesSp.getSpinnerText();
                 MainActivity.sort += " " + favorite;
+                MainActivity.sort += " " + allergen;
                 //Toast.makeText(getContext(), "" + MainActivity.sort, Toast.LENGTH_LONG).show();
                 Log.e("LRFSSSSSSSSSSSSSSSON:", "" + MainActivity.sort);
-                createNewListBySort(MainActivity.sort);
-
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        createNewListBySort(MainActivity.sort);
+                    }
+                },2000);
                 d.dismiss();
             }
         });
@@ -146,7 +168,8 @@ public class ListRecipesFragment extends BaseFragment {
         Log.e("LRF isLevel", "" + isLevel(recipe));
         Log.e("LRF isPercent", "" + isPercent(recipe));
         Log.v("LRF isFav",""+ isFavorite(recipe));
-        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe)  && isFavorite(recipe))  ||  MainActivity.sort.equals("null");
+        Log.v("LRF isAll",""+ isAllergens(recipe));
+        return (isClock(recipe) && isLevel(recipe) && isPercent(recipe)  && isFavorite(recipe)) && isAllergens(recipe) ||  MainActivity.sort.equals("null");
     }
 
     public boolean isClock(Recipe recipe) {
@@ -175,6 +198,27 @@ public class ListRecipesFragment extends BaseFragment {
     public boolean isFavorite(Recipe recipe) {
         return MainActivity.sort.contains(recipe.getCategory()) || MainActivity.sort.contains("noFavorite");
     }
+    public boolean isAllergens(Recipe recipe) {
+        if(MainActivity.sort.contains(ESort.NOALLERGEN.toString())){
+            return true;
+        }
+        else if(MainActivity.sort.contains(ESort.ALLERGEN.toString())){
+            if (listAllergens!=null) {
+                for (String s : listAllergens) {
+                    if (recipe.getIngredientInfoToString().contains(s)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            return true;}
+    }
+
 
     public void createNewListBySort(String spinnerText) {
         repo.getAllRecipes(new Repository.OnSearchAllRecipes() {
@@ -307,10 +351,18 @@ public class ListRecipesFragment extends BaseFragment {
         return v;
     }
 
+//    private List<String> copy(List<String> l){
+//
+//        List<String> newList = new ArrayList<>(l.size());
+//        for (String s: l){
+//            newList.add(s);
+//        }
+//        Log.e("InCopy","newList ----- "+ newList);
+//        return newList;
+//    }
 
     private void openDetailsFragment(Recipe recipe) {
         mListener.showFragment(R.id.nav_item_details,ItemDetailsFragment.newInstance(recipe));
     }
-
 
 }
