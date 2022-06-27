@@ -1,12 +1,9 @@
 package com.dvora.finalproject.fragments;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +18,6 @@ import com.dvora.finalproject.FirebaseManager;
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
 import com.dvora.finalproject.activities.Login;
-import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.entities.Category;
 import com.dvora.finalproject.entities.Ingredient;
 import com.google.firebase.auth.FirebaseAuth;
@@ -290,13 +286,6 @@ public class ProfileFragment extends BaseFragment {
                             mBuilder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
-//                        if (isChecked) {
-//                            if (!mUserItems.contains(position)) {
-//                                mUserItems.add(position);
-//                            }
-//                        } else if (mUserItems.contains(position)) {
-//                            mUserItems.remove(position);
-//                        }
                                     if (isChecked) {
                                         mUserItems.add(position);
                                     } else {

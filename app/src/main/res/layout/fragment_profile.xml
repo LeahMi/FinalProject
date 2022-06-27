@@ -83,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/rounded_edittext"
             android:hint=" בחר קטגוריות מועדפות"
             app:layout_constraintTop_toBottomOf="@+id/favorita_c"
@@ -94,7 +94,7 @@
 
         <TextView
             android:id="@+id/tvItemSelected"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
@@ -111,7 +111,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/rounded_edittext"
             android:text="@string/allergens"
             android:textColor="@color/black"

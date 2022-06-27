@@ -25,18 +25,20 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class Login extends AppCompatActivity {
+public class Login extends BaseActivity {
     EditText mEmail, mPassword;
     Button mLoginBtn;
     TextView mCreateBtn, forgotTextLink;
     ProgressBar progressBar;
     FirebaseAuth fAuth;
-
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_login;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-//        getSupportActionBar().hide();
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
         progressBar = findViewById(R.id.progressBar);
@@ -99,11 +101,11 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 EditText resetMail = new EditText(v.getContext());
                 final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
-                passwordResetDialog.setTitle("שחזור סיסמא ?");
+                passwordResetDialog.setTitle("שחזור סיסמא");
                 passwordResetDialog.setMessage("הכנס את הדואר האלקטרוני לקבלת לינק לשחזור סיסמא");
                 passwordResetDialog.setView(resetMail);
 
-                passwordResetDialog.setPositiveButton("כן", new DialogInterface.OnClickListener() {
+                passwordResetDialog.setPositiveButton("אישור", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // extract the email and send reset link
@@ -122,7 +124,7 @@ public class Login extends AppCompatActivity {
 
                     }
                 });
-                passwordResetDialog.setNegativeButton("לא", new DialogInterface.OnClickListener() {
+                passwordResetDialog.setNegativeButton("ביטול", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // close the dialog

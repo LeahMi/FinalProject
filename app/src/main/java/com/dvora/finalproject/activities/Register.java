@@ -39,7 +39,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
-public class Register extends AppCompatActivity {
+public class Register extends BaseActivity {
     EditText mFullName, mEmail, mPassword;
     Button mRegisterBtn;
     TextView mLoginBtn;
@@ -49,8 +49,11 @@ public class Register extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private static final String USER = "user";
-    private User user;
 
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_register;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
