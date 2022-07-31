@@ -8,6 +8,7 @@ public class User implements Serializable {
     private String email;
     private String password;
     private String fullName;
+    private String uid;
     private List<Ingredient> inventory;
     private List<Recipe> recipes;
 
@@ -21,9 +22,11 @@ public class User implements Serializable {
         this.fullName = fullName;
     }
 
-    public User(String email, String password,String fullName) {
-        this.email=email;
-        this.password=password;
+    public User(String email, String password, String fullName, String uid) {
+        this.email = email;
+        this.password = password;
+        this.fullName = fullName;
+        this.uid = uid;
     }
 
     public String getEmail() {
@@ -32,8 +35,9 @@ public class User implements Serializable {
     public String getPassword() {
         return password;
     }
-
     public String getFullName() {
         return fullName;
     }
+
+    public String getUid() { return uid; }
 }

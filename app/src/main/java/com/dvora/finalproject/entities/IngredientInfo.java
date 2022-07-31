@@ -10,6 +10,7 @@ public class IngredientInfo {
     private double quantity;
     private String type;
 
+
     public IngredientInfo() {}
 
     public IngredientInfo(String name, double quantity, String type) {

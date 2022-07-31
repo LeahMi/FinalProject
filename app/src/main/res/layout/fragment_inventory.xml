@@ -8,16 +8,32 @@
     tools:context=".fragments.InventoryFragment">
 
 
+    <TextView
+        android:id="@+id/inventory_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="33dp"
+        android:fontFamily="@font/chango"
+        android:text="מלאי"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <SearchView
         android:id="@+id/search_bar_inventory"
-        android:layout_width="371dp"
-        android:layout_height="35dp"
-        android:layout_below="@+id/btn_add_rec"
-        android:layout_alignParentStart="true"
+        android:layout_width="300dp"
+        android:layout_height="34dp"
+        android:layout_below="@+id/inventory_title"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="34dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="16dp"
         android:background="#33c5c9cc"
         android:iconifiedByDefault="false"
         android:layoutDirection="rtl"
@@ -29,29 +45,32 @@
     <ListView
         android:id="@+id/mainlistinventory_listv"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
-        android:layout_marginTop="80dp">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_bar_inventory"
+        android:layout_marginTop="8dp">
 
     </ListView>
 
     <ImageButton
-        android:id="@+id/btn_Add_ing"
-        android:layout_width="95dp"
-        android:layout_height="34dp"
-        android:src="@drawable/add_24"
-        android:background="#00FFFFFF"
-        tools:layout_editor_absoluteX="159dp"
-        tools:layout_editor_absoluteY="528dp" />
-
-    <ImageButton
         android:id="@+id/btn_list_shopping"
-        android:layout_width="97dp"
-        android:layout_height="42dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="5dp"
+        android:layout_width="50dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginStart="5dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:background="#00FFFFFF"
         android:src="@drawable/edit_shop" />
 
+    <ImageButton
+        android:id="@+id/btn_Add_ing"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="46dp"
+        android:background="#00FFFFFF"
+        android:src="@drawable/add_24" />
 
 
 </RelativeLayout>

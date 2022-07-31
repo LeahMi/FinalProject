@@ -281,7 +281,6 @@ public class ListRecipesFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list_recipes, container, false);
         list = v.findViewById(R.id.mainlistfragment_listv);
-
         sortBtn = v.findViewById(R.id.sort_btn1);
         sortBtn.setOnClickListener(new View.OnClickListener() {
             @Override

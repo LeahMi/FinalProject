@@ -25,16 +25,20 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="25dp"
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/button_Save_Ing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="183dp"
         android:layout_marginHorizontal="15dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="68dp"
         android:text="שמור"
         app:backgroundTint="#03A9F4" />
 

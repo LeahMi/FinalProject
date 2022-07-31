@@ -1,7 +1,6 @@
 package com.dvora.finalproject.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
  import android.os.Bundle;
@@ -32,11 +31,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.Repo;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class Register extends BaseActivity {
@@ -45,9 +41,10 @@ public class Register extends BaseActivity {
     TextView mLoginBtn;
     FirebaseAuth fAuth;
     ProgressBar progressBar;
-    private String fullName;
+    private String fullName, email, password;
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String USER = "user";
 
     @Override
@@ -79,8 +76,8 @@ public class Register extends BaseActivity {
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = mEmail.getText().toString().trim();
-                String password = mPassword.getText().toString().trim();
+                email = mEmail.getText().toString().trim();
+                password = mPassword.getText().toString().trim();
                 fullName = mFullName.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
@@ -98,7 +95,6 @@ public class Register extends BaseActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
 
-                User user1 = new User(email, password, fullName);
 
                 // register the user in firebase
 
@@ -128,9 +124,6 @@ public class Register extends BaseActivity {
                             Toast.makeText(Register.this, "החשבון נוצר", Toast.LENGTH_SHORT).show();
 
 
-//                            String keyId=mDatabase.push().getKey();
-//                            String currentuser = user.getUid();
-//                            mDatabase.child(currentuser).setValue(user1);
                             Log.d("TAG", "updateUI====Before====");
                             updateUI(user);
                             Log.d("TAG", "updateUI====After====");
@@ -158,13 +151,10 @@ public class Register extends BaseActivity {
         Log.d("TAG", "currentUser==========" + currentUser);
         String keyId = currentUser.getUid();
         Log.d("TAG", "keyId==========" + keyId);
-        String in = "0";
         ref.child("userName").setValue(fullName);
 
         FirebaseManager.resetAfterLogin();
         FirebaseManager.setAllergens();
-
-
 
 
         FirebaseDatabase.getInstance().getReference().child("base_vategories_for_all_users").child("categories").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -186,7 +176,8 @@ public class Register extends BaseActivity {
 
             }
         });
-
+        User user1 = new User(email, password, fullName,currentUser.getUid());
+        createUserCollection(user1);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -198,6 +189,22 @@ public class Register extends BaseActivity {
 
 
 //        ref.child(keyId).child("Details").setValue(currentUser);
+    }
+    public void createUserCollection(User user){
+        db.collection("users").document(user.getUid())
+                .set(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("TAG", "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("TAG", "Error adding document", e);
+                    }
+                });
     }
 
 

@@ -31,9 +31,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.dvora.finalproject.FirebaseManager.currentUser;
+
 
 public class Repository {
-    private int count = 0;
+    private int count = 0, wAll=0;
     private static final DecimalFormat df = new DecimalFormat("0.00");
     private HashMap hm = new HashMap();
     public static final String RECIPES_PATH = "userRecipes";
@@ -49,8 +51,9 @@ public class Repository {
         String uid = "";
         if (currentUser == null)
             uid = "admin";
-        else
+        else {
             uid = currentUser.getUid();
+        }
         ref = FirebaseManager.root.child(uid);
         ref.child(RECIPES_PATH).addValueEventListener(new ValueEventListener() {
             @Override
@@ -168,6 +171,7 @@ public class Repository {
                                 continue;
                             else {
                                 count = 0;
+                                wAll=0;
                                 matches.add(match);
                                 List<IngredientInfo> l = match.getIngredients();
                                 int numOfIngs = l.size();
@@ -179,7 +183,8 @@ public class Repository {
                                             Ingredient ingInventory = (Ingredient) (hm.get(ingredientInfo.getName()));
                                             Double quantity = convert(ingInventory, ingredientInfo);
                                             if (ingInventory.getQuantity() >= quantity)
-                                                count++;
+                                                count+=quantity;
+                                            wAll+=quantity;
                                         }
                                     }
                                 }
@@ -187,7 +192,7 @@ public class Repository {
                                     Log.d("count", "count___ " + count);
                                     Log.d("numOfIngs", "numOfIngs___ " + numOfIngs);
                                     Log.d("(count / numOfIngs)", "(count / numOfIngs)____" + (count / numOfIngs));
-                                    double d = (double) count / (double) numOfIngs;
+                                    double d = (double) count / (double) wAll;
                                     d = Double.valueOf(df.format(d));
                                     d = Double.valueOf(df.format(d * 100));
                                     System.out.println("d:   " + d);
@@ -419,7 +424,6 @@ public class Repository {
                         @Override
                         public void onSuccess(DataSnapshot dataSnapshot) {
                             Category category = dataSnapshot.getValue(Category.class);
-                            Log.v("flag1","flag1");
                             category.incNumOfRecipes();
                             ref.child("categories").child(recipe.getCategory()).setValue(category);
                         }
@@ -615,6 +619,23 @@ public class Repository {
                 amount = ingRecipe.getQuantity();
                 break;
         }
+        switch (ingRecipe.getType()) {
+            case "כפית":
+                amount = 5.0* ingRecipe.getQuantity();
+                break;
+            case "כף":
+                amount = 15.0* ingRecipe.getQuantity();
+                break;
+            case "כוס":
+                amount = 240.0* ingRecipe.getQuantity();
+                break;
+            case "קורט":
+                amount = 0.3125* ingRecipe.getQuantity();
+                break;
+            default:
+                amount = ingRecipe.getQuantity();
+                break;
+        }
         return amount;
     }
 
@@ -655,6 +676,15 @@ public class Repository {
                         break;
                     case "יחידה":
                         amount = ingRecipe.getQuantity() * quantity;
+                        break;
+                    case "כוס":
+                        amount = ingRecipe.getQuantity() * 240;
+                        break;
+                    case "כפית":
+                        amount = ingRecipe.getQuantity() * 5;
+                        break;
+                    case "כף":
+                        amount = ingRecipe.getQuantity() * 15;
                         break;
                 }
                 break;

@@ -28,7 +28,7 @@ public class FirebaseManager {
                  allergens = copy(matches);
             }
             @Override
-            public void onNoAllergensFound(String message) { }
+            public void onNoAllergensFound(String message) { allergens = null; }
             @Override
             public void onExceptionOccurred(Exception e) { }
         });

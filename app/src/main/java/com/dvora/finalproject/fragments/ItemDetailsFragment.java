@@ -1,6 +1,8 @@
 package com.dvora.finalproject.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +22,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.dvora.finalproject.R;
 import com.dvora.finalproject.Repository;
+import com.dvora.finalproject.activities.MainActivity;
 import com.dvora.finalproject.entities.Category;
 import com.dvora.finalproject.entities.IngredientInfo;
 import com.dvora.finalproject.entities.Recipe;
@@ -41,6 +45,9 @@ public class ItemDetailsFragment extends BaseFragment implements View.OnClickLis
     EditText prepEt;
     EditText IngEt;
     EditText levelEt;
+    private ProgressBar mProgressBar;
+    private int mProgressStatus = 0;
+    private Handler mHandler = new Handler();
     private Repository repo = new Repository();
 
     public static Bundle newInstance(Recipe recipe) {
@@ -83,7 +90,7 @@ public class ItemDetailsFragment extends BaseFragment implements View.OnClickLis
 
             }
         });
-
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar);
         categoryEt = view.findViewById(R.id.edt_category);
         timeEt = view.findViewById(R.id.edt_time);
         prepEt = view.findViewById(R.id.edt_prep_method);
@@ -142,11 +149,41 @@ public class ItemDetailsFragment extends BaseFragment implements View.OnClickLis
             repo.updateInventory(recipe, new OnSuccessListener() {
                 @Override
                 public void onSuccess(Object o) {
-                    Toast.makeText(getContext(), o.toString(), Toast.LENGTH_SHORT).show();
-                    openDetailsFragment(c);
                 }
             });
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    updateUi();
+                }
+            },500);
+
         }
 
+    }
+    public void updateUi() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (mProgressStatus < 100) {
+                    mProgressStatus++;
+                    android.os.SystemClock.sleep(50);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mProgressBar.setProgress(mProgressStatus);
+                        }
+                    });
+                }
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), "המלאי עודכן בהצלחה", Toast.LENGTH_SHORT).show();
+                        mProgressBar.setVisibility(View.GONE);
+                    }
+                });
+            }
+        }).start();
     }
 }
